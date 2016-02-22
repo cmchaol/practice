@@ -1,0 +1,23 @@
+
+
+  http://doc.scrapy.org/en/1.0/intro/tutorial.html
+
+* Creating a project
+
+
+#+HEADERS:  :results silent
+#+HEADERS:  :results raw
+#+BEGIN_SRC sh
+
+scrapy startproject tutorial
+
+#+END_SRC
+
+#+HEADERS:  :results silent
+#+HEADERS:  :results raw
+#+BEGIN_SRC sh
+
+tree tutorial
+
+#+END_SRC
+
