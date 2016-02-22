@@ -1,11 +1,8 @@
 
-* 2 steps
+
 
   http://doc.scrapy.org/en/1.0/intro/tutorial.html
 
-|  2 | steps                        |                                         |
-|    |                              |                                         |
-|----+------------------------------+-----------------------------------------|
 | 10 | Creating a project structure |                                         |
 | 12 |                              | view the project structure (optional)   |
 | 14 |                              | delete the project structure (optional) |
@@ -23,7 +20,8 @@
 | 42 |                              | view product files (optional)           |
 |    |                              |                                         |
 |----+------------------------------+-----------------------------------------|
-| 92 | blank sh babel block         |                                         |
+| 92 |                              | blank sh babel block                    |
+|    |                              |                                         |
 
 
 * 10 Creating a project structure
