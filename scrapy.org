@@ -23,7 +23,7 @@
 | 42 |                              | view product files                      |
 |    |                              |                                         |
 |----+------------------------------+-----------------------------------------|
-| 95 | sh blank babel block         |                                         |
+| 95 | blank sh babel block         |                                         |
 
 
 * 10 Creating a project structure
@@ -145,7 +145,7 @@ scrapy crawl dmoz
 #+END_SRC
 
 
-** 42 view product files
+** 42 view product files (optional)
 
 #+HEADERS:  :results silent
 #+HEADERS:  :results raw
@@ -156,7 +156,7 @@ ls tutorial
 #+END_SRC
 
 
-* 95 sh blank babel block
+* 95 blank sh babel block
 
 #+HEADERS:  :results silent
 #+HEADERS:  :results raw
