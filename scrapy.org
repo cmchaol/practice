@@ -1,8 +1,32 @@
 
+* 2 steps
 
   http://doc.scrapy.org/en/1.0/intro/tutorial.html
 
-* Creating a project
+|  2 | steps                        |                                         |
+|    |                              |                                         |
+|----+------------------------------+-----------------------------------------|
+| 10 | Creating a project structure |                                         |
+| 12 |                              | view the project structure (optional)   |
+| 14 |                              | delete the project structure (optional) |
+|    |                              |                                         |
+|----+------------------------------+-----------------------------------------|
+| 20 | item.py                      |                                         |
+| 22 |                              | view item.py (optional)                 |
+|    |                              |                                         |
+|----+------------------------------+-----------------------------------------|
+| 30 | dmoz_spider.py               |                                         |
+| 32 |                              | view dmoz_spider.py (optional)          |
+|    |                              |                                         |
+|----+------------------------------+-----------------------------------------|
+| 40 | crawling                     |                                         |
+| 42 |                              | view product files                      |
+|    |                              |                                         |
+|----+------------------------------+-----------------------------------------|
+| 95 | sh blank babel block         |                                         |
+
+
+* 10 Creating a project structure
 
 
 #+HEADERS:  :results silent
@@ -13,7 +37,7 @@ scrapy startproject tutorial
 
 #+END_SRC
 
-** view the project structure (optional)
+** 12 view the project structure (optional)
 
 #+HEADERS:  :results silent
 #+HEADERS:  :results raw
@@ -24,7 +48,7 @@ tree tutorial
 #+END_SRC
 
 
-** delete the project (optional)
+** 14 delete the project structure (optional)
 
 #+HEADERS:  :results silent
 #+HEADERS:  :results raw
@@ -37,7 +61,7 @@ ls tutorial
 #+END_SRC
 
 
-* item.py
+* 20 item.py
 
 
 #+HEADERS:  :results silent
@@ -69,7 +93,7 @@ cat tutorial/tutorial/items.py
 #+END_SRC
 
 
-* dmoz_spider.py
+* 30 dmoz_spider.py
 
 #+HEADERS:  :results silent
 #+HEADERS:  :results raw
@@ -97,7 +121,7 @@ EOF
 #+END_SRC
 
 
-** view dmoz_spider.py (optional)
+** 32 view dmoz_spider.py (optional)
 
 #+HEADERS:  :results silent
 #+HEADERS:  :results raw
@@ -108,7 +132,7 @@ cat  tutorial/tutorial/spiders/dmoz_spider.py
 #+END_SRC
 
 
-* crasling
+* 40 crawling
 
 #+HEADERS:  :results silent
 #+HEADERS:  :results raw
@@ -121,7 +145,7 @@ scrapy crawl dmoz
 #+END_SRC
 
 
-** view product files
+** 42 view product files
 
 #+HEADERS:  :results silent
 #+HEADERS:  :results raw
@@ -132,7 +156,7 @@ ls tutorial
 #+END_SRC
 
 
-* sh blank babel block
+* 95 sh blank babel block
 
 #+HEADERS:  :results silent
 #+HEADERS:  :results raw
