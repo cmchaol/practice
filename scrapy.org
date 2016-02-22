@@ -13,6 +13,8 @@ scrapy startproject tutorial
 
 #+END_SRC
 
+** view the project structure (optional)
+
 #+HEADERS:  :results silent
 #+HEADERS:  :results raw
 #+BEGIN_SRC sh
@@ -21,3 +23,120 @@ tree tutorial
 
 #+END_SRC
 
+
+** delete the project (optional)
+
+#+HEADERS:  :results silent
+#+HEADERS:  :results raw
+#+BEGIN_SRC sh
+
+rm -r tutorial
+
+ls tutorial
+
+#+END_SRC
+
+
+* item.py
+
+
+#+HEADERS:  :results silent
+#+HEADERS:  :results raw
+#+BEGIN_SRC sh
+
+cat > tutorial/tutorial/items.py << EOF
+
+import scrapy
+
+class DmozItem(scrapy.Item):
+    title = scrapy.Field()
+    link = scrapy.Field()
+    desc = scrapy.Field()
+
+EOF
+
+#+END_SRC
+
+
+** view item.py (optional)
+
+#+HEADERS:  :results silent
+#+HEADERS:  :results raw
+#+BEGIN_SRC sh
+
+cat tutorial/tutorial/items.py
+
+#+END_SRC
+
+
+* dmoz_spider.py
+
+#+HEADERS:  :results silent
+#+HEADERS:  :results raw
+#+BEGIN_SRC sh
+
+cat > tutorial/tutorial/spiders/dmoz_spider.py << EOF
+
+import scrapy
+
+class DmozSpider(scrapy.Spider):
+    name = "dmoz"
+    allowed_domains = ["dmoz.org"]
+    start_urls = [
+        "http://www.dmoz.org/Computers/Programming/Languages/Python/Books/",
+        "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
+    ]
+
+    def parse(self, response):
+        filename = response.url.split("/")[-2] + '.html'
+        with open(filename, 'wb') as f:
+            f.write(response.body)
+
+EOF
+
+#+END_SRC
+
+
+** view dmoz_spider.py (optional)
+
+#+HEADERS:  :results silent
+#+HEADERS:  :results raw
+#+BEGIN_SRC sh
+
+cat  tutorial/tutorial/spiders/dmoz_spider.py 
+
+#+END_SRC
+
+
+* crasling
+
+#+HEADERS:  :results silent
+#+HEADERS:  :results raw
+#+BEGIN_SRC sh
+
+cd tutorial
+
+scrapy crawl dmoz
+
+#+END_SRC
+
+
+** view product files
+
+#+HEADERS:  :results silent
+#+HEADERS:  :results raw
+#+BEGIN_SRC sh
+
+ls tutorial
+
+#+END_SRC
+
+
+* sh blank babel block
+
+#+HEADERS:  :results silent
+#+HEADERS:  :results raw
+#+BEGIN_SRC sh
+
+
+#+END_SRC
