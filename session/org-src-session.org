@@ -14,11 +14,13 @@
 |    |                              |          |          |          |
 | 28 | session without session_name | included | included | negative |
 
+* conclusion
+
 [2016-02-26 Fri 10:47]
 
 Org-mode version 8.2.10 
 
-Session name is mandatory to get the positive session results under my test.
+Session name is mandatory in all blocks to get the positive session results under my test.
 
 
 * Session-based Evaluation
@@ -40,10 +42,10 @@ http://orgmode.org/worg/org-contrib/babel/intro.html#orgheadline14
 #+HEADERS:  :session session_name_20
 #+BEGIN_SRC sh
 
-PN="tutorial3" 
-# define the variable of the Project Name, $PN
+a=1
+# define the variable, $a
 
-echo 'echo from the block of variable definition, $PN =' $PN
+echo 'echo from the block of variable definition, $a =' $a
 
 #+END_SRC
 
@@ -53,8 +55,7 @@ echo 'echo from the block of variable definition, $PN =' $PN
 #+HEADERS:  :session session_name_20
 #+BEGIN_SRC sh
 
-# echo  $PN
-echo 'echo outside the block of variable definition, $PN =' $PN
+echo 'echo outside the block of variable definition, $a =' $a
 
 #+END_SRC
 
@@ -69,10 +70,10 @@ echo 'echo outside the block of variable definition, $PN =' $PN
 #+HEADERS:  :session session_name_22
 #+BEGIN_SRC sh
 
-PN="tutorial3" 
-# define the variable of the Project Name, $PN
+a=1
+# define the variable, $a
 
-echo 'echo from the block of variable definition, $PN =' $PN
+echo 'echo from the block of variable definition, $a =' $a
 
 #+END_SRC
 
@@ -81,8 +82,7 @@ echo 'echo from the block of variable definition, $PN =' $PN
 #+HEADERS:  :results silent
 #+BEGIN_SRC sh
 
-# echo  $PN
-echo 'echo outside the block of variable definition, $PN =' $PN
+echo 'echo outside the block of variable definition, $a =' $a
 
 #+END_SRC
 
@@ -96,10 +96,10 @@ echo 'echo outside the block of variable definition, $PN =' $PN
 #+HEADERS:  :results silent
 #+BEGIN_SRC sh
 
-PN="tutorial3" 
-# define the variable of the Project Name, $PN
+a=1
+# define the variable, $a
 
-echo 'echo from the block of variable definition, $PN =' $PN
+echo 'echo from the block of variable definition, $a =' $a
 
 #+END_SRC
 
@@ -109,8 +109,7 @@ echo 'echo from the block of variable definition, $PN =' $PN
 #+HEADERS:  :session session_name_24
 #+BEGIN_SRC sh
 
-# echo  $PN
-echo 'echo outside the block of variable definition, $PN =' $PN
+echo 'echo outside the block of variable definition, $a =' $a
 
 #+END_SRC
 
@@ -124,10 +123,10 @@ echo 'echo outside the block of variable definition, $PN =' $PN
 #+HEADERS:  :results silent
 #+BEGIN_SRC sh
 
-PN="tutorial3" 
-# define the variable of the Project Name, $PN
+a=1
+# define the variable, $a
 
-echo 'echo from the block of variable definition, $PN =' $PN
+echo 'echo from the block of variable definition, $a =' $a
 
 #+END_SRC
 
@@ -136,8 +135,7 @@ echo 'echo from the block of variable definition, $PN =' $PN
 #+HEADERS:  :results silent
 #+BEGIN_SRC sh
 
-# echo  $PN
-echo 'echo outside the block of variable definition, $PN =' $PN
+echo 'echo outside the block of variable definition, $a =' $a
 
 #+END_SRC
 
@@ -152,10 +150,11 @@ echo 'echo outside the block of variable definition, $PN =' $PN
 #+HEADERS:  :session 
 #+BEGIN_SRC sh
 
-PN="tutorial3" 
-# define the variable of the Project Name, $PN
 
-echo 'echo from the block of variable definition, $PN =' $PN
+a=1
+# define the variable, $a
+
+echo 'echo from the block of variable definition, $a =' $a
 
 #+END_SRC
 
@@ -165,8 +164,7 @@ echo 'echo from the block of variable definition, $PN =' $PN
 #+HEADERS:  :session 
 #+BEGIN_SRC sh
 
-# echo  $PN
-echo 'echo outside the block of variable definition, $PN =' $PN
+echo 'echo outside the block of variable definition, $a =' $a
 
 #+END_SRC
 
