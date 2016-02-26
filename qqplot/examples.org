@@ -1,0 +1,4 @@
+* David Scott
+
+http://onlinestatbook.com/2/advanced_graphs/q-q_plots.html
+
