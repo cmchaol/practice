@@ -2,8 +2,9 @@
 * summary
 
 |    | 2 blocks                     | 1st      | 2nd      |          |   |
-|    |                              |          |          | result   |   |
+|    |                              |          |          |          |   |
 |----+------------------------------+----------+----------+----------+---|
+|    |                              |          |          | result   |   |
 |    |                              |          |          |          |   |
 | 20 | session & session_name       | included | included | positive |   |
 |    |                              |          |          |          |   |
@@ -15,71 +16,6 @@
 |    |                              |          |          |          |   |
 | 28 | session without session_name | included | included | negative |   |
 |    |                              |          |          |          |   |
-
-
-* without header session, default
-
-#+HEADERS:  :results raw
-#+BEGIN_SRC sh
-
-PN="tutorial3" 
-# define the variable of the Project Name, $PN
-
-echo 'echo from the block of variable definition, $PN =' $PN
-
-#+END_SRC
-
-#+RESULTS:
-echo from the block of variable definition, $PN = tutorial3
-
-
-
-
-
-#+HEADERS:  :results raw
-#+BEGIN_SRC sh
-
-# echo  $PN
-echo 'echo outside the block of variable definition, $PN =' $PN
-
-#+END_SRC
-
-#+RESULTS:
-echo outside the block of variable definition, $PN =
-
-
-* with header session and a blank session name
-
-
-#+HEADERS:  :results raw
-#+HEADERS:  :session 
-#+BEGIN_SRC sh
-
-PN="tutorial3" 
-# define the variable of the Project Name, $PN
-
-echo 'echo from the block of variable definition, $PN =' $PN
-
-#+END_SRC
-
-#+RESULTS:
-echo from the block of variable definition, $PN = tutorial3
-
-
-
-
-#+HEADERS:  :results raw
-#+HEADERS:  :session 
-#+BEGIN_SRC sh
-
-# echo  $PN
-echo 'echo outside the block of variable definition, $PN =' $PN
-
-#+END_SRC
-
-#+RESULTS:
-echo outside the block of variable definition, $PN =
-
 
 
 * 20  session & session_name
