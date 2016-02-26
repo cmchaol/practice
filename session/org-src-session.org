@@ -1,21 +1,35 @@
 
 * summary
 
-|    | 2 blocks                     | 1st      | 2nd      |          |   |
-|    |                              |          |          |          |   |
-|----+------------------------------+----------+----------+----------+---|
-|    |                              |          |          | result   |   |
-|    |                              |          |          |          |   |
-| 20 | session & session_name       | included | included | positive |   |
-|    |                              |          |          |          |   |
-| 22 |                              | included | none     | negative |   |
-|    |                              |          |          |          |   |
-| 24 |                              | none     | included | negative |   |
-|    |                              |          |          |          |   |
-| 26 |                              | none     | none     | negative |   |
-|    |                              |          |          |          |   |
-| 28 | session without session_name | included | included | negative |   |
-|    |                              |          |          |          |   |
+|    | 2 blocks                     | 1st      | 2nd      |          |
+|    |                              |          |          | result   |
+|----+------------------------------+----------+----------+----------|
+| 20 | session & session_name       | included | included | positive |
+|    |                              |          |          |          |
+| 22 |                              | included | none     | negative |
+|    |                              |          |          |          |
+| 24 |                              | none     | included | negative |
+|    |                              |          |          |          |
+| 26 |                              | none     | none     | negative |
+|    |                              |          |          |          |
+| 28 | session without session_name | included | included | negative |
+
+[2016-02-26 Fri 10:47]
+
+Org-mode version 8.2.10 
+
+Session name is mandatory to get the positive session results under my test.
+
+
+* Session-based Evaluation
+
+An environment is created containing data objects that persist between different source code blocks.
+
+Once a code block is finished, it is often best to execute it outside of a session, so the state of the environment in which it executes will be certain.
+
+
+http://orgmode.org/worg/org-contrib/babel/intro.html#orgheadline14
+
 
 
 * 20  session & session_name
