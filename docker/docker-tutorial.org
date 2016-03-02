@@ -1,0 +1,60 @@
+* qemu inside win7 and docker inside rancheros inside qemu
+
+** step
+
+| step | aim                      |
+|------+--------------------------|
+|   20 | install qemu inside win7 |
+|      |                          |
+|   30 | download rancheros       |
+|      |                          |
+|   40 | edit bat                 |
+|      |                          |
+|   50 | test bat                 |
+|      |                          |
+
+
+** 20 QEMU Binaries for Windows
+
+http://qemu.weilnetz.de/
+
+
+install qemu-system-x86_64.exe in ramdisk
+
+
+** 30 rancheros
+
+https://github.com/rancher/os
+
+v0.4.2 - Docker 1.9.1 - Linux 4.2
+
+ISO
+
+https://releases.rancher.com/os/latest/rancheros.iso
+https://releases.rancher.com/os/v0.4.2/rancheros.iso
+
+Note: you must login using rancher for username and password.
+
+
+
+** 40 bat
+
+mkdir g:\bat
+
+bat\test.bat
+
+g:\qemu\qemu-system-x86_64 -m 2000 -cdrom g:\rancheros.iso
+
+
+** 50 test bat
+
+g:\bat\test.bat
+
+
+Quick Start Guide
+
+http://docs.rancher.com/os/quick-start-guide/
+
+
+* docker inside gentoo
+

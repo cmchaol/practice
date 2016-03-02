@@ -1,0 +1,105 @@
+* docker
+
+https://wiki.gentoo.org/wiki/Docker
+
+| step | aim             |
+|------+-----------------|
+| 20   | adjust kernel   |
+|      |                 |
+| 30   | install package |
+|      |                 |
+
+** 20 kernel
+
+4.3.3-hardened-r4
+
+cd /usr/src/linux
+
+make menuconfig
+
+make && make modules_install
+
+
+|                          | default |
+|--------------------------+---------|
+| General setup            |         |
+| [*] POSIX Message Queues | *       |
+
+| level | 1 | 2 | 3 | location |                          | default | modification |
+|-------+---+---+---+----------+--------------------------+---------+--------------|
+|       | v |   |   | top      | General setup            |         |              |
+|-------+---+---+---+----------+--------------------------+---------+--------------|
+|       |   | v |   | top      | [*] POSIX Message Queues | *       |              |
+|       |   |   |   |          |                          |         |              |
+|-------+---+---+---+----------+--------------------------+---------+--------------|
+|       |   |   |   |          |                          |         |              |
+
+|                                                         | default | modify to |
+|---------------------------------------------------------+---------+-----------|
+| General setup                                           |         |           |
+| [*] Control Group support  --->                         | *       |           |
+|---------------------------------------------------------+---------+-----------|
+| [*]   Freezer cgroup subsystem                          | *       |           |
+| [ ]   Device controller for cgroups                     | blank   | *         |
+| [*]   Cpuset support                                    | *       |           |
+| [*]   Simple CPU accounting cgroup subsystem            | *       |           |
+| [ ]   Enable perf_event per-cpu per-container           | blank   | *         |
+| [*]   Group CPU scheduler  --->                         | *       |           |
+|---------------------------------------------------------+---------+-----------|
+| [*]   Group scheduling for SCHED_OTHER                  | *       |           |
+| [ ]     CPU bandwidth provisioning for FAIR_GROUP_SCHED | blank   | *         |
+
+|                              | default | modify to |
+|------------------------------+---------+-----------|
+| General setup                |         |           |
+| -*- Namespaces support  ---> | *       |           |
+|------------------------------+---------+-----------|
+| [*]   UTS namespace          | *       |           |
+| [*]   IPC namespace          | *       |           |
+| [*]   PID Namespaces         | *       |           |
+| [*]   Network namespace      | *       |           |
+
+
+|                                                          | default | modify to |
+|----------------------------------------------------------+---------+-----------|
+| [*] Networking support  --->                             | *       |           |
+|----------------------------------------------------------+---------+-----------|
+| Networking options  --->                                 |         |           |
+|----------------------------------------------------------+---------+-----------|
+| [*] Network packet filtering framework (Netfilter)  ---> | *       |           |
+|----------------------------------------------------------+---------+-----------|
+| [ ]   Advanced netfilter configuration                   | blank   | *         |
+| [*]     Bridged IP/ARP packets filtering                 | missing |           |
+|                                                          |         |           |
+| Core Netfilter Configuration  --->                       |         |           |
+|----------------------------------------------------------+---------+-----------|
+| *** Xtables matches ***                                  |         |           |
+| <M>   "addrtype" address type match support              | M       |           |
+| <*>   "conntrack" connection tracking match support      | *       |           |
+
+
+|                                                          | default | modify to |
+|----------------------------------------------------------+---------+-----------|
+| [*] Networking support  --->                             | *       |           |
+|----------------------------------------------------------+---------+-----------|
+| Networking options  --->                                 |         |           |
+|----------------------------------------------------------+---------+-----------|
+| [*] Network packet filtering framework (Netfilter)  ---> | *       |           |
+|----------------------------------------------------------+---------+-----------|
+| Core Netfilter Configuration  --->                       |         |           |
+|----------------------------------------------------------+---------+-----------|
+| *** Xtables matches ***                                  |         |           |
+| <M>   "addrtype" address type match support              | M       |           |
+| <*>   "conntrack" connection tracking match support      | *       |           |
+
+|                                                          | default | modify to |
+|----------------------------------------------------------+---------+-----------|
+| [*] Networking support  --->                             | *       |           |
+|----------------------------------------------------------+---------+-----------|
+| Networking options  --->                                 |         |           |
+|----------------------------------------------------------+---------+-----------|
+| [*] Network packet filtering framework (Netfilter)  ---> | *       |           |
+|----------------------------------------------------------+---------+-----------|
+| IP: Netfilter Configuration  --->                        |         |           |
+|----------------------------------------------------------+---------+-----------|
+|                                                          |         |           |
