@@ -25,81 +25,126 @@ make && make modules_install
 | General setup            |         |
 | [*] POSIX Message Queues | *       |
 
-| level | 1 | 2 | 3 | location |                          | default | modification |
-|-------+---+---+---+----------+--------------------------+---------+--------------|
-|       | v |   |   | top      | General setup            |         |              |
-|-------+---+---+---+----------+--------------------------+---------+--------------|
-|       |   | v |   | top      | [*] POSIX Message Queues | *       |              |
-|       |   |   |   |          |                          |         |              |
-|-------+---+---+---+----------+--------------------------+---------+--------------|
-|       |   |   |   |          |                          |         |              |
+level 1 General setup 
 
-|                                                         | default | modify to |
-|---------------------------------------------------------+---------+-----------|
-| General setup                                           |         |           |
-| [*] Control Group support  --->                         | *       |           |
-|---------------------------------------------------------+---------+-----------|
-| [*]   Freezer cgroup subsystem                          | *       |           |
-| [ ]   Device controller for cgroups                     | blank   | *         |
-| [*]   Cpuset support                                    | *       |           |
-| [*]   Simple CPU accounting cgroup subsystem            | *       |           |
-| [ ]   Enable perf_event per-cpu per-container           | blank   | *         |
-| [*]   Group CPU scheduler  --->                         | *       |           |
-|---------------------------------------------------------+---------+-----------|
-| [*]   Group scheduling for SCHED_OTHER                  | *       |           |
-| [ ]     CPU bandwidth provisioning for FAIR_GROUP_SCHED | blank   | *         |
-
-|                              | default | modify to |
-|------------------------------+---------+-----------|
-| General setup                |         |           |
-| -*- Namespaces support  ---> | *       |           |
-|------------------------------+---------+-----------|
-| [*]   UTS namespace          | *       |           |
-| [*]   IPC namespace          | *       |           |
-| [*]   PID Namespaces         | *       |           |
-| [*]   Network namespace      | *       |           |
-
-
-|                                                          | default | modify to |
-|----------------------------------------------------------+---------+-----------|
-| [*] Networking support  --->                             | *       |           |
-|----------------------------------------------------------+---------+-----------|
-| Networking options  --->                                 |         |           |
-|----------------------------------------------------------+---------+-----------|
-| [*] Network packet filtering framework (Netfilter)  ---> | *       |           |
-|----------------------------------------------------------+---------+-----------|
-| [ ]   Advanced netfilter configuration                   | blank   | *         |
-| [*]     Bridged IP/ARP packets filtering                 | missing |           |
-|                                                          |         |           |
-| Core Netfilter Configuration  --->                       |         |           |
-|----------------------------------------------------------+---------+-----------|
-| *** Xtables matches ***                                  |         |           |
-| <M>   "addrtype" address type match support              | M       |           |
-| <*>   "conntrack" connection tracking match support      | *       |           |
+| 2 | 3 | 4 | location |                                               | default | modification |
+|---+---+---+----------+-----------------------------------------------+---------+--------------|
+| v |   |   | top      | [*] POSIX Message Queues                      | *       |              |
+|---+---+---+----------+-----------------------------------------------+---------+--------------|
+| v |   |   | middle   | [*] Control Group support  --->               | *       |              |
+|   |   |   |          |                                               |         |              |
+|   | v |   |          | [*]   Freezer cgroup subsystem                | *       |              |
+|   |   |   |          |                                               |         |              |
+|   | v |   |          | [ ]   Device controller for cgroups           | blank   | *            |
+|   |   |   |          |                                               |         |              |
+|   | v |   |          | [*]   Cpuset support                          | *       |              |
+|   |   |   |          |                                               |         |              |
+|   | v |   |          | [*]   Simple CPU accounting cgroup subsystem  | *       |              |
+|   |   |   |          |                                               |         |              |
+|   | v |   |          | [ ]   Enable perf_event per-cpu per-container | blank   | *            |
+|---+---+---+----------+-----------------------------------------------+---------+--------------|
+|   | v |   |          | [*]   Group CPU scheduler  --->               | *       |              |
+|   |   |   |          |                                               |         |              |
+|   |   | v |          | [*]   Group scheduling for SCHED_OTHER        | *       |              |
+|   |   |   |          |                                               |         |              |
+|   |   | v |          | [ ]     CPU bandwidth provisioning            | blank   | *            |
+|---+---+---+----------+-----------------------------------------------+---------+--------------|
+| v |   |   |          | -*- Namespaces support  --->                  | *       |              |
+|   |   |   |          |                                               |         |              |
+|   | v |   |          | [*]   UTS namespace                           | *       |              |
+|   |   |   |          |                                               |         |              |
+|   | v |   |          | [*]   IPC namespace                           | *       |              |
+|   |   |   |          |                                               |         |              |
+|   | v |   |          | [*]   PID Namespaces                          | *       |              |
+|   |   |   |          |                                               |         |              |
+|   | v |   |          | [*]   Network namespace                       | *       |              |
+|   |   |   |          |                                               |         |              |
 
 
-|                                                          | default | modify to |
-|----------------------------------------------------------+---------+-----------|
-| [*] Networking support  --->                             | *       |           |
-|----------------------------------------------------------+---------+-----------|
-| Networking options  --->                                 |         |           |
-|----------------------------------------------------------+---------+-----------|
-| [*] Network packet filtering framework (Netfilter)  ---> | *       |           |
-|----------------------------------------------------------+---------+-----------|
-| Core Netfilter Configuration  --->                       |         |           |
-|----------------------------------------------------------+---------+-----------|
-| *** Xtables matches ***                                  |         |           |
-| <M>   "addrtype" address type match support              | M       |           |
-| <*>   "conntrack" connection tracking match support      | *       |           |
 
-|                                                          | default | modify to |
-|----------------------------------------------------------+---------+-----------|
-| [*] Networking support  --->                             | *       |           |
-|----------------------------------------------------------+---------+-----------|
-| Networking options  --->                                 |         |           |
-|----------------------------------------------------------+---------+-----------|
-| [*] Network packet filtering framework (Netfilter)  ---> | *       |           |
-|----------------------------------------------------------+---------+-----------|
-| IP: Netfilter Configuration  --->                        |         |           |
-|----------------------------------------------------------+---------+-----------|
-|                                                          |         |           |
+level 1   [*] Networking support  --->   
+| 2 | 3 | 4 | 5 | location |                                                          | default | modification |
+|---+---+---+---+----------+----------------------------------------------------------+---------+--------------|
+| v |   |   |   |          | Networking options  --->                                 |         |              |
+|---+---+---+---+----------+----------------------------------------------------------+---------+--------------|
+|   | v |   |   | middle   | [*] Network packet filtering framework (Netfilter)  ---> | *       |              |
+|   |   |   |   |          |                                                          |         |              |
+|   |   | v |   |          | [ ]   Advanced netfilter configuration                   | blank   | *            |
+|   |   |   |   |          |                                                          |         |              |
+|   |   | v |   |          | [*]     Bridged IP/ARP packets filtering                 | M       |              |
+|   |   |   |   |          | active  802.1d Ethernet Bridging first                   |         |              |
+|   |   |   |   |          |                                                          |         |              |
+|---+---+---+---+----------+----------------------------------------------------------+---------+--------------|
+|   |   | v |   |          | Core Netfilter Configuration  --->                       |         |              |
+|   |   |   |   |          |                                                          |         |              |
+|   |   |   | v | buttom   | <M>   "addrtype" address type match support              | M       |              |
+|   |   |   |   |          |                                                          |         |              |
+|   |   |   | v | buttom   | <*>   "conntrack" connection tracking                    | *       |              |
+|---+---+---+---+----------+----------------------------------------------------------+---------+--------------|
+|   |   | v |   |          | IP: Netfilter Configuration  --->                        |         |              |
+|   |   |   |   |          |                                                          |         |              |
+|   |   |   | v |          | <*> IPv4 connection tracking support                     | *       |              |
+|   |   |   |   |          |                                                          |         |              |
+|   |   |   | v |          | <*> IP tables support                                    | *       |              |
+|   |   |   |   |          |                                                          |         |              |
+|   |   |   | v |          | <*>   Packet filtering                                   | *       |              |
+|   |   |   |   |          |                                                          |         |              |
+|   |   |   | v |          | {M} IPv4 NAT                                             | M       |              |
+|   |   |   |   |          |                                                          |         |              |
+|   |   |   | v |          | <M>     MASQUERADE target support                        | M       |              |
+|---+---+---+---+----------+----------------------------------------------------------+---------+--------------|
+|   | v |   |   | buttom   | < > 802.1d Ethernet Bridging                             | blank   | *            |
+|   |   |   |   |          |                                                          |         |              |
+
+
+level 1    Device Drivers  --->    
+| 2 | 3 | 4 | 5 | location |                                                    | default | modification |
+|---+---+---+---+----------+----------------------------------------------------+---------+--------------|
+| v |   |   |   | top      | [*] Multiple devices driver support (RAID and LVM) | *       |              |
+|   |   |   |   |          |                                                    |         |              |
+|   | v |   |   |          | <*>   Device mapper support                        | *       |              |
+|   |   |   |   |          |                                                    |         |              |
+|   | v |   |   |          | < >     Thin provisioning target                   | blank   | *            |
+|---+---+---+---+----------+----------------------------------------------------+---------+--------------|
+| v |   |   |   |          | [*] Network device support  --->                   | *       |              |
+|   |   |   |   |          |                                                    |         |              |
+|   | v |   |   |          | [*]   Network core driver support                  | *       |              |
+|   |   |   |   |          |                                                    |         |              |
+|   | v |   |   |          | < >     Virtual ethernet pair device               | blank   | *            |
+|---+---+---+---+----------+----------------------------------------------------+---------+--------------|
+| v |   |   |   |          | Character devices  --->                            |         |              |
+|   |   |   |   |          |                                                    |         |              |
+|   | v |   |   |          | -*- Enable TTY                                     | *       |              |
+|   |   |   |   |          |                                                    |         |              |
+|   | v |   |   |          | -*-   Unix98 PTY support                           | *       |              |
+|   |   |   |   |          |                                                    |         |              |
+|   | v |   |   |          | [ ]     Support multiple instances of devpts       | blank   | *            |
+|   |   |   |   |          |                                                    |         |              |
+
+
+
+error while emerge docker
+
+CONFIG_MACVLAN:     is not set when it should be.
+
+CONFIG_MEMCG_SWAP: is required if you wish to limit swap usage of containers
+
+CONFIG_MEMCG_SWAP_ENABLED:  is not set when it should be.
+
+CONFIG_BLK_CGROUP:  is not set when it should be.
+
+CONFIG_EXT4_FS_POSIX_ACL:   is not set when it should be.
+
+CONFIG_EXT4_FS_SECURITY:    is not set when it should be.
+
+
+
+
+
+** emerge
+
+emerge --ask --verbose app-emulation/docker
+
+root # /etc/init.d/docker start
+root # rc-update add docker default 
+
