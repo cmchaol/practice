@@ -1,3 +1,13 @@
+* docker tutorial
+
+https://docs.docker.com/linux/step_one/
+
+$ docker run hello-world
+
+$ docker run -it ubuntu bash
+
+
+
 * qemu inside win7 and docker inside rancheros inside qemu
 
 ** step
