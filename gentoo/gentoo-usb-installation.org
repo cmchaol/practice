@@ -27,38 +27,47 @@ make && make modules_install
 
 level 1 General setup 
 
-| 2 | 3 | 4 | location |                                               | default | modification |
-|---+---+---+----------+-----------------------------------------------+---------+--------------|
-| v |   |   | top      | [*] POSIX Message Queues                      | *       |              |
-|---+---+---+----------+-----------------------------------------------+---------+--------------|
-| v |   |   | middle   | [*] Control Group support  --->               | *       |              |
-|   |   |   |          |                                               |         |              |
-|   | v |   |          | [*]   Freezer cgroup subsystem                | *       |              |
-|   |   |   |          |                                               |         |              |
-|   | v |   |          | [ ]   Device controller for cgroups           | blank   | *            |
-|   |   |   |          |                                               |         |              |
-|   | v |   |          | [*]   Cpuset support                          | *       |              |
-|   |   |   |          |                                               |         |              |
-|   | v |   |          | [*]   Simple CPU accounting cgroup subsystem  | *       |              |
-|   |   |   |          |                                               |         |              |
-|   | v |   |          | [ ]   Enable perf_event per-cpu per-container | blank   | *            |
-|---+---+---+----------+-----------------------------------------------+---------+--------------|
-|   | v |   |          | [*]   Group CPU scheduler  --->               | *       |              |
-|   |   |   |          |                                               |         |              |
-|   |   | v |          | [*]   Group scheduling for SCHED_OTHER        | *       |              |
-|   |   |   |          |                                               |         |              |
-|   |   | v |          | [ ]     CPU bandwidth provisioning            | blank   | *            |
-|---+---+---+----------+-----------------------------------------------+---------+--------------|
-| v |   |   |          | -*- Namespaces support  --->                  | *       |              |
-|   |   |   |          |                                               |         |              |
-|   | v |   |          | [*]   UTS namespace                           | *       |              |
-|   |   |   |          |                                               |         |              |
-|   | v |   |          | [*]   IPC namespace                           | *       |              |
-|   |   |   |          |                                               |         |              |
-|   | v |   |          | [*]   PID Namespaces                          | *       |              |
-|   |   |   |          |                                               |         |              |
-|   | v |   |          | [*]   Network namespace                       | *       |              |
-|   |   |   |          |                                               |         |              |
+| 2 | 3 | 4 | location |                                                                              | default | modification |
+|---+---+---+----------+------------------------------------------------------------------------------+---------+--------------|
+| v |   |   | top      | [*] POSIX Message Queues                                                     | *       |              |
+|---+---+---+----------+------------------------------------------------------------------------------+---------+--------------|
+| v |   |   | middle   | [*] Control Group support  --->                                              | *       |              |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [*]   Freezer cgroup subsystem                                               | *       |              |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [ ]   Device controller for cgroups                                          | blank   | *            |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [*]   Cpuset support                                                         | *       |              |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [*]   Simple CPU accounting cgroup subsystem                                 | *       |              |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [ ]   Enable perf_event per-cpu per-container                                | blank   | *            |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [ ]   Memory Resource Controller for Control Groups                          | blank   | *            |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [ ]     Memory Resource Controller Swap Extension (NEW)                      | blank   | *            |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [*]       Memory Resource Controller Swap Extension enabled by default (NEW) | blank   | *            |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [ ]   Block IO controller                                                    | blank   | *            |
+|   |   |   |          |                                                                              |         |              |
+|---+---+---+----------+------------------------------------------------------------------------------+---------+--------------|
+|   | v |   |          | [*]   Group CPU scheduler  --->                                              | *       |              |
+|   |   |   |          |                                                                              |         |              |
+|   |   | v |          | [*]   Group scheduling for SCHED_OTHER                                       | *       |              |
+|   |   |   |          |                                                                              |         |              |
+|   |   | v |          | [ ]     CPU bandwidth provisioning                                           | blank   | *            |
+|---+---+---+----------+------------------------------------------------------------------------------+---------+--------------|
+| v |   |   |          | -*- Namespaces support  --->                                                 | *       |              |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [*]   UTS namespace                                                          | *       |              |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [*]   IPC namespace                                                          | *       |              |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [*]   PID Namespaces                                                         | *       |              |
+|   |   |   |          |                                                                              |         |              |
+|   | v |   |          | [*]   Network namespace                                                      | *       |              |
+|   |   |   |          |                                                                              |         |              |
 
 
 
@@ -110,6 +119,8 @@ level 1    Device Drivers  --->
 |   |   |   |   |          |                                                    |         |              |
 |   | v |   |   |          | [*]   Network core driver support                  | *       |              |
 |   |   |   |   |          |                                                    |         |              |
+|   | v |   |   |          | < >     MAC-VLAN support                           | blank   | *            |
+|   |   |   |   |          |                                                    |         |              |
 |   | v |   |   |          | < >     Virtual ethernet pair device               | blank   | *            |
 |---+---+---+---+----------+----------------------------------------------------+---------+--------------|
 | v |   |   |   |          | Character devices  --->                            |         |              |
@@ -122,20 +133,30 @@ level 1    Device Drivers  --->
 |   |   |   |   |          |                                                    |         |              |
 
 
+level 1 File systems
+| 2 | 3 | 4 | 5 | location |                                       | default | modification |
+|---+---+---+---+----------+---------------------------------------+---------+--------------|
+| v |   |   |   |          | [*]   Ext4 POSIX Access Control Lists | blank   | *            |
+|   |   |   |   |          |                                       |         |              |
+| v |   |   |   |          | [ ]   Ext4 Security Labels            | blank   | *            |
 
-error while emerge docker
 
-CONFIG_MACVLAN:     is not set when it should be.
 
-CONFIG_MEMCG_SWAP: is required if you wish to limit swap usage of containers
 
-CONFIG_MEMCG_SWAP_ENABLED:  is not set when it should be.
+error while emerging docker
 
-CONFIG_BLK_CGROUP:  is not set when it should be.
+CONFIG_MACVLAN:     is not set when it should be. [2016-03-03 Thu 14:58]
 
-CONFIG_EXT4_FS_POSIX_ACL:   is not set when it should be.
+CONFIG_MEMCG_SWAP: is required if you wish to limit swap usage of containers [2016-03-03 Thu 15:01]
 
-CONFIG_EXT4_FS_SECURITY:    is not set when it should be.
+CONFIG_MEMCG_SWAP_ENABLED:  is not set when it should be. [2016-03-03 Thu 15:02]
+
+CONFIG_BLK_CGROUP:  is not set when it should be. [2016-03-03 Thu 15:04]
+
+CONFIG_EXT4_FS_POSIX_ACL:   is not set when it should be. [2016-03-03 Thu 15:05]
+
+CONFIG_EXT4_FS_SECURITY:    is not set when it should be. [2016-03-03 Thu 15:06]
+
 
 
 
