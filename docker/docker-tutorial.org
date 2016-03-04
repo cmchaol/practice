@@ -68,3 +68,23 @@ http://docs.rancher.com/os/quick-start-guide/
 
 * docker inside gentoo
 
+* Get Started with Docker for Windows
+
+https://docs.docker.com/windows/
+
+Docker CLI client for running Docker Engine to create images and containers
+Docker Machine so you can run Docker Engine commands from Windows terminals
+Docker Compose for running the docker-compose command
+Kitematic, the Docker GUI
+the Docker QuickStart shell preconfigured for a Docker command-line environment
+
+Docker Engine provides the core Docker technology that enables images and containers.
+
+| docker vocabulary | function                                          |
+|-------------------+---------------------------------------------------|
+| engine            | enables images and containers.                    |
+|                   |                                                   |
+| client            |                                                   |
+|                   |                                                   |
+| machine           | run Docker Engine commands from Windows terminals |
+|                   |                                                   |

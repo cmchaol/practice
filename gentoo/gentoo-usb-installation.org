@@ -162,10 +162,13 @@ CONFIG_EXT4_FS_SECURITY:    is not set when it should be. [2016-03-03 Thu 15:06]
 
 
 
-** emerge
+** 30 emerge
 
 emerge --ask --verbose app-emulation/docker
 
 root # /etc/init.d/docker start
 root # rc-update add docker default 
+
+
+
 
