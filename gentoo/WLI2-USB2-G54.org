@@ -13,6 +13,7 @@
 |      |                                           |
 |      | find, download, rename and place firmware |
 |   40 | unload driver      modprobe -r p54usb     |
+|      |                                           |
 |   50 | load the driver                           |
 |      |                                           |
 
@@ -78,6 +79,14 @@ level 1 Networking support
 |   | v |   |          | <*>   cfg80211 - wireless configuration API           | *       |              |
 |   |   |   |          |                                                       |         |              |
 |   | v |   |          | <*>   Generic IEEE 802.11 Networking Stack (mac80211) | *       |              |
+
+
+
+* 40
+
+* 50
+
+modprobe  p54usb
 
 * wpa_supplicant
 
