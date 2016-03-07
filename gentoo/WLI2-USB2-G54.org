@@ -3,39 +3,74 @@
 * steps
 
 
-| step | aim                                       |
-|------+-------------------------------------------|
-|      |                                           |
-|   20 | wifi card id and firmware                 |
-|      |                                           |
-|      |                                           |
-|   30 | generate kernel                           |
-|      |                                           |
-|      | find, download, rename and place firmware |
-|   40 | unload driver      modprobe -r p54usb     |
-|      |                                           |
-|   50 | load the driver                           |
-|      |                                           |
+| step | aim                       |                           |
+|------+---------------------------+---------------------------|
+|   20 | wifi card id and firmware |                           |
+|      |                           |                           |
+|   22 |                           | lsusb                     |
+|      |                           |                           |
+|   24 |                           | id                        |
+|      |                           |                           |
+|   26 |                           | firmware                  |
+|      |                           |                           |
+|------+---------------------------+---------------------------|
+|   30 | kernel                    |                           |
+|      |                           |                           |
+|   32 |                           | adjust adjust             |
+|      |                           |                           |
+|   34 |                           | driver load               |
+|      |                           |                           |
+|   36 |                           | driver unload             |
+|      |                           |                           |
+|------+---------------------------+---------------------------|
+|   40 | wpa_supplicant            |                           |
+|      |                           |                           |
+|   42 |                           | installation              |
+|      |                           |                           |
+|   44 |                           | configuration, default    |
+|      |                           |                           |
+|   46 |                           | configuration, example    |
+|      |                           |                           |
+|------+---------------------------+---------------------------|
+|   50 | wifi connection, example  |                           |
+|      |                           |                           |
+|   52 |                           | identify wifi device name |
+|      |                           |                           |
+|   54 |                           | authentication to ssid    |
+|      |                           |                           |
+|   56 |                           | get ip, dhcpcd            |
+|      |                           |                           |
+|   58 |                           | adjust route, test        |
 
 
-
-cp 2.13.1.0.lm86.arm /lib/firmware/isl3886usb
+https://wiki.gentoo.org/wiki/Wifi
 
 
 * 20 wifi card id and firmware
 
-https://wireless.wiki.kernel.org/en/users/drivers/p54/devices
+** 22 lsusb
 
+emerge --ask sys-apps/usbutils
+
+lsusb
+
+Bus 001 Device 007: ID 0411:0050 BUFFALO INC. (formerly MelCo., Inc.) WLI2-USB2-G54 Wireless LAN Adapter
+
+
+** 24 id
+
+https://wireless.wiki.kernel.org/en/users/drivers/p54/devices
 
 | vender  | product       | chip    | usb vender | usb product |
 |---------+---------------+---------+------------+-------------|
 | Buffalo | WLI2-USB2-G54 | ISL3886 |     0x0411 |      0x0050 | 
 
-
-
 | card type                              | required filename |
 |----------------------------------------+-------------------|
 | USB 1st generation (ISL3886 + net2280) | isl3886usb        |
+
+
+** 26 firmware
 
 download
 
@@ -44,11 +79,17 @@ https://wireless.wiki.kernel.org/en/users/Drivers/p54
 http://daemonizer.de/prism54/prism54-fw/fw-usb/2.13.1.0.lm86.arm
 
 
+cp 2.13.1.0.lm86.arm /lib/firmware/isl3886usb
 
-* 30 kernel
+
+* 30 adjust kernel
+
 
 uname -a
 Linux 4.3.3-hardened-r4 #8 SMP Thu Mar 3 15:37:05 CST 2016 x86_64 Intel(R) Core(TM)2 Duo CPU E8500 @ 3.16GHz GenuineIntel GNU/Linux
+
+** 32 adjust kernel
+
 
 cd /usr/src/linux
 
@@ -82,14 +123,154 @@ level 1 Networking support
 
 
 
-* 40
+** 34 driver load
 
-* 50
+modprobe p54usb
 
-modprobe  p54usb
+lsmod
 
-* wpa_supplicant
+
+** 36 driver unload
+
+modprobe -r p54usb
+
+lsmod
+
+
+
+
+
+* 40 wpa_supplicant
+
+** 42 installation
 
 https://wiki.gentoo.org/wiki/Wpa_supplicant
 
 emerge --ask wpa_supplicant
+
+
+** 44 configuration, default
+
+https://wiki.gentoo.org/wiki/Wpa_supplicant
+
+/etc/wpa_supplicant/wpa_supplicant.conf
+
+# Allow users in the 'wheel' group to control wpa_supplicant
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=wheel
+ 
+# Make this file writable for wpa_gui
+update_config=1
+
+
+man wpa_supplicant
+
+QUICK START
+       First, make a configuration file, e.g.  /etc/wpa_supplicant.conf, that describes the networks you are interested in.  See wpa_supplicant.conf(5) for details.
+
+       Once the configuration is ready, you can test whether the configuration works by running wpa_supplicant with following command to start it on foreground with debugging enabled:
+
+              wpa_supplicant -iwlan0 -c/etc/wpa_supplicant.conf -d
+
+       Assuming everything goes fine, you can start using following command to start wpa_supplicant on background without debugging:
+
+              wpa_supplicant -iwlan0 -c/etc/wpa_supplicant.conf -B
+
+       Please  note  that  if you included more than one driver interface in the build time configuration (.config), you may need to specify which interface to use by including -D<driver name> option on the
+       command line.
+
+
+man 5 wpa_supplicant.conf
+
+ See  the  example  configuration  file, probably in /usr/share/doc/wpa_supplicant/, for detailed information about the configuration format and supported fields.
+
+
+ls -l /usr/share/doc/w*
+
+/usr/share/doc/wpa_supplicant-2.5-r1:
+total 92
+-rw-r--r-- 1 root root  6601 Mar  7 10:22 build-config.bz2
+-rw-r--r-- 1 root root 31517 Mar  7 10:22 ChangeLog.bz2
+-rw-r--r-- 1 root root  3274 Mar  7 10:22 eap_testing.txt.bz2
+-rw-r--r-- 1 root root 12393 Mar  7 10:22 README.bz2
+-rw-r--r-- 1 root root  5548 Mar  7 10:22 README-WPS.bz2
+-rw-r--r-- 1 root root  2238 Mar  7 10:22 todo.txt.bz2
+-rw-r--r-- 1 root root 18289 Mar  7 10:22 wpa_supplicant.conf.bz2
+
+
+** 46 configuration, example
+
+/etc/wpa_supplicant/wpa_supplicant_example.conf 
+
+
+# Allow users in the 'wheel' group to control wpa_supplicant
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=wheel
+ 
+# Make this file writable for wpa_gui
+update_config=1
+
+
+
+network={
+    ssid="ssid_example"
+    scan_ssid=1
+    key_mgmt=WPA-EAP
+    eap=PEAP
+    identity="identity_example"
+    password="password_example"
+    phase1="peaplabel=0"
+    phase2="auth=MSCHAPV2"
+}
+
+
+
+
+
+
+* 50 connection
+
+as root
+
+** 52 identify wifi device name
+
+2 methods
+
+
+ifconfig -a
+
+wlp0s29f7u7: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+
+
+ip addr
+
+5: wlp0s29f7u7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+
+
+** 54 authentication to ssid
+
+as root
+
+wpa_supplicant -i wlp0s29f7u7 -c /etc/wpa_supplicant/wpa_supplicant_example.conf &
+
+
+** 56 get ip, dhcpcd 
+
+as root
+
+dhcpcd wlp0s29f7u7
+
+
+** 58 adjust route, test 
+
+route -n
+
+route add -net 10.0.0.0 netmask 255.0.0.0 gw your_own_gw dev your_own_net_dev
+
+route del -net 0.0.0.0 netmask 0.0.0.0 gw your_own_gw dev your_own_net_dev
+
+route -n
+
+ping -c 3 www.ntu.edu.tw 
+
+
+
+
