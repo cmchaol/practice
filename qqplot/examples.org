@@ -23,6 +23,72 @@ http://onlinestatbook.com/2/advanced_graphs/q-q_plots.html
 內文應包含：Purpose、Materials & Methods、Results、Conclusion共四個段落。
 字數限制：Purpose、Materials & Methods、Results、Conclusion四個段落總字數上限為350字，超過者無法成功投遞。(在論文內容左側有字數之提醒)
 
+
+** 論文投稿 2016 1
+
+*** Purpose
+
+
+*** Materials & Methods
+
+
+*** Results
+
+
+
+*** Conclusion
+
+
+
+
+** 論文投稿 2016 2
+
+Fine-Needle Aspiration of a breast mass is one of the critical step for diagnosis of breast cancer. The diagnosis depends solely upon a labor-intensive process that can be affected by human factors such as fatigue, reader variation and bias. Pathologists must visually examine and grade the specimens through high-powered microscopes.
+
+Performance of Predictive Models for Breast Cancer Diagnosis from digital images of Fine-Needle Aspiration.
+
+https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/
+
+https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)
+
+
+
+*** Purpose
+
+
+
+This study evaluate the performance of 6 predictive models for fine-needle aspiration (FNA) diagnosis of breast cancer.
+
+
+*** Materials & Methods
+
+
+*** Results
+
+
+
+*** Conclusion
+
+
+
+
+** 論文投稿 2016 1
+
+*** Purpose
+
+
+*** Materials & Methods
+
+
+*** Results
+
+
+
+*** Conclusion
+
+
+
+
 * 癌症登記
 
 http://tcr.cph.ntu.edu.tw/main.php?Page=A5
