@@ -172,3 +172,24 @@ root # rc-update add docker default
 
 
 
+
+* net card
+
+|        |       |   |
+| cp6320 | r8169 |   |
+
+
+** r8169
+
+level 1    Device Drivers  --->    
+| 2 | 3 | 4 | 5 | location |                                               | default | modification | motherboard |
+|---+---+---+---+----------+-----------------------------------------------+---------+--------------+-------------|
+| v |   |   |   |          | [*] Network device support  --->              | *       |              |             |
+|   |   |   |   |          |                                               |         |              |             |
+|   | v |   |   |          | Ethernet driver support                       |         |              |             |
+|   |   |   |   |          |                                               |         |              |             |
+|   |   | v |   | buttom   | [*]   Realtek devices                         | blank   | *            | cp6320      |
+|   |   |   |   |          |                                               |         |              |             |
+|   |   | v |   |          | <M>     Realtek 8169 gigabit ethernet support | blank   | M            | cp6320      |
+|   |   |   |   |          |                                               |         |              |             |
+
