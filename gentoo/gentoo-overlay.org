@@ -1,0 +1,24 @@
+* Overlay
+
+
+https://wiki.gentoo.org/wiki/Overlay
+
+** the main package repository 
+
+| synonym                      |   |
+|------------------------------+---|
+| the main package respository |   |
+| the portage tree             |   |
+|                              |   |
+
+
+/etc/portage/repos.conf/ 
+
+With it, calling emerge --sync will automatically update the repositories as well.
+
+
+
+** Project:Overlays/User Guide
+
+https://wiki.gentoo.org/wiki/Project:Overlays/User_Guide
+
