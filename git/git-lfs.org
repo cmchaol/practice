@@ -1,0 +1,28 @@
+* Git Large File Storage (LFS) - official
+
+https://git-lfs.github.com/
+
+
+* git lfs gentoo overlay
+
+https://gpo.zugaina.org/dev-vcs/git-lfs
+
+* Storing large binary files in git repositories
+
+http://blog.deveo.com/storing-large-binary-files-in-git-repositories/
+
+| git-annex    |
+|              |
+| git-lfs      |
+|              |
+| git-bigfiles |
+|              |
+| git-fat      |
+|              |
+| git-media    |
+|              |
+| git-bigstore |
+|              |
+| git-sym      |
+|              |
+|              |

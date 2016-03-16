@@ -1,0 +1,15 @@
+* official
+
+
+https://megatools.megous.com/
+
+* gentoo net-misc/megatools 
+
+https://packages.gentoo.org/packages/net-misc/megatools
+
+
+emerge --ask net-misc/megatools --autounmask-write 
+
+dispatch-conf
+
+emerge net-misc/megatools 
