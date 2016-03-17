@@ -1,0 +1,69 @@
+
+* installation
+
+
+
+* individual package
+
+** imagemagick
+
+echo "media-gfx/imagemagick jpeg tiff" > /etc/portage/package.use/imagemagick 
+
+emerge -pv media-gfx/imagemagick
+
+emerge media-gfx/imagemagick
+
+** gthumb
+
+
+echo "media-gfx/gthumb jpeg tiff" > /etc/portage/package.use/gthumb
+
+emerge -pv media-gfx/gthumb
+
+emerge media-gfx/gthumb --autounmask-write
+
+dispatch-conf
+
+echo " dev-libs/libxml2 -icu" > /etc/portage/package.use/libxml2
+
+emerge -pv dev-libs/libxml2
+
+emerge dev-libs/libxml2
+
+** parallel
+
+emerge  sys-process/parallel
+
+*** my modification
+
+ls -1 *.tif | parallel convert '{}' '{.}.jpg'
+
+ls -1 *.tif | parallel convert '{}' '{.}.jpg'
+
+ls -1 *.tif | parallel convert '{}' -rotate -90 '{.}-90.jpg'
+
+*** examples
+
+http://superuser.com/questions/71028/batch-converting-png-to-jpg-in-linux
+
+The simplest solution is like most already posted. A simple bash for loop.
+
+for i in *.png ; do convert "$i" "${i%.*}.jpg" ; done
+For some reason I tend to avoid loops in bash so here is a more unixy xargs approach, using bash for the name-mangling.
+
+ls -1 *.png | xargs -n 1 bash -c 'convert "$0" "${0%.*}.jpg"'
+The one I use. It uses GNU Parallel to run multiple jobs at once, giving you a performance boost. It is installed by default on many systems and is almost definitely in your repo (it is a good program to have around).
+
+ls -1 *.png | parallel convert '{}' '{.}.jpg'
+The number of jobs defaults to the number of processes you have. I found better CPU usage using 3 jobs on my dual-core system.
+
+ls -1 *.png | parallel -j 3 convert '{}' '{.}.jpg'
+And if you want some stats (an ETA, jobs completed, average time per job...)
+
+ls -1 *.png | parallel --eta convert '{}' '{.}.jpg'
+There is also an alternative syntax if you are using GNU Parallel.
+
+parallel convert '{}' '{.}.jpg' ::: *.png
+And a similar syntax for some other versions (including debian).
+
+parallel convert '{}' '{.}.jpg' -- *.png

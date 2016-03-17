@@ -15,5 +15,20 @@ less than 2 minutes.
 [2016-03-07 Mon 17:10] [2016-03-07 Mon 17:13]
 
 
+* 
+
+media-gfx/imagemagick
+
+* upload limitation
+
+https://support.google.com/drive/answer/176692?hl=zh-Hant
+
+檔案大小限制
+圖片 (.jpg、.gif、.png) 和 PDF 檔案 (.pdf) 的檔案大小上限為 2 MB。在 PDF 檔案中搜尋要擷取的文字時，系統只會針對檔案的前 10 頁進行搜尋。
 
 
+| filename extension |
+| jpg                |
+| gif                |
+| png                |
+|                    |
