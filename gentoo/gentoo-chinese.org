@@ -1,0 +1,30 @@
+* vfat chinese filename
+
+
+** DONE mount vfat utf8
+
+中文文件名亂碼產生的原因有二：一是掛載NTFS或FAT文件系統時，編碼指定不正確導致亂碼（或問號）；二是在文件系統中文件名存儲的編碼不正確，導致亂碼。二者分別討論：
+
+目錄
+[隱藏]
+1 NTFS/FAT上的文件名亂碼
+2 其它情況
+2.1 convmv簡介
+2.2 實例
+2.3 處理zip文件亂碼
+NTFS/FAT上的文件名亂碼
+如果正在用的Linux系統locale是UTF-8，只需在mount FAT文件系統時加上utf8參數，在mount NTFS文件系統時加上nls=utf8即可，如下例子fstab：
+
+LABEL=WinFAT    /media/WIND vfat  defaults,utf8,umask=111,dmask=000 0 0
+/dev/sda6 /media/WinNTFS    ntfs  defaults,nls=utf8,umask=0111,dmask=000  0 0
+
+** failed  iocharset=cp936
+
+掛載隨身碟的時候很好用...
+指令範例
+mount   -t   vfat   -o   iocharset=cp936   /dev/hdaxxx   /mnt/xxxx
+參數說明
+-t msdos 是 FAT16
+-t vfat 是 FAT32
+-o   iocharset=cp936 中文長檔案名稱 
+http://earthcat99.pixnet.net/blog/post/36811189-linux-%E6%8E%9B%E8%BC%89-fat32%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1%E7%9A%84%E6%96%B9%E5%BC%8F
