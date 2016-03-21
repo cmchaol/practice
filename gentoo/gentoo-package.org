@@ -13,6 +13,7 @@ emerge -pv media-gfx/imagemagick
 
 emerge media-gfx/imagemagick
 
+
 ** gthumb
 
 
@@ -29,6 +30,7 @@ echo " dev-libs/libxml2 -icu" > /etc/portage/package.use/libxml2
 emerge -pv dev-libs/libxml2
 
 emerge dev-libs/libxml2
+
 
 ** parallel
 
@@ -67,3 +69,16 @@ parallel convert '{}' '{.}.jpg' ::: *.png
 And a similar syntax for some other versions (including debian).
 
 parallel convert '{}' '{.}.jpg' -- *.png
+
+** app-text/tesseract
+
+echo "app-text/tesseract jpeg png tiff" > /etc/portage/package.use/tesseract 
+
+emerge -pv app-text/tesseract
+
+emerge app-text/tesseract --autounmask-write
+
+dispatch-conf
+
+emerge app-text/tesseract 
+

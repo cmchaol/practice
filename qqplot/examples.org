@@ -1,3 +1,24 @@
+* step
+
+* git lfs
+
+dev-vcs/git-lfs
+
+https://gpo.zugaina.org/dev-vcs/git-lfs
+
+** Overlay
+
+https://wiki.gentoo.org/wiki/Overlay
+
+| 2 approaches | new                     | deprecated             |
+|--------------+-------------------------+------------------------|
+|              | /etc/portage/repos.conf | /etc/portage/make.conf |
+|              |                         |                        |
+
+
+
+
+
 * reference
 
 ** David Scott
@@ -309,6 +330,7 @@ df.expanded
 4    c    f
 5    c    f
 6    c    f
+
 
 * Working with categorical data with R and the vcd and vcdExtra packages
 
