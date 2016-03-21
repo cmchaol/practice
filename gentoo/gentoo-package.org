@@ -82,3 +82,10 @@ dispatch-conf
 
 emerge app-text/tesseract 
 
+*** example
+
+TESSERACT OCR 中文識別嘗試
+
+http://miphol.com/muse/2013/05/tesseract-ocr.html
+
+
