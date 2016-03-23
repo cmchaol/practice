@@ -70,6 +70,7 @@ And a similar syntax for some other versions (including debian).
 
 parallel convert '{}' '{.}.jpg' -- *.png
 
+
 ** app-text/tesseract
 
 echo "app-text/tesseract jpeg png tiff" > /etc/portage/package.use/tesseract 
