@@ -90,3 +90,7 @@ TESSERACT OCR 中文識別嘗試
 http://miphol.com/muse/2013/05/tesseract-ocr.html
 
 
+
+** sys-boot/mbr
+
+emerge sys-boot/mbr
