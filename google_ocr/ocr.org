@@ -1,0 +1,106 @@
+* app-text/tesseract
+
+
+emerge -pv app-text/tesseract
+
+Calculating dependencies... done!
+[ebuild  N     ] media-libs/leptonica-1.71-r1::gentoo  USE="zlib -gif -jpeg -jpeg2k -png -static-libs {-test} -tiff -utils -webp" 9,973 KiB
+[ebuild  N     ] app-text/tesseract-3.04.00-r2::gentoo  USE="scrollview -doc -examples -jpeg -opencl -osd -png -static-libs -tiff -training -webp" LINGUAS="-ar -bg -ca -chr -cs -da -de -el -es -fi -fr -he -hi -hu -id -it -jp -ko -lt -lv -nl -no -pl -pt -ro -ru -sk -sl -sr -sv -th -tl -tr -uk -vi -zh_CN -zh_TW" 23,576 KiB
+
+Total: 2 packages (2 new), Size of downloads: 33,549 KiB
+
+https://github.com/tesseract-ocr/tesseract
+
+** langdata
+
+
+https://github.com/tesseract-ocr/langdata
+
+tesseract --list-langs
+
+
+cp chi_tra.traineddata /usr/share/tessdata/
+
+tesseract  img-316174222_r270.jpg  -l chi_tra
+
+tesseract  img-316174222_r270.jpg test -l chi_tra
+
+
+tesseract  img-316174222_r270.jpg stdout  -l chi_tra
+
+
+
+
+
+* app-text/yagf
+
+emerge -pv app-text/yagf
+
+emerge app-text/yagf
+
+emerge app-text/yagf --autounmask-write 
+
+dispatch-conf
+
+emerge app-text/yagf
+
+
+** Need OCR? How about YAGF?
+
+http://www.ocsmag.com/2015/05/18/need-ocr-how-about-yagf/
+
+** https://wiki.archlinux.org/index.php/YAGF
+
+
+* steps
+
+| step | aim               |
+|------+-------------------|
+|      | install tesseract |
+|      |                   |
+|      | install yagf      |
+|      |                   |
+|      |                   |
+
+* batch rotation
+
+| ro | ba |
+|----+----|
+|    |    |
+|    |    |
+|    |    |
+
+
+| rotation | ro |
+| batch    | ba |
+|          |    |
+http://superuser.com/questions/71028/batch-converting-png-to-jpg-in-linux
+
+
+The simplest solution is like most already posted. A simple bash for loop.
+
+for i in *.png ; do convert "$i" "${i%.*}.jpg" ; done
+For some reason I tend to avoid loops in bash so here is a more unixy xargs approach, using bash for the name-mangling.
+
+ls -1 *.png | xargs -n 1 bash -c 'convert "$0" "${0%.*}.jpg"'
+The one I use. It uses GNU Parallel to run multiple jobs at once, giving you a performance boost. It is installed by default on many systems and is almost definitely in your repo (it is a good program to have around).
+
+ls -1 *.png | parallel convert '{}' '{.}.jpg'
+The number of jobs defaults to the number of processes you have. I found better CPU usage using 3 jobs on my dual-core system.
+
+ls -1 *.png | parallel -j 3 convert '{}' '{.}.jpg'
+And if you want some stats (an ETA, jobs completed, average time per job...)
+
+ls -1 *.png | parallel --eta convert '{}' '{.}.jpg'
+There is also an alternative syntax if you are using GNU Parallel.
+
+parallel convert '{}' '{.}.jpg' ::: *.png
+And a similar syntax for some other versions (including debian).
+
+parallel convert '{}' '{.}.jpg' -- *.png
+
+convert img-316174222.tif -rotate 90 img-316174222_r90.tif
+
+convert img-316174222.tif -rotate 270 img-316174222_r270.tif
+
+convert img-316174222.tif -rotate 270 img-316174222_r270.jpg
