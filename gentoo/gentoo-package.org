@@ -1,5 +1,5 @@
 
-* installation
+
 
 
   
@@ -95,13 +95,225 @@ http://miphol.com/muse/2013/05/tesseract-ocr.html
 
 emerge sys-boot/mbr
 
-* hardware
 
-** b1 asus
+
+
+
+** tlsdate
+
+https://github.com/ioerror/tlsdate/
+
+
+emerge --ask net-misc/tlsdate
+
+
+/etc/init.d/tlsdate start
+
+rc-update add tlsdate default
+
+tlsdate -V -n -H www.google.com.tw socks5://127.0.0.1:1080
+
+
+*** openntpd gentoo
+
+https://wiki.gentoo.org/wiki/OpenNTPD
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge --ask net-misc/openntpd
+
+/etc/ntpd.conf
+
+/etc/init.d/ntpd start
+
+/etc/init.d/ntpd stop
+
+/etc/init.d/ntpd restart
+
+rc-update add ntpd default
+
+rc-update delete ntpd default
+
+
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge --ask net-misc/openntpd
+
+4.0_pre20080406 missing ntpctl
+
+
+
+equery y openntpd
+Keywords for net-misc/openntpd:
+                      |                               | u   |  
+                      | a a   a         n   p     s   | n   |  
+                      | l m   r h i m m i   p s   p   | u s | r
+                      | p d a m p a 6 i o p c 3   a x | s l | e
+                      | h 6 r 6 p 6 8 p s p 6 9 s r 8 | e o | p
+                      | a 4 m 4 a 4 k s 2 c 4 0 h c 6 | d t | o
+----------------------+-------------------------------+-----+-------
+[I]4.0_pre20080406    | + + + + + + o ~ o + + + + + + | o 0 | gentoo
+            5.7_p4-r1 | ~ ~ ~ ~ ~ ~ o ~ o ~ ~ ~ ~ ~ ~ | o   | gentoo
+
+
+emerge --ask --autounmask-write =net-misc/openntpd-5.7_p4-r1
+
+dispatch-conf
+
+
+emerge --ask  =net-misc/openntpd-5.7_p4-r1
+
+
+ntpd -s
+
+
+ntpctl -sa
+
+*** software hardware clock
+
+https://wiki.gentoo.org/wiki/System_time
+
+| clock | software  | hardware            |                 |
+|-------+-----------+---------------------+-----------------|
+|       | unix time |                     |                 |
+|       |           | real-time clock RTC |                 |
+|       |           | mainboard           |                 |
+|       |           |                     |                 |
+|-------+-----------+---------------------+-----------------|
+|       |           | 2 standards         |                 |
+|-------+-----------+---------------------+-----------------|
+|       |           | localtime           |                 |
+|       |           |                     | time zone + DST |
+|       |           |                     | Windows         |
+|       |           |                     |                 |
+|-------+-----------+---------------------+-----------------|
+|       |           | UTC time            |                 |
+|       |           |                     |                 |
+
+
+cat /etc/timezone
+Asia/Taipei
+
+emerge --config timezone-data
+
+
+
+https://wiki.gentoo.org/wiki/System_time
+
+|       | software clock    | hardware clock                   |   |
+|-------+-------------------+----------------------------------+---|
+|       |                   | real-time clock, RTC, CMOS clock |   |
+|       |                   |                                  |   |
+|       | kernel clock      |                                  |   |
+|       | system clock      |                                  |   |
+|       | since 1 1 1970    |                                  |   |
+|       | unix time         |                                  |   |
+|       |                   |                                  |   |
+|-------+-------------------+----------------------------------+---|
+|       | date              | hwclock -r                       |   |
+|       | date -R           |                                  |   |
+|       | date -u           |                                  |   |
+|       |                   |                                  |   |
+|-------+-------------------+----------------------------------+---|
+| store | yyyymmddhhmmss    | yyyymmddhhmmss                   |   |
+|       | DST localtime UTC |                                  |   |
+|       |                   |                                  |   |
+
+
+
+| hardware clock | localtime      | UTC time  |
+|----------------+----------------+-----------|
+|                | timezone + DST |           |
+|                |                | preferred |
+|                | ms Windows     |           |
+| #              |                |           |
+| hwclock -r     |                |           |
+|                |                |           |
+
+|        |                            |   |   |   |
+|        | UTC                        |   |   |   |
+|--------+----------------------------+---+---+---|
+|        | Coordinated Universal Time |   |   |   |
+|        | 世界標準時間               |   |   |   |
+|        | 世界協調時間               |   |   |   |
+|        | internet                   |   |   |   |
+| taipei | UTC+8                      |   |   |   |
+|        |                            |   |   |   |
+|        | date -u                    |   |   |   |
+|        |                            |   |   |   |
+
+*** CST
+
+| CST       | Central Standard Time | China Standard Time |
+|           |                       |                     |
+|-----------+-----------------------+---------------------|
+|           | UTC-6                 | UTC+8               |
+| reference | 1                     | 2                   |
+|           |                       |                     |
+
+
+date; date -u
+
+
+reference
+
+1
+
+https://en.wikipedia.org/wiki/Central_Time_Zone
+
+
+2
+
+https://en.wikipedia.org/wiki/Time_in_China
+
+
+
+
+
+***  set the hardware clock to the current system clock: 
+
+https://wiki.gentoo.org/wiki/System_time#systemd
+
+hwclock --systohc
+
+hwclock --show
+
+
+hwclock --show; date; tlsdate -V -n -H encrypted.google.com
+
+
+tlsdate -V -n -H encrypted.google.com
+
+tlsdate -V -n 
+
+tlsdate -V -n -H www.google.com
+tlsdate -V -n -H www.google.com socks5://127.0.0.1:1080
+
+tlsdate -V -n -H www.google.com.tw
+tlsdate -V -n -H www.google.com.tw socks5://127.0.0.1:1080
+
+
+tlsdate -V -n -H www.google.com
+
+tlsdate -V -n -H www.google.de 
+tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
+
+tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
+
+tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
+
+tlsdate -V -n -H www.google.com.tw
+
+
+
+
+
+* M4A87TD/USB3, BIOS 1102    12/09/2010 inventory
 
 [2015-05-14 Thu 15:57]
 
-*** lspci
+** lspci
 
  lspci -n
 00:00.0 0600: 1002:5957
@@ -134,43 +346,43 @@ emerge sys-boot/mbr
 05:00.1 0403: 10de:0beb (rev a1)
 
 
-*** driver
+** driver
 
-|   PCI ID | Works? | Vendor                                 | Device                                                    | Driver               | Kernel   |
-|----------+--------+----------------------------------------+-----------------------------------------------------------+----------------------+----------|
-| 10025957 |        | Advanced Micro Devices, Inc. [AMD/ATI] | RX780/RX790 Host Bridge                                   |                      |          |
-| 10025978 |        | Advanced Micro Devices, Inc. [AMD/ATI] | RX780/RD790 PCI to PCI bridge (external gfx0 port A)      |                      |          |
-| 1002597e |        | Advanced Micro Devices, Inc. [AMD/ATI] | RD790 PCI to PCI bridge (PCI express gpp port E)          |                      |          |
-| 1002597f |        | Advanced Micro Devices, Inc. [AMD/ATI] | RD790 PCI to PCI bridge (PCI express gpp port F)          |                      |          |
-| 10024390 | Yes    | Advanced Micro Devices, Inc. [AMD/ATI] | SB7x0/SB8x0/SB9x0 SATA Controller [IDE mode]              | ahci                 | v2.6.25- |
-| 10024397 |        | Advanced Micro Devices, Inc. [AMD/ATI] | SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    |                      |          |
-| 10024396 |        | Advanced Micro Devices, Inc. [AMD/ATI] | SB7x0/SB8x0/SB9x0 USB EHCI Controller                     |                      |          |
-| 10024397 |        | Advanced Micro Devices, Inc. [AMD/ATI] | SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    |                      |          |
-| 10024396 |        | Advanced Micro Devices, Inc. [AMD/ATI] | SB7x0/SB8x0/SB9x0 USB EHCI Controller                     |                      |          |
-| 10024385 | Yes    | Advanced Micro Devices, Inc. [AMD/ATI] | SBx00 SMBus Controller                                    | i2c_piix4,sp5100_tco | v2.6.25- |
-| 1002439c | Yes    | Advanced Micro Devices, Inc. [AMD/ATI] | SB7x0/SB8x0/SB9x0 IDE Controller                          | pata_atiixp          |          |
-| 10024383 | Yes    | Advanced Micro Devices, Inc. [AMD/ATI] | SBx00 Azalia (Intel HDA)                                  | snd_hda_intel        | v2.6.25- |
-| 1002439d |        | Advanced Micro Devices, Inc. [AMD/ATI] | SB7x0/SB8x0/SB9x0 LPC host controller                     |                      |          |
-| 10024384 |        | Advanced Micro Devices, Inc. [AMD/ATI] | SBx00 PCI to PCI Bridge                                   |                      |          |
-| 10024399 |        | Advanced Micro Devices, Inc. [AMD/ATI] | SB7x0/SB8x0/SB9x0 USB OHCI2 Controller                    |                      |          |
-| 100243a0 |        | Advanced Micro Devices, Inc. [AMD/ATI] | SB700/SB800/SB900 PCI to PCI bridge (PCIE port 0)         |                      |          |
-| 10024397 |        | Advanced Micro Devices, Inc. [AMD/ATI] | SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    |                      |          |
-| 10024396 |        | Advanced Micro Devices, Inc. [AMD/ATI] | SB7x0/SB8x0/SB9x0 USB EHCI Controller                     |                      |          |
-| 10221200 |        | Advanced Micro Devices, Inc. [AMD]     | Family 10h Processor HyperTransport Configuration         |                      |          |
-| 10221201 |        | Advanced Micro Devices, Inc. [AMD]     | Family 10h Processor Address Map                          |                      |          |
-| 10221202 | Yes    | Advanced Micro Devices, Inc. [AMD]     | Family 10h Processor DRAM Controller                      | amd64_edac_mod       | v3.16.0- |
-| 10221203 | Yes    | Advanced Micro Devices, Inc. [AMD]     | Family 10h Processor Miscellaneous Control                | k10temp              | v2.6.33- |
-| 10221204 |        | Advanced Micro Devices, Inc. [AMD]     | Family 10h Processor Link Control                         |                      |          |
-| 10ec8168 | Yes    | Realtek Semiconductor Co., Ltd.        | RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller | r8169                |          |
-| 10330194 |        | NEC Corporation                        | uPD720200 USB 3.0 Host Controller                         |                      |          |
-| 197b2368 | Yes    | JMicron Technology Corp.               | JMB368 IDE controller                                     | jmicron              |          |
-| 10de0e22 |        | NVIDIA Corporation                     | GF104 [GeForce GTX 460]                                   |                      |          |
-| 10de0beb |        | NVIDIA Corporation                     | GF104 High Definition Audio Controller                    |                      |          |
-|          |        |                                        |                                                           |                      |          |
-|          |        |                                        |                                                           |                      |          |
+| Device                                                    | Vendor                                 |   PCI ID | Works? | Driver               | Kernel   |
+|-----------------------------------------------------------+----------------------------------------+----------+--------+----------------------+----------|
+| RX780/RX790 Host Bridge                                   | Advanced Micro Devices, Inc. [AMD/ATI] | 10025957 |        |                      |          |
+| RX780/RD790 PCI to PCI bridge (external gfx0 port A)      | Advanced Micro Devices, Inc. [AMD/ATI] | 10025978 |        |                      |          |
+| RD790 PCI to PCI bridge (PCI express gpp port E)          | Advanced Micro Devices, Inc. [AMD/ATI] | 1002597e |        |                      |          |
+| RD790 PCI to PCI bridge (PCI express gpp port F)          | Advanced Micro Devices, Inc. [AMD/ATI] | 1002597f |        |                      |          |
+| SB7x0/SB8x0/SB9x0 SATA Controller [IDE mode]              | Advanced Micro Devices, Inc. [AMD/ATI] | 10024390 | Yes    | ahci                 | v2.6.25- |
+| SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024397 |        |                      |          |
+| SB7x0/SB8x0/SB9x0 USB EHCI Controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 10024396 |        |                      |          |
+| SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024397 |        |                      |          |
+| SB7x0/SB8x0/SB9x0 USB EHCI Controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 10024396 |        |                      |          |
+| SBx00 SMBus Controller                                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024385 | Yes    | i2c_piix4,sp5100_tco | v2.6.25- |
+| SB7x0/SB8x0/SB9x0 IDE Controller                          | Advanced Micro Devices, Inc. [AMD/ATI] | 1002439c | Yes    | pata_atiixp          |          |
+| SBx00 Azalia (Intel HDA)                                  | Advanced Micro Devices, Inc. [AMD/ATI] | 10024383 | Yes    | snd_hda_intel        | v2.6.25- |
+| SB7x0/SB8x0/SB9x0 LPC host controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 1002439d |        |                      |          |
+| SBx00 PCI to PCI Bridge                                   | Advanced Micro Devices, Inc. [AMD/ATI] | 10024384 |        |                      |          |
+| SB7x0/SB8x0/SB9x0 USB OHCI2 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024399 |        |                      |          |
+| SB700/SB800/SB900 PCI to PCI bridge (PCIE port 0)         | Advanced Micro Devices, Inc. [AMD/ATI] | 100243a0 |        |                      |          |
+| SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024397 |        |                      |          |
+| SB7x0/SB8x0/SB9x0 USB EHCI Controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 10024396 |        |                      |          |
+| Family 10h Processor HyperTransport Configuration         | Advanced Micro Devices, Inc. [AMD]     | 10221200 |        |                      |          |
+| Family 10h Processor Address Map                          | Advanced Micro Devices, Inc. [AMD]     | 10221201 |        |                      |          |
+| Family 10h Processor DRAM Controller                      | Advanced Micro Devices, Inc. [AMD]     | 10221202 | Yes    | amd64_edac_mod       | v3.16.0- |
+| Family 10h Processor Miscellaneous Control                | Advanced Micro Devices, Inc. [AMD]     | 10221203 | Yes    | k10temp              | v2.6.33- |
+| Family 10h Processor Link Control                         | Advanced Micro Devices, Inc. [AMD]     | 10221204 |        |                      |          |
+| RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller | Realtek Semiconductor Co., Ltd.        | 10ec8168 | Yes    | r8169                |          |
+| uPD720200 USB 3.0 Host Controller                         | NEC Corporation                        | 10330194 |        |                      |          |
+| JMB368 IDE controller                                     | JMicron Technology Corp.               | 197b2368 | Yes    | jmicron              |          |
+| GF104 [GeForce GTX 460]                                   | NVIDIA Corporation                     | 10de0e22 |        |                      |          |
+| GF104 High Definition Audio Controller                    | NVIDIA Corporation                     | 10de0beb |        |                      |          |
+|                                                           |                                        |          |        |                      |          |
+|                                                           |                                        |          |        |                      |          |
 
 
-*** cpu
+** cpu
 
 cat /proc/cpuinfo
 processor       : 0
@@ -297,3 +509,222 @@ cat /proc/cpuinfo
 
 
 
+
+** official
+
+https://www.asus.com/tw/Motherboards/M4A87TDUSB3/specifications/
+
+
+CPU
+AMD AM3 Phenom™ II/Athlon™ II/Sempron™ 100 Series 處理器 
+支援 AM3 45 nm CPU
+支援 CPU 最高至 140 W
+AMD Cool 'n' Quiet™ Technology
+
+晶片組
+AMD 870/SB850
+
+記憶體
+4 x DIMM, Max. 16GB, DDR3 2000(O.C.)/1600/1333/1066 Hz ECC, 非ECC, 無緩衝區 Memory
+Dual Channel Memory Architecture
+有關記憶體合格廠商清單（QVL）的相關資訊，請參閱 www.asus.com 網站或本使用手冊。
+由於作業系統的限制，當安裝記憶體總容量達 4GB 或以上時，WindowsR 32 位元作業系統僅能識別 3GB。如果您要在主機板上安裝 4GB 或更多的記憶體，可安裝 64 位元 Windows 作業系統。
+由於 CPU 規格，AMD 100 及 200 系列 CPU 最高支援 DDR3 1066Mhz。藉由華碩的設計，這款主機板最高可支援 DDR3 1333MHz。
+支援超低電壓 DDR3 記憶體
+
+系統匯流排
+Up to 5.2 GT/s HyperTransport™ 3.0
+
+擴充槽
+1 x PCIe 2.0 x16 
+1 x PCIe 2.0 x4 
+1 x PCIe 2.0 x1 
+3 x PCI
+
+資料儲存應用
+AMD SB850 controller : 
+6 x SATA 6Gb/s埠 (灰), 白色
+支援Raid 0, 1, 5, 10
+JMicron® JMB368 controller : 
+1 x UltraDMA 133/100/66 最多可連接兩部 PATA裝置, 海軍藍
+
+區域網路
+Realtek 8111E , 1 x Gigabit LAN Controller(s), 具備 AI NET2功能
+
+音效
+VIA VT1818 8 通道 高傳真音效 CODEC
+- Supports : 插頭偵測, 多路音頻輸出輸入, 前面板插孔指定功能
+Audio Feature :
+- Absolute Pitch 192kHz/ 24-bit True BD Lossless Sound
+- 華碩雜訊過濾器
+- 光纖 S/PDIF 輸出埠位於背板
+
+USB連接埠
+NEC® USB 3.0 controller : 
+2 x USB 3.0 port(s) (2 位於背板, 藍色)
+AMD SB850 controller : 
+12 x USB 2.0 port(s) (6 位於背板, 黑色, 6 位於主機板中)
+
+獨家超頻功能
+Overclocking Protection :
+- ASUS C.P.R.(CPU Parameter Recall)
+
+獨特功能
+華碩 Xtreme 設計 :
+ASUS Hybrid Processor - TurboV EVO :
+- Turbo Unlocker
+- TurboV
+- CPU Level Up
+華碩 EPU :
+- EPU 
+華碩 Hybrid Switch :
+- Core Unlocker
+- Turbo Key
+華碩獨家功能 :
+- MemOK!
+- 快速開機
+華碩靜音散熱解決方案 :
+- 風格獨特的無風扇設計 - 散熱解決方案
+- 華碩 Fan Xpert 
+華碩 EZ DIY :
+- 華碩 O.C. Profile
+- 華碩 CrashFree BIOS 3 
+- 華碩 EZ Flash 2 
+- 華碩 MyLogo 2 
+- 多國語言 BIOS
+
+後面板輸出端子
+1 x PS/2 鍵盤(紫)
+1 x PS/2 滑鼠(綠)
+1 x LAN (RJ45) 連接埠
+2 x USB 3.0 
+6 x USB 2.0 
+1 x 光纖 S/PDIF 輸出
+3 x 音訊插孔
+
+內建 I/O 連接孔
+3 x USB 2.0 接頭支援額外的 6 USB 3.0 連接埠
+1 x IDE 接頭
+1 x COM 接頭連接埠
+6 x SATA 6Gb/s 接頭
+1 x CPU 風扇接頭 
+1 x 機殼風扇接頭 (3 -pin)
+1 x 電源風扇接頭 
+1 x S/PDIF 輸出接頭
+1 x 24-pin EATX 電源接頭
+1 x 4-pin ATX 12V 電源接頭
+1 x 前面板音訊接頭 (AAFP)
+1 x 系統面板 
+1 x MemOK! 按鈕
+1 x Core Unlocker 開關
+1 x Clear CMOS 跳線
+
+配件
+使用者手冊
+I/O 擋板
+1 x UltraDMA 133/100 纜線
+2 x Serial ATA 3.0Gb/s 纜線
+1 x Serial ATA 6.0Gb/s 纜線
+1 x Q-connector(s) (2 合一) *1
+
+BIOS
+8 Mb Flash ROM , SPI, AMI BIOS, PnP, DMI2.0, WfM2.0, SM BIOS 2.5, ACPI 2.0a, Multi-language BIOS, ASUS EZ Flash 2, ASUS CrashFree BIOS 3
+
+管理能力
+WfM 2.0,DMI 2.0,WOL by PME,WOR by PME,PXE
+
+支援光碟
+Drivers
+Anti-virus software (OEM version)
+ASUS Utilities 
+ASUS Update
+
+主機板尺寸
+ATX Form Factor 
+12 inch x 8.4 inch ( 30.5 cm x 21.3 cm )
+
+備註
+*1: USB, System panel; Retail version only.
+
+
+* M4A87TD/USB3 gentoo installation
+
+** steps
+
+| steps |                    |
+|-------+--------------------|
+|    20 | hardware inventory |
+|       |                    |
+|    22 | lsblk              |
+|       |                    |
+|    24 | btrfs              |
+|       |                    |
+|    26 | net card + vga     |
+|       |                    |
+|-------+--------------------|
+|    30 | 2 big files        |
+|       |                    |
+|    32 | download           |
+|       |                    |
+|    34 | extract            |
+|       |                    |
+|       |                    |
+
+
+** 22 lsblk
+
+
+[2016-03-28 Mon 16:04]
+
+sda                         8:0    0 279.5G  0 disk 
+├─sda1                      8:1    0     2M  0 part 
+├─sda2                      8:2    0   122M  0 part 
+├─sda3                      8:3    0   488M  0 part 
+├─sda4                      8:4    0   8.7G  0 part 
+├─sda5                      8:5    0   9.3G  0 part 
+└─sda6                      8:6    0 260.9G  0 part 
+sdb                         8:16   0 465.8G  0 disk 
+└─sdb1                      8:17   0 445.3G  0 part 
+
+** 24 btrfs
+
+mkfs.btrfs -f /dev/sda
+
+mount -o defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag /dev/sda /mnt/sda
+
+
+btrfs subvolume create fs1
+
+btrfs subvolume create fs2
+
+
+btrfs subvolume create fs3
+
+btrfs subvolume create fs4
+
+
+
+** 26 net card + vga
+
+|              | net card                                                  | vga                     |
+|--------------+-----------------------------------------------------------+-------------------------|
+| M4A87TD/USB3 | RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller | GF104 [GeForce GTX 460] |
+| cp6320       | r8169                                                     |                         |
+
+
+*** r8169
+
+level 1    Device Drivers  --->    
+| 2 | 3 | 4 | 5 | location |                                               | default | modification | motherboard |
+|---+---+---+---+----------+-----------------------------------------------+---------+--------------+-------------|
+| v |   |   |   |          | [*] Network device support  --->              | *       |              |             |
+|   |   |   |   |          |                                               |         |              |             |
+|   | v |   |   |          | Ethernet driver support                       |         |              |             |
+|   |   |   |   |          |                                               |         |              |             |
+|   |   | v |   | buttom   | [*]   Realtek devices                         | blank   | *            | cp6320      |
+|   |   |   |   |          |                                               |         |              |             |
+|   |   | v |   |          | <M>     Realtek 8169 gigabit ethernet support | blank   | M            | cp6320      |
+|   |   |   |   |          |                                               |         |              |             |
+
+
+ 
