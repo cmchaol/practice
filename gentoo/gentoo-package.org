@@ -3,7 +3,146 @@
 
 
   
-* individual package
+* stage4
+
+** steps
+
+| generate excluding file |
+|                         |
+| generate tar            |
+|                         |
+| extract tar             |
+
+
+
+** steps wusb to M4A87TD/USB3 [2016-03-29 Tue 16:33]
+
+
+
+| steps |                         |
+|-------+-------------------------|
+|    10 | btrfs                   |
+|       |                         |
+|    20 | generate excluding file |
+|       |                         |
+|    30 | generate tar            |
+|       |                         |
+|    40 | extract tar             |
+|       |                         |
+
+
+*** 10 btrfs
+
+[2016-03-29 Tue 16:38]
+
+
+sda                         8:0    0 279.5G  0 disk 
+├─sda1                      8:1    0     2M  0 part 
+├─sda2                      8:2    0   122M  0 part 
+├─sda3                      8:3    0   488M  0 part 
+├─sda4                      8:4    0   8.7G  0 part 
+├─sda5                      8:5    0   9.3G  0 part 
+└─sda6                      8:6    0 260.9G  0 part 
+sdb                         8:16   0 465.8G  0 disk 
+└─sdb1                      8:17   0 445.3G  0 part 
+
+mkfs.btrfs -f /dev/sda
+
+mount -o defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag /dev/sda /mnt/sda
+
+cd /mnt/sda
+
+btrfs subvolume create fs1
+
+btrfs subvolume create fs2
+
+btrfs subvolume create fs3
+
+btrfs subvolume create fs4
+
+btrfs subvolume create fs5
+
+*** 20 generate excluding file 
+
+
+/tmp/stage4.excl 
+
+
+.bash_history
+/mnt/*
+/tmp/*
+/proc/*
+/sys/*
+/dev/*
+/etc/ssh/ssh_host_*
+/usr/src/*
+/usr/portage/*
+/home/c5766/Mail/*
+/home/c5766/downloads/*
+/home/c5766/Downloads/*
+/home/c5766/News/*
+
+
+*** 30 generate tar 
+
+
+tar cvjf /mnt/sda/fs1/stage4_wusb_20160329.tar.bz2 / -X /tmp/stage4.excl  
+
+*** 40 extract tar 
+
+cd /mnt/sda/fs2/
+
+tar -xvjpf /mnt/sda/fs1/stage4_wusb_20160329.tar.bz2
+
+
+
+** original
+
+http://www.gentoo-wiki.info/HOWTO_Custom_Stage4
+
+stage4.excl contents:
+
+.bash_history
+/mnt/*
+/tmp/*
+/proc/*
+/sys/*
+/dev/*
+/etc/ssh/ssh_host_*
+/usr/src/*
+/usr/portage/*
+/path/to/save/at/stage4.tar.bz2
+
+
+
+
+# tar cvjf /path/to/save/at/stage4.tar.bz2 / -X stage4.excl
+
+tar cvjf /mnt/sdb6/gentoo/stage4.tar.bz2 / -X stage4.excl
+
+  
+** my modification 1
+
+nano stage4.excl
+
+.bash_history
+/mnt/*
+/tmp/*
+/proc/*
+/sys/*
+/dev/*
+/etc/ssh/ssh_host_*
+
+tar cvjf stage4_20160121.tar.bz2 / -X stage4.excl  
+
+mount the target fs and cd inside.
+
+tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
+
+
+
+
+* packages
 
 ** imagemagick
 
@@ -304,6 +443,8 @@ tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
 tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
 
 tlsdate -V -n -H www.google.com.tw
+
+
 
 
 
