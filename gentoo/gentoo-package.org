@@ -12,6 +12,8 @@
 | generate tar            |
 |                         |
 | extract tar             |
+|                         |
+|                         |
 
 
 
@@ -31,6 +33,7 @@
 |       |                         |
 |    50 | adjust grub             |
 |       |                         |
+|    60 | adjust fstab            |
 |       |                         |
 
 
@@ -126,6 +129,17 @@ cd
 umount -l /mnt/sda/fs2/dev{/shm,/pts,}
 umount -l /mnt/sda/fs2{/boot,/sys,/proc,}
 
+*** 60 adjust fstab
+
+blkid
+
+
+UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a/ btrfs subvol=fs2,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
+
+UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a/mnt/fs1 btrfs subvol=fs1,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
+
+tmpfs           /var/tmp/portage        tmpfs   uid=portage,gid=portage,mode=0775,size=90%,noatime    0 0
+tmpfs   /tmp         tmpfs   nodev,nosuid,size=90%          0  0
 
 
 
