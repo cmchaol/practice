@@ -503,6 +503,20 @@ tlsdate -V -n -H www.google.com.tw
 
 ** grub
 
+*** resolution
+
+**** steps
+
+| steps |                                       |
+|-------+---------------------------------------|
+|       | modify /etc/default/grub              |
+|       | GRUB_GFXMODE=1024x768                 |
+|       |                                       |
+|       | grub2-mkconfig -o /boot/grub/grub.cfg |
+
+**** reference
+
+
 http://askubuntu.com/questions/54067/how-do-i-safely-change-grub2-screen-resolution
 
 To do this safely requires two steps.
