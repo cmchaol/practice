@@ -29,6 +29,9 @@
 |       |                         |
 |    40 | extract tar             |
 |       |                         |
+|    50 | adjust grub             |
+|       |                         |
+|       |                         |
 
 
 *** 10 btrfs
@@ -93,6 +96,36 @@ tar cvjf /mnt/sda/fs1/stage4_wusb_20160329.tar.bz2 / -X /tmp/stage4.excl
 cd /mnt/sda/fs2/
 
 tar -xvjpf /mnt/sda/fs1/stage4_wusb_20160329.tar.bz2
+
+*** 50 adjust grub
+
+
+mount -t proc proc  /mnt/sda/fs2/proc
+mount --rbind /sys  /mnt/sda/fs2/sys
+mount --make-rslave /mnt/sda/fs2/sys
+mount --rbind /dev  /mnt/sda/fs2/dev
+mount --make-rslave /mnt/sda/fs2/dev
+
+
+chroot /mnt/sda/fs2/ /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"
+
+
+grub2-install /dev/sda --recheck
+
+
+grub2-mkconfig -o /boot/grub/grub.cfg
+
+grub2-mkconfig -o /mnt/sda/fs2/boot/grub/grub.cfg
+
+
+exit
+cd
+
+umount -l /mnt/sda/fs2/dev{/shm,/pts,}
+umount -l /mnt/sda/fs2{/boot,/sys,/proc,}
+
 
 
 
