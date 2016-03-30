@@ -68,6 +68,7 @@ btrfs subvolume create fs4
 
 btrfs subvolume create fs5
 
+
 *** 20 generate excluding file 
 
 
@@ -94,11 +95,13 @@ btrfs subvolume create fs5
 
 tar cvjf /mnt/sda/fs1/stage4_wusb_20160329.tar.bz2 / -X /tmp/stage4.excl  
 
+
 *** 40 extract tar 
 
 cd /mnt/sda/fs2/
 
 tar -xvjpf /mnt/sda/fs1/stage4_wusb_20160329.tar.bz2
+
 
 *** 50 adjust grub
 
@@ -128,6 +131,7 @@ cd
 
 umount -l /mnt/sda/fs2/dev{/shm,/pts,}
 umount -l /mnt/sda/fs2{/boot,/sys,/proc,}
+
 
 *** 60 adjust fstab
 
@@ -497,6 +501,39 @@ tlsdate -V -n -H www.google.com.tw
 
 
 
+** grub
+
+http://askubuntu.com/questions/54067/how-do-i-safely-change-grub2-screen-resolution
+
+To do this safely requires two steps.
+
+Step 1: find the preferred mode
+Reboot and press and hold Shift to display your grub. Press C to enter console mode. Then type:
+
+$ vbeinfo
+This will display various stuff how grub recognizes your display. At the bottom is "preferred mode" - in your case it should say 1280x800. Note down the value.
+
+Note: sometimes, some buggy video cards incorrectly give Grub the wrong preferred resolution - if the preferred mode is much higher than you were expecting, then select the nearest mode in the list displayed that you were expecting.
+
+Press Esc to return to grub and press Enter to boot.
+
+Step 2: Setting the resolution in grub
+Reach for your terminal and type
+
+$ sudo nano /etc/default/grub
+find the line
+
+#GRUB_GFXMODE=640x480
+remove the # and change 640x480 with the preferred mode you wrote down. E.g.:
+
+GRUB_GFXMODE=1280x800
+save, then type
+
+$ sudo update-grub
+
+
+
+ 
 * M4A87TD/USB3, BIOS 1102    12/09/2010 inventory
 
 [2015-05-14 Thu 15:57]
@@ -571,6 +608,17 @@ tlsdate -V -n -H www.google.com.tw
 
 
 ** cpu
+
+https://en.wikipedia.org/wiki/List_of_AMD_Phenom_microprocessors#Phenom_II_series
+
+Model Number	Step.	Freq.	L2 Cache	L3 Cache	HT	Multi1	Voltage	TDP	Socket	Release Date	Part Number
+
+Phenom II X4 955	
+
+C2	3.2 GHz	4x 512 KB	6 MB	2 GHz	16x	0.850 - 1.400	125 W	AM3	April 2009	HDX955FBK4DGI
+C3	3.2 GHz	4x 512 KB	6 MB	2 GHz	16x	0.850 - 1.400	125 W	AM3	November 4, 2009	HDX955FBK4DGM
+C3	3.2 GHz	4x 512 KB	6 MB	2 GHz	16x	0.850 - 1.400	95 W	AM3	Q2 2010	HDX955WFK4DGM
+
 
 cat /proc/cpuinfo
 processor       : 0
@@ -694,6 +742,26 @@ address sizes   : 48 bits physical, 48 bits virtual
 power management: ts ttp tm stc 100mhzsteps hwpstate
 
 cat /proc/cpuinfo
+
+
+
+
+** cpu kernel
+
+*** Kernel/Gentoo Kernel Configuration Guide
+
+https://wiki.gentoo.org/wiki/Kernel/Gentoo_Kernel_Configuration_Guide
+
+*** Kernel/Configuration
+
+https://wiki.gentoo.org/wiki/Kernel/Configuration
+
+
+*** Chapter 7. Configuring a Linux Kernel
+
+http://swift.siphos.be/linux_sea/kernelbuilding.html
+
+
 
 
 
