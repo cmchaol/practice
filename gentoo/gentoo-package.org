@@ -17,6 +17,132 @@
 
 
 
+** steps fs3 M4A87TD/USB3 [2016-03-31 Thu 17:57]
+
+
+
+
+| steps |                         |
+|-------+-------------------------|
+|    10 | btrfs                   |
+|       |                         |
+|    20 | generate excluding file |
+|       |                         |
+|    30 | generate tar            |
+|       |                         |
+|    40 | extract tar             |
+|       |                         |
+|    50 | adjust grub             |
+|       |                         |
+|    60 | adjust fstab            |
+|       |                         |
+
+
+*** 10 btrfs
+
+[2016-03-29 Tue 16:38]
+
+
+sda                         8:0    0 279.5G  0 disk 
+├─sda1                      8:1    0     2M  0 part 
+├─sda2                      8:2    0   122M  0 part 
+├─sda3                      8:3    0   488M  0 part 
+├─sda4                      8:4    0   8.7G  0 part 
+├─sda5                      8:5    0   9.3G  0 part 
+└─sda6                      8:6    0 260.9G  0 part 
+sdb                         8:16   0 465.8G  0 disk 
+└─sdb1                      8:17   0 445.3G  0 part 
+
+mkfs.btrfs -f /dev/sda
+
+mount -o defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag /dev/sda /mnt/sda
+
+cd /mnt/sda
+
+btrfs subvolume create fs1
+
+btrfs subvolume create fs2
+
+btrfs subvolume create fs3
+
+btrfs subvolume create fs4
+
+btrfs subvolume create fs5
+
+
+*** 20 generate excluding file 
+
+
+/tmp/stage4.excl 
+
+
+.bash_history
+/mnt/*
+/tmp/*
+/proc/*
+/sys/*
+/dev/*
+
+
+
+*** 30 generate tar 
+
+
+tar cvjf stage4_fs3b_20160329.tar.bz2 / -X /tmp/stage4.excl  
+
+
+*** 40 extract tar 
+
+cd /mnt/sda/fs2/
+
+tar -xvjpf /mnt/sda/fs1/stage4_wusb_20160329.tar.bz2
+
+
+*** 50 adjust grub
+
+
+mount -t proc proc  /mnt/sda/fs2/proc
+mount --rbind /sys  /mnt/sda/fs2/sys
+mount --make-rslave /mnt/sda/fs2/sys
+mount --rbind /dev  /mnt/sda/fs2/dev
+mount --make-rslave /mnt/sda/fs2/dev
+
+
+chroot /mnt/sda/fs2/ /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"
+
+
+grub2-install /dev/sda --recheck
+
+
+grub2-mkconfig -o /boot/grub/grub.cfg
+
+grub2-mkconfig -o /mnt/sda/fs2/boot/grub/grub.cfg
+
+
+exit
+cd
+
+umount -l /mnt/sda/fs2/dev{/shm,/pts,}
+umount -l /mnt/sda/fs2{/boot,/sys,/proc,}
+
+
+*** 60 adjust fstab
+
+blkid
+
+
+UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a/ btrfs subvol=fs2,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
+
+UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a/mnt/fs1 btrfs subvol=fs1,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
+
+tmpfs           /var/tmp/portage        tmpfs   uid=portage,gid=portage,mode=0775,size=90%,noatime    0 0
+tmpfs   /tmp         tmpfs   nodev,nosuid,size=90%          0  0
+
+
+
+
 ** steps wusb to M4A87TD/USB3 [2016-03-29 Tue 16:33]
 
 
