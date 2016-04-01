@@ -1,0 +1,31 @@
+* kernel configuration
+
+https://wiki.gentoo.org/wiki/Tmpfs
+
+KERNEL
+File systems  --->
+     Pseudo filesystems  --->
+          [*] Tmpfs virtual memory file system support (former shm fs)
+          [ ] Optional drivers
+
+
+#
+
+mount -t tmpfs tmpfs /MOUNTPOINT
+
+* Portage TMPDIR on tmpfs
+
+https://wiki.gentoo.org/wiki/Portage_TMPDIR_on_tmpfs
+
+FILE /etc/fstabtmpfs fstab example
+
+tmpfs		/var/tmp/portage		tmpfs	size=4G,uid=portage,gid=portage,mode=775,noatime	0 0
+tmpfs		/tmp		tmpfs	mode=777	0 0
+
+
+
+
+* kernel.org
+
+https://www.kernel.org/doc/Documentation/filesystems/tmpfs.txt
+
