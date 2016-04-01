@@ -93,10 +93,9 @@ tar cvjf stage4_fs3b_20160329.tar.bz2 / -X /tmp/stage4.excl
 
 *** 40 extract tar 
 
-cd /mnt/sda/fs2/
+cd /tmp/gentoo
 
-tar -xvjpf /mnt/sda/fs1/stage4_wusb_20160329.tar.bz2
-
+tar -xvjpf /mnt/fs1/stage4_fs3b_20160329.tar.bz2 
 
 *** 50 adjust grub
 
@@ -321,6 +320,369 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 
 * packages
 
+** inventory
+
+|             | [2016-04-01 Fri 09:20] |
+|             | M4A87TD/USB3           |
+|             | 280g/fs3               |
+|-------------+------------------------|
+| shell       |                        |
+|             |                        |
+| proxychains | [2016-04-01 Fri 09:30] |
+|             |                        |
+| grub        | [2016-04-01 Fri 09:31] |
+|             |                        |
+| dhcpcd      | [2016-04-01 Fri 09:35] |
+|             |                        |
+|             |                        |
+
+
+
+** shell group
+
+
+*** proxychains
+
+
+emerge proxychains
+
+
+*** dhcpcd
+
+emerge net-misc/dhcpcd
+
+
+
+
+
+
+
+*** grub
+
+emerge grub
+
+do the installation and generation of grub menu after all the files in the final /dev/sdx place.
+otherwise, it will failed during preparation (tar).
+
+grub2-install /dev/sda
+
+grub2-mkconfig -o /boot/grub/grub.cfg
+
+
+*** resolution
+
+**** steps
+
+| steps |                                       |
+|-------+---------------------------------------|
+|       | modify /etc/default/grub              |
+|       | GRUB_GFXMODE=1024x768                 |
+|       |                                       |
+|       | grub2-mkconfig -o /boot/grub/grub.cfg |
+
+**** reference
+
+
+http://askubuntu.com/questions/54067/how-do-i-safely-change-grub2-screen-resolution
+
+To do this safely requires two steps.
+
+Step 1: find the preferred mode
+Reboot and press and hold Shift to display your grub. Press C to enter console mode. Then type:
+
+$ vbeinfo
+This will display various stuff how grub recognizes your display. At the bottom is "preferred mode" - in your case it should say 1280x800. Note down the value.
+
+Note: sometimes, some buggy video cards incorrectly give Grub the wrong preferred resolution - if the preferred mode is much higher than you were expecting, then select the nearest mode in the list displayed that you were expecting.
+
+Press Esc to return to grub and press Enter to boot.
+
+Step 2: Setting the resolution in grub
+Reach for your terminal and type
+
+$ sudo nano /etc/default/grub
+find the line
+
+#GRUB_GFXMODE=640x480
+remove the # and change 640x480 with the preferred mode you wrote down. E.g.:
+
+GRUB_GFXMODE=1280x800
+save, then type
+
+$ sudo update-grub
+
+
+
+
+
+*** tlsdate
+
+https://github.com/ioerror/tlsdate/
+
+
+emerge --ask net-misc/tlsdate
+
+
+/etc/init.d/tlsdate start
+
+rc-update add tlsdate default
+
+tlsdate -V -n -H www.google.com.tw socks5://127.0.0.1:1080
+
+
+**** openntpd gentoo
+
+https://wiki.gentoo.org/wiki/OpenNTPD
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge --ask net-misc/openntpd
+
+/etc/ntpd.conf
+
+/etc/init.d/ntpd start
+
+/etc/init.d/ntpd stop
+
+/etc/init.d/ntpd restart
+
+rc-update add ntpd default
+
+rc-update delete ntpd default
+
+
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge --ask net-misc/openntpd
+
+4.0_pre20080406 missing ntpctl
+
+
+
+equery y openntpd
+Keywords for net-misc/openntpd:
+                      |                               | u   |  
+                      | a a   a         n   p     s   | n   |  
+                      | l m   r h i m m i   p s   p   | u s | r
+                      | p d a m p a 6 i o p c 3   a x | s l | e
+                      | h 6 r 6 p 6 8 p s p 6 9 s r 8 | e o | p
+                      | a 4 m 4 a 4 k s 2 c 4 0 h c 6 | d t | o
+----------------------+-------------------------------+-----+-------
+[I]4.0_pre20080406    | + + + + + + o ~ o + + + + + + | o 0 | gentoo
+            5.7_p4-r1 | ~ ~ ~ ~ ~ ~ o ~ o ~ ~ ~ ~ ~ ~ | o   | gentoo
+
+
+emerge --ask --autounmask-write =net-misc/openntpd-5.7_p4-r1
+
+dispatch-conf
+
+
+emerge --ask  =net-misc/openntpd-5.7_p4-r1
+
+
+ntpd -s
+
+
+ntpctl -sa
+
+**** software hardware clock
+
+https://wiki.gentoo.org/wiki/System_time
+
+| clock | software  | hardware            |                 |
+|-------+-----------+---------------------+-----------------|
+|       | unix time |                     |                 |
+|       |           | real-time clock RTC |                 |
+|       |           | mainboard           |                 |
+|       |           |                     |                 |
+|-------+-----------+---------------------+-----------------|
+|       |           | 2 standards         |                 |
+|-------+-----------+---------------------+-----------------|
+|       |           | localtime           |                 |
+|       |           |                     | time zone + DST |
+|       |           |                     | Windows         |
+|       |           |                     |                 |
+|-------+-----------+---------------------+-----------------|
+|       |           | UTC time            |                 |
+|       |           |                     |                 |
+
+
+cat /etc/timezone
+Asia/Taipei
+
+emerge --config timezone-data
+
+
+
+https://wiki.gentoo.org/wiki/System_time
+
+|       | software clock    | hardware clock                   |   |
+|-------+-------------------+----------------------------------+---|
+|       |                   | real-time clock, RTC, CMOS clock |   |
+|       |                   |                                  |   |
+|       | kernel clock      |                                  |   |
+|       | system clock      |                                  |   |
+|       | since 1 1 1970    |                                  |   |
+|       | unix time         |                                  |   |
+|       |                   |                                  |   |
+|-------+-------------------+----------------------------------+---|
+|       | date              | hwclock -r                       |   |
+|       | date -R           |                                  |   |
+|       | date -u           |                                  |   |
+|       |                   |                                  |   |
+|-------+-------------------+----------------------------------+---|
+| store | yyyymmddhhmmss    | yyyymmddhhmmss                   |   |
+|       | DST localtime UTC |                                  |   |
+|       |                   |                                  |   |
+
+
+
+| hardware clock | localtime      | UTC time  |
+|----------------+----------------+-----------|
+|                | timezone + DST |           |
+|                |                | preferred |
+|                | ms Windows     |           |
+| #              |                |           |
+| hwclock -r     |                |           |
+|                |                |           |
+
+|        |                            |   |   |   |
+|        | UTC                        |   |   |   |
+|--------+----------------------------+---+---+---|
+|        | Coordinated Universal Time |   |   |   |
+|        | 世界標準時間               |   |   |   |
+|        | 世界協調時間               |   |   |   |
+|        | internet                   |   |   |   |
+| taipei | UTC+8                      |   |   |   |
+|        |                            |   |   |   |
+|        | date -u                    |   |   |   |
+|        |                            |   |   |   |
+
+**** CST
+
+| CST       | Central Standard Time | China Standard Time |
+|           |                       |                     |
+|-----------+-----------------------+---------------------|
+|           | UTC-6                 | UTC+8               |
+| reference | 1                     | 2                   |
+|           |                       |                     |
+
+
+date; date -u
+
+
+reference
+
+1
+
+https://en.wikipedia.org/wiki/Central_Time_Zone
+
+
+2
+
+https://en.wikipedia.org/wiki/Time_in_China
+
+
+
+
+
+****  set the hardware clock to the current system clock: 
+
+https://wiki.gentoo.org/wiki/System_time#systemd
+
+hwclock --systohc
+
+hwclock --show
+
+
+hwclock --show; date; tlsdate -V -n -H encrypted.google.com
+
+
+tlsdate -V -n -H encrypted.google.com
+
+tlsdate -V -n 
+
+tlsdate -V -n -H www.google.com
+tlsdate -V -n -H www.google.com socks5://127.0.0.1:1080
+
+tlsdate -V -n -H www.google.com.tw
+tlsdate -V -n -H www.google.com.tw socks5://127.0.0.1:1080
+
+
+tlsdate -V -n -H www.google.com
+
+tlsdate -V -n -H www.google.de 
+tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
+
+tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
+
+tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
+
+tlsdate -V -n -H www.google.com.tw
+
+
+
+*** sys-boot/mbr
+
+emerge sys-boot/mbr
+
+
+
+
+** xorg group
+
+*** x11-base/xorg-server
+
+**** kernel
+
+https://wiki.gentoo.org/wiki/Xorg/Guide
+
+https://wiki.gentoo.org/wiki/Nouveau
+
+
+
+| 1 | 2 | 3 | 4 |   | kernel option                     | default | change to |
+|---+---+---+---+---+-----------------------------------+---------+-----------|
+| v |   |   |   |   | Device Drivers                    |         |           |
+|   | v |   |   |   | Input device support              |         |           |
+|   |   | v |   |   | Event interface                   | *       |           |
+|---+---+---+---+---+-----------------------------------+---------+-----------|
+|   |   |   |   |   |                                   |         |           |
+|   | v |   |   |   | Graphics support                  |         |           |
+|   |   | v |   |   | Frame buffer Devices              |         |           |
+|   |   |   | v |   | Support for frame buffer devices  | none    |           |
+|---+---+---+---+---+-----------------------------------+---------+-----------|
+|   |   |   |   |   |                                   |         |           |
+|   |   | v |   |   | Console display driver support    |         |           |
+|   |   |   | v |   | Framebuffer Console support       | *       |           |
+|---+---+---+---+---+-----------------------------------+---------+-----------|
+|   |   |   |   |   |                                   |         |           |
+|   |   | v |   |   | Direct Rendering Manager (XFree86 |         |           |
+|   |   |   | v |   | Enable legacy fbdev support for   | *       |           |
+|---+---+---+---+---+-----------------------------------+---------+-----------|
+|   |   |   |   |   |                                   |         |           |
+|   |   | v |   |   | Nouveau (NVIDIA) cards            | none    | M         |
+
+**** make.conf
+
+Sample make.conf entries
+## (For mouse, keyboard, and Synaptics touchpad support)
+INPUT_DEVICES="evdev synaptics"
+## (For nVidia cards)
+VIDEO_CARDS="nouveau"
+## (For AMD/ATI cards)
+VIDEO_CARDS="radeon"
+
+nano /etc/portage/make.conf
+
+INPUT_DEVICES="evdev"
+
+VIDEO_CARDS="nouveau"
+
+emerge --ask x11-base/xorg-server
+
+
 ** imagemagick
 
 echo "media-gfx/imagemagick jpeg tiff" > /etc/portage/package.use/imagemagick 
@@ -404,274 +766,6 @@ emerge app-text/tesseract
 TESSERACT OCR 中文識別嘗試
 
 http://miphol.com/muse/2013/05/tesseract-ocr.html
-
-
-
-** sys-boot/mbr
-
-emerge sys-boot/mbr
-
-
-
-
-
-** tlsdate
-
-https://github.com/ioerror/tlsdate/
-
-
-emerge --ask net-misc/tlsdate
-
-
-/etc/init.d/tlsdate start
-
-rc-update add tlsdate default
-
-tlsdate -V -n -H www.google.com.tw socks5://127.0.0.1:1080
-
-
-*** openntpd gentoo
-
-https://wiki.gentoo.org/wiki/OpenNTPD
-
-
-proxychains -f /home/c5766/.proxychains/proxychains.conf \
-emerge --ask net-misc/openntpd
-
-/etc/ntpd.conf
-
-/etc/init.d/ntpd start
-
-/etc/init.d/ntpd stop
-
-/etc/init.d/ntpd restart
-
-rc-update add ntpd default
-
-rc-update delete ntpd default
-
-
-
-
-proxychains -f /home/c5766/.proxychains/proxychains.conf \
-emerge --ask net-misc/openntpd
-
-4.0_pre20080406 missing ntpctl
-
-
-
-equery y openntpd
-Keywords for net-misc/openntpd:
-                      |                               | u   |  
-                      | a a   a         n   p     s   | n   |  
-                      | l m   r h i m m i   p s   p   | u s | r
-                      | p d a m p a 6 i o p c 3   a x | s l | e
-                      | h 6 r 6 p 6 8 p s p 6 9 s r 8 | e o | p
-                      | a 4 m 4 a 4 k s 2 c 4 0 h c 6 | d t | o
-----------------------+-------------------------------+-----+-------
-[I]4.0_pre20080406    | + + + + + + o ~ o + + + + + + | o 0 | gentoo
-            5.7_p4-r1 | ~ ~ ~ ~ ~ ~ o ~ o ~ ~ ~ ~ ~ ~ | o   | gentoo
-
-
-emerge --ask --autounmask-write =net-misc/openntpd-5.7_p4-r1
-
-dispatch-conf
-
-
-emerge --ask  =net-misc/openntpd-5.7_p4-r1
-
-
-ntpd -s
-
-
-ntpctl -sa
-
-*** software hardware clock
-
-https://wiki.gentoo.org/wiki/System_time
-
-| clock | software  | hardware            |                 |
-|-------+-----------+---------------------+-----------------|
-|       | unix time |                     |                 |
-|       |           | real-time clock RTC |                 |
-|       |           | mainboard           |                 |
-|       |           |                     |                 |
-|-------+-----------+---------------------+-----------------|
-|       |           | 2 standards         |                 |
-|-------+-----------+---------------------+-----------------|
-|       |           | localtime           |                 |
-|       |           |                     | time zone + DST |
-|       |           |                     | Windows         |
-|       |           |                     |                 |
-|-------+-----------+---------------------+-----------------|
-|       |           | UTC time            |                 |
-|       |           |                     |                 |
-
-
-cat /etc/timezone
-Asia/Taipei
-
-emerge --config timezone-data
-
-
-
-https://wiki.gentoo.org/wiki/System_time
-
-|       | software clock    | hardware clock                   |   |
-|-------+-------------------+----------------------------------+---|
-|       |                   | real-time clock, RTC, CMOS clock |   |
-|       |                   |                                  |   |
-|       | kernel clock      |                                  |   |
-|       | system clock      |                                  |   |
-|       | since 1 1 1970    |                                  |   |
-|       | unix time         |                                  |   |
-|       |                   |                                  |   |
-|-------+-------------------+----------------------------------+---|
-|       | date              | hwclock -r                       |   |
-|       | date -R           |                                  |   |
-|       | date -u           |                                  |   |
-|       |                   |                                  |   |
-|-------+-------------------+----------------------------------+---|
-| store | yyyymmddhhmmss    | yyyymmddhhmmss                   |   |
-|       | DST localtime UTC |                                  |   |
-|       |                   |                                  |   |
-
-
-
-| hardware clock | localtime      | UTC time  |
-|----------------+----------------+-----------|
-|                | timezone + DST |           |
-|                |                | preferred |
-|                | ms Windows     |           |
-| #              |                |           |
-| hwclock -r     |                |           |
-|                |                |           |
-
-|        |                            |   |   |   |
-|        | UTC                        |   |   |   |
-|--------+----------------------------+---+---+---|
-|        | Coordinated Universal Time |   |   |   |
-|        | 世界標準時間               |   |   |   |
-|        | 世界協調時間               |   |   |   |
-|        | internet                   |   |   |   |
-| taipei | UTC+8                      |   |   |   |
-|        |                            |   |   |   |
-|        | date -u                    |   |   |   |
-|        |                            |   |   |   |
-
-*** CST
-
-| CST       | Central Standard Time | China Standard Time |
-|           |                       |                     |
-|-----------+-----------------------+---------------------|
-|           | UTC-6                 | UTC+8               |
-| reference | 1                     | 2                   |
-|           |                       |                     |
-
-
-date; date -u
-
-
-reference
-
-1
-
-https://en.wikipedia.org/wiki/Central_Time_Zone
-
-
-2
-
-https://en.wikipedia.org/wiki/Time_in_China
-
-
-
-
-
-***  set the hardware clock to the current system clock: 
-
-https://wiki.gentoo.org/wiki/System_time#systemd
-
-hwclock --systohc
-
-hwclock --show
-
-
-hwclock --show; date; tlsdate -V -n -H encrypted.google.com
-
-
-tlsdate -V -n -H encrypted.google.com
-
-tlsdate -V -n 
-
-tlsdate -V -n -H www.google.com
-tlsdate -V -n -H www.google.com socks5://127.0.0.1:1080
-
-tlsdate -V -n -H www.google.com.tw
-tlsdate -V -n -H www.google.com.tw socks5://127.0.0.1:1080
-
-
-tlsdate -V -n -H www.google.com
-
-tlsdate -V -n -H www.google.de 
-tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
-
-tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
-
-tlsdate -V -n -H www.google.de socks5://127.0.0.1:1080
-
-tlsdate -V -n -H www.google.com.tw
-
-
-
-
-
-
-
-** grub
-
-*** resolution
-
-**** steps
-
-| steps |                                       |
-|-------+---------------------------------------|
-|       | modify /etc/default/grub              |
-|       | GRUB_GFXMODE=1024x768                 |
-|       |                                       |
-|       | grub2-mkconfig -o /boot/grub/grub.cfg |
-
-**** reference
-
-
-http://askubuntu.com/questions/54067/how-do-i-safely-change-grub2-screen-resolution
-
-To do this safely requires two steps.
-
-Step 1: find the preferred mode
-Reboot and press and hold Shift to display your grub. Press C to enter console mode. Then type:
-
-$ vbeinfo
-This will display various stuff how grub recognizes your display. At the bottom is "preferred mode" - in your case it should say 1280x800. Note down the value.
-
-Note: sometimes, some buggy video cards incorrectly give Grub the wrong preferred resolution - if the preferred mode is much higher than you were expecting, then select the nearest mode in the list displayed that you were expecting.
-
-Press Esc to return to grub and press Enter to boot.
-
-Step 2: Setting the resolution in grub
-Reach for your terminal and type
-
-$ sudo nano /etc/default/grub
-find the line
-
-#GRUB_GFXMODE=640x480
-remove the # and change 640x480 with the preferred mode you wrote down. E.g.:
-
-GRUB_GFXMODE=1280x800
-save, then type
-
-$ sudo update-grub
-
-
 
  
 * M4A87TD/USB3, BIOS 1102    12/09/2010 inventory
