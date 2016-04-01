@@ -326,7 +326,7 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |             | M4A87TD/USB3           |
 |             | 280g/fs3               |
 |-------------+------------------------|
-| shell       |                        |
+| shell group |                        |
 |             |                        |
 | proxychains | [2016-04-01 Fri 09:30] |
 |             |                        |
@@ -334,6 +334,19 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |             |                        |
 | dhcpcd      | [2016-04-01 Fri 09:35] |
 |             |                        |
+| keychain    |                        |
+|             |                        |
+|             |                        |
+|-------------+------------------------|
+| xorg group  |                        |
+|             |                        |
+| xorg-server | [2016-04-01 Fri 12:18] |
+|             |                        |
+| xrandr      | [2016-04-01 Fri 12:18] |
+|             |                        |
+| xterm       | [2016-04-01 Fri 12:19] |
+|             |                        |
+| spectrwm    | [2016-04-01 Fri 12:23] |
 |             |                        |
 
 
@@ -681,6 +694,253 @@ INPUT_DEVICES="evdev"
 VIDEO_CARDS="nouveau"
 
 emerge --ask x11-base/xorg-server
+
+
+
+
+*** xrandr
+
+emerge  x11-apps/xrandr
+
+
+
+*** xterm
+
+emerge x11-terms/xterm
+
+ * Messages for package media-fonts/liberation-fonts-2.00.1-r1:
+
+ * The following fontconfig configuration files have been installed:
+ * 
+ *   60-liberation.conf
+ * 
+ * Use `eselect fontconfig` to enable/disable them.
+
+ * Messages for package media-libs/fontconfig-2.11.1-r2:
+
+eselect fontconfig enable 60-liberation.conf
+
+eselect fontconfig list
+
+
+
+
+
+*** spectrwm
+
+emerge spectrwm
+
+https://wiki.archlinux.org/index.php/Spectrwm#Statusbar_configuration
+
+**** baraction.sh
+
+***** temperature h77md3h [2016-02-13 Sat 19:12]
+
+
+Linux wusb 4.3.3-hardened-r4 #2 SMP Sat Feb 13 16:58:02 CST 2016 x86_64 Intel(R) Celeron(R) CPU G530 @ 2.40GHz GenuineIntel GNU/Linux
+
+
+find /sys -name *temp*_input*
+/sys/devices/virtual/hwmon/hwmon0/temp1_input
+/sys/devices/virtual/hwmon/hwmon0/temp2_input
+/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp3_input
+/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input
+/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input
+
+
+#!/bin/bash
+#baraction.sh for spectrwm status bar
+
+
+SLEEP_SEC=10  # set bar_delay = 5 in /etc/spectrwm.conf
+
+#loops forever outputting a line every SLEEP_SEC secs
+while :; do
+
+	LOAD=$(uptime | sed 's/.*://; s/,//g')
+	echo -n "|" $LOAD
+
+	Avail=$(df / -h | awk '$NF ~/^\/$/{print $4}')
+	rootfs=$(mount | awk '$3 ~ /^\/$/ {print $1}' | awk 'BEGIN{ FS="[/]"} {print $3}')
+	subvolume=$(mount  | awk '$3 ~ /^\/$/ {print $NF}' | sed 's/.*subvol=\/\(.*\))/\1/')
+
+
+#	rootfs=$(lsblk | awk '$NF ~/^\/$/{print $1}')
+	echo -n "|" $rootfs $Avail
+
+	T1=$(cat /sys/devices/virtual/hwmon/hwmon0/subsystem/hwmon0/temp1_input)
+	T2=$(cat /sys/devices/virtual/hwmon/hwmon0/subsystem/hwmon0/temp2_input)
+	T3=$(cat /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input)
+	T4=$(cat /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input)
+	T5=$(cat /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp3_input)
+	echo -n "|" $(($T1/1000)) $(($T2/1000)) $(($T3/1000)) $(($T4/1000)) $(($T5/1000)) °C
+
+
+	Avail=$(free -h | awk '$0 ~ /Mem/ {print $NF}')
+	Swpfr=$(free -h | awk '$0 ~ /Swap/ {print $NF}')
+	echo -n "|" $Avail $Swpfr
+	
+	ip_dev=$(ip addr | awk '$0 ~ /global/ {print $NF}')
+	ip_addr=$(ip addr | awk '$0 ~ /global/ {print $2}' | sed 's/\/..//')
+	echo "|" $ip_dev $ip_addr
+
+#	pidssh=$(netstat -tpln | grep ssh | awk '$1 ~ /tcp$/ {print $NF, $4}')
+
+        sleep $SLEEP_SEC
+done
+
+***** temperature [2016-02-13 Sat 19:12]
+
+
+h77md3h 4.3.3-hardened-r4 [2016-01-24 Sun 20:37]
+
+cat /sys/devices/virtual/hwmon/hwmon0/subsystem/hwmon0/temp1_input
+
+cat /sys/devices/virtual/hwmon/hwmon0/subsystem/hwmon0/temp2_input
+
+find /sys -name hwmon
+
+#!/bin/bash
+#baraction.sh for spectrwm status bar
+
+
+SLEEP_SEC=10  # set bar_delay = 5 in /etc/spectrwm.conf
+
+#loops forever outputting a line every SLEEP_SEC secs
+while :; do
+
+	LOAD=$(uptime | sed 's/.*://; s/,//g')
+	echo -n "|" $LOAD
+
+	Avail=$(df / -h | awk '$NF ~/^\/$/{print $4}')
+	rootfs=$(mount | awk '$3 ~ /^\/$/ {print $1}' | awk 'BEGIN{ FS="[/]"} {print $3}')
+	subvolume=$(mount  | awk '$3 ~ /^\/$/ {print $NF}' | sed 's/.*subvol=\/\(.*\))/\1/')
+
+
+#	rootfs=$(lsblk | awk '$NF ~/^\/$/{print $1}')
+	echo -n "|" $rootfs $Avail
+
+	T1=$(cat /sys/devices/virtual/hwmon/hwmon0/subsystem/hwmon0/temp1_input)
+	T2=$(cat /sys/devices/virtual/hwmon/hwmon0/subsystem/hwmon0/temp2_input)
+	echo -n "|" $(($T1/1000)) $(($T2/1000)) °C
+
+	Avail=$(free -h | awk '$0 ~ /Mem/ {print $NF}')
+	Swpfr=$(free -h | awk '$0 ~ /Swap/ {print $NF}')
+	echo -n "|" $Avail $Swpfr
+	
+	ip_dev=$(ip addr | awk '$0 ~ /global/ {print $NF}')
+	ip_addr=$(ip addr | awk '$0 ~ /global/ {print $2}' | sed 's/\/..//')
+	echo "|" $ip_dev $ip_addr
+
+#	pidssh=$(netstat -tpln | grep ssh | awk '$1 ~ /tcp$/ {print $NF, $4}')
+
+        sleep $SLEEP_SEC
+done
+
+***** btrfs subvolume
+
+http://www.grymoire.com/Unix/sed.html
+
+#+HEADERS: :results raw
+#+BEGIN_SRC sh
+
+  mount  | awk '$3 ~ /^\/$/ {print $NF}' | sed 's/.*subvol=\/\(.*\))/\1/'
+# mount  | awk '$3 ~ /^\/$/ {print $NF}' | sed 's/.*subvol=\/\(.*\)/\1/'
+
+# mount | awk '$3 ~ /^\/$/ {print $NF}' # | awk 'BEGIN{ FS="[,]"} {print $NF}'  
+# mount | awk '$3 ~ /^\/$/ {print $NF}' # | awk 'BEGIN{ FS="[,]"} {print $NF}'  
+
+#+END_SRC
+
+#+RESULTS:
+fs2/snapshot20160210
+fs2/snapshot20160210)
+(rw,noatime,compress=lzo,noacl,space_cache,autodefrag,inode_cache,subvolid=263,subvol=/fs2/snapshot20160210)
+(rw,noatime,compress=lzo,noacl,space_cache,autodefrag,inode_cache,subvolid=263,subvol=/fs2/snapshot20160210)
+
+***** root device
+
+#+HEADERS: :results raw
+#+BEGIN_SRC sh
+
+mount | awk '$3 ~ /^\/$/ {print $1}' | awk 'BEGIN{ FS="[/]"} {print $3}'
+
+#  mount #| awk '$3 ~ /^\/$/ {print $1}'   | awk 'BEGIN{ FS="[/]"} {print $3}'
+#  mount  | awk '$3 ~ /^\/$/ {print $1}' # | awk 'BEGIN{ FS="[/]"} {print $3}'
+#  mount  | awk '$3 ~ /^\/$/ {print $1}'   | awk 'BEGIN{ FS="[/]"} {print $3}'
+
+#+END_SRC
+
+#+RESULTS:
+sdb
+
+
+
+**** temperature kernel
+
+
+h77md3h
+x86_pkg_temp_thermal 
+motherboard temperature
+
+| 4.3.3hardened-r4                             |
+|----------------------------------------------|
+| Device Drivers                               |
+| Generic Thermal sysfs driver                 |
+| <M>   X86 package temperature thermal driver |
+|                                              | 
+
+| 4.3.3hardened-r4                               |
+|------------------------------------------------|
+| Device Drivers                                 |
+| Hardware Monitoring support                    |
+| <M>   Intel Core/Core2/Atom temperature sensor |
+|                                                |
+**** .spectrwm.conf
+
+cp /etc/spectrwm.conf ~/.spectrwm.conf
+
+
+# workspace_limit	= 22
+  workspace_limit	= 6
+
+# modkey = Mod1
+  modkey = Mod4
+
+# program[lock]		= xlock
+  program[lock]		= /bin/false
+
+# program[term]		= xterm
+  program[term]		= xterm -fg white -bg black
+
+**** libswmhack.so.0.0
+
+find /usr -name libswmhack.so.0.0
+/usr/lib64/libswmhack.so.0.0
+
+ERROR: ld.so: object '/usr/local/lib/libswmhack.so.0.0' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
+
+ls -lha /usr/local/lib
+
+#
+
+cd /usr/local/lib
+
+ln -s /usr/lib64/libswmhack.so.0.0
+
+ls -lha
+
+
+
+
+# bar_action		= baraction.sh
+  bar_action		= /home/c5766/baraction.sh  # valid
+  bar_action		= ~/baraction.sh            # valid
+  bar_action		= baraction.sh              # external app failed: no such file or directory.
+
+
+
+
 
 
 ** imagemagick
