@@ -18,6 +18,11 @@ NTFS/FAT上的文件名亂碼
 LABEL=WinFAT    /media/WIND vfat  defaults,utf8,umask=111,dmask=000 0 0
 /dev/sda6 /media/WinNTFS    ntfs  defaults,nls=utf8,umask=0111,dmask=000  0 0
 
+mount -o utf8=true /dev/sdc1 /mnt/sdc1
+
+mount | grep sdc1
+
+
 ** failed  iocharset=cp936
 
 掛載隨身碟的時候很好用...

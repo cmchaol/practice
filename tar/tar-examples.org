@@ -1,0 +1,119 @@
+* The Ultimate Tar Command Tutorial with 10 Practical Examples
+
+http://www.thegeekstuff.com/2010/04/unix-tar-command-examples/
+
+
+** tar cvf
+
+
+$ tar cvf archive_name.tar dirname/
+
+
+In the above command:
+
+c – create a new archive
+v – verbosely list files which are processed.
+f – following is the archive file name
+
+
+** tar zcvf
+
+$ tar cvzf archive_name.tar.gz dirname/
+
+z – filter the archive through gzip
+
+Note: .tgz is same as .tar.gz
+
+| the same |
+|----------|
+| .tar.gz  |
+| .tgz     |
+
+
+** tar jcvf
+
+$ tar cvfj archive_name.tar.bz2 dirname/
+
+j – filter the archive through bzip2
+
+gzip vs bzip2: bzip2 takes more time to compress and decompress than gzip. bzip2 archival size is less than gzip.
+
+Note: .tbz and .tb2 is same as .tar.bz2
+
+| the same |
+|----------|
+| .tar.bz2 |
+| .tbz     |
+| .tb2     |
+
+
+** tar xvf
+
+$ tar xvf archive_name.tar
+
+x – extract files from archive
+
+
+** tar zxvf
+
+Use the option z for uncompressing a gzip tar archive.
+
+$ tar xvfz archive_name.tar.gz
+
+
+** tar jxvf
+
+Use the option j for uncompressing a bzip2 tar archive.
+
+$ tar xvfj archive_name.tar.bz2
+
+
+** tar tvf
+
+You can view the *.tar file content before extracting as shown below.
+
+$ tar tvf archive_name.tar
+
+
+** tar ztvf
+
+You can view the *.tar.gz file content before extracting as shown below.
+
+$ tar tvfz archive_name.tar.gz
+
+
+** tar jtvf
+
+You can view the *.tar.bz2 file content before extracting as shown below.
+
+$ tar tvfj archive_name.tar.bz2
+
+
+
+** tar xvf
+
+The following command extracts only a specific file from a large tar file.
+
+$ tar xvf archive_file.tar /path/to/file
+
+$ tar xvfz archive_file.tar.gz /path/to/file
+
+$ tar xvfj archive_file.tar.bz2 /path/to/file
+
+
+
+
+** tar Jcvf
+
+http://blog.gtwang.org/linux/linux-why-are-tar-archive-formats-switching-to-xz-compression-to-replace-bzip2-and-what-about-gzip/
+
+
+tar.xz
+
+壓縮 tar.xz：
+
+tar Jcvf file_name.tar.xz dir_name
+
+解壓縮 tar.xz：
+
+tar Jxvf file_name.tar.xz

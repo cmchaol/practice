@@ -1,0 +1,65 @@
+* Hardened/Introduction to Hardened Gentoo
+
+https://wiki.gentoo.org/wiki/Hardened/Introduction_to_Hardened_Gentoo
+
+** PaX
+
+At the heart of the project is PaX. PaX is a kernel patch that allows systems to be protected against buffer and heap overflows and similar attacks. PaX is the first line of defense in hardening a system.
+
+
+** PIE and SSP
+
+Stages marked with 'hardened' are standard stages built with PIE and SSP, they do not include SELinux/RSBAC/grsecurity access controls.
+
+
+
+** grsecurity kernel patches
+
+
+The sys-kernel/hardened-sources package is the kernel package of choice if grsecurity based protections are desired on the system. 
+
+
+** Mandatory access control
+
+Currently Hardened Gentoo supports three access control solutions: SELinux, grsecurity, and RSBAC.
+
+To use grsecurity do not worry about which stage tarball to use; grsecurity requires no userland changes. Simply use a hardened stage. When ready to build a kernel use a grsecurity-enabled kernel such as hardened-sources. Once the system is up and running use grsecurity's learning mode to build ACL's for the system.
+
+| stage    | kernel           |
+|----------+------------------|
+| hardened | hardened-sources |
+| PIE SSP  | grsecurity       |
+|          |                  |
+
+Similar to grsecurity, RSBAC does not require any userland changes but can be installed after setting up a normal Gentoo installation. RSBAC is supported by the sys-kernel/rsbac-sources kernel. 
+
+
+
+* Hardened/PaX Quickstart
+
+https://wiki.gentoo.org/wiki/Hardened/PaX_Quickstart
+
+** Understanding PaX
+
+|             | softmode                   | non-softmode             |
+|-------------+----------------------------+--------------------------|
+|             | permit by default          | forbid by default        |
+|             |                            |                          |
+| enforce PaX | explicitly mark executable | immediately activate     |
+|             |                            | default                  |
+|             |                            |                          |
+| relax PaX   | default                    | explicitly mark binaries |
+|-------------+----------------------------+--------------------------|
+|             |                            | problematic excutables   |
+|             |                            | relax PaX                |
+|             |                            |                          |
+
+*** Enforce non-executable pages
+
+
+** Building a PaX kernel
+
+emerge --ask sys-kernel/hardened-sources
+
+We recommend starting off with as much hardening as possible and relaxing only when there is no other workaround.
+
