@@ -1,0 +1,128 @@
+ 
+
+* source block template
+
+|    | block only | sh | date | raw | silent | verbatim | su | sudo |
+|----+------------+----+------+-----+--------+----------+----+------|
+| 20 | v          |    |      |     |        |          |    |      |
+|    |            |    |      |     |        |          |    |      |
+| 30 | v          | v  |      |     |        |          |    |      |
+|    |            |    |      |     |        |          |    |      |
+| 40 | v          | v  | v    |     |        |          |    |      |
+|    |            |    |      |     |        |          |    |      |
+| 50 | v          | v  | v    | v   |        |          |    |      |
+|    |            |    |      |     |        |          |    |      |
+| 60 | v          | v  | v    |     | v      |          |    |      |
+|    |            |    |      |     |        |          |    |      |
+| 70 | v          | v  | v    |     |        | v        |    |      |
+|    |            |    |      |     |        |          |    |      |
+| 80 | v          | v  | v    |     |        |          | v  |      |
+|    |            |    |      |     |        |          |    |      |
+| 82 | v          | v  | v    |     |        |          |    | v    |
+|    |            |    |      |     |        |          |    |      |
+
+
+** 20 block only
+
+to insert a blank source block inside org mode
+
+#+BEGIN_SRC 
+
+#+END_SRC
+
+To insert the above template, type the 3-keystroke in a raw, "<", "s", "Tab" inside the emacs org buffer.
+
+
+| inside org emacs buffer        |
+| type the following 3-keystroke |
+|--------------------------------|
+| <                              |
+|                                |
+| s                              |
+|                                |
+| tab                            |
+
+#+BEGIN_SRC 
+
+#+END_SRC
+
+
+** 30 minimal sh block
+
+#+BEGIN_SRC sh
+
+#+END_SRC
+
+#+RESULTS:
+
+
+
+** 40 sh date
+
+#+BEGIN_SRC sh
+
+date
+
+#+END_SRC
+
+#+RESULTS:
+: Wed Apr  6 17:05:13 CST 2016
+
+
+** 50 sh date raw
+
+#+HEADERS: :results raw
+#+BEGIN_SRC sh
+
+date
+
+#+END_SRC
+
+
+
+
+** 60 sh date silent
+
+#+HEADERS: :results silent
+#+BEGIN_SRC sh
+
+date
+
+#+END_SRC
+
+
+** 70 sh date verbatim
+
+#+HEADERS: :results verbatim
+#+BEGIN_SRC sh
+
+date
+
+#+END_SRC
+
+#+RESULTS:
+: Wed Apr  6 17:17:33 CST 2016
+
+
+
+
+** 80 sh su
+
+#+HEADERS: :dir /su::/tmp
+#+BEGIN_SRC sh
+
+pwd
+whoami
+
+#+END_SRC
+
+
+** 82 sh sudo
+
+#+HEADERS: :dir /sudo::/tmp
+#+BEGIN_SRC sh
+
+pwd
+whoami
+
+#+END_SRC
