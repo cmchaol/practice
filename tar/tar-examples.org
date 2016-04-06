@@ -3,6 +3,44 @@
 http://www.thegeekstuff.com/2010/04/unix-tar-command-examples/
 
 
+** summary
+
+| tar  cvf |       | .tar     |
+| tar  tvf |       |          |
+| tar  xvf |       |          |
+|----------+-------+----------|
+|          |       |          |
+| tar zcvf | gzip  | .tar.gz  |
+| tar ztvf |       | .tgz     |
+| tar zxvf |       |          |
+|----------+-------+----------|
+|          |       |          |
+| tar jcvf | bzip2 | .tar.bz2 |
+| tar jtvf |       | .tbz     |
+| tar jxvf |       | .tb2     |
+|----------+-------+----------|
+|          |       |          |
+| tar Jcvf | xz    | .tar.xz  |
+| tar Jtvf |       |          |
+| tar Jxvf |       |          | 
+
+** performance
+
+tar zcvf nhird.tar.gz /mnt/sda5/nhird
+
+tar jcvf nhird.tar.bz2 /mnt/sda5/nhird
+
+tar Jcvf nhird.tar.xz /mnt/sda5/nhird
+
+|     |   Gb |
+|-----+------|
+| gz  |  1.4 |
+|     |      |
+| bz2 | 0.95 |
+|     |      |
+| xz  |      |
+|     |      |
+
 ** tar cvf
 
 

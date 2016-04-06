@@ -3,9 +3,12 @@
 
 * gentoo 2 big files
 
-| stage3           |
-|                  |
-| portage snapshot |
+|                  |                                        |
+|                  | [2016-04-06 Wed 22:31]                 |
+|------------------+----------------------------------------|
+| stage3           | stage3-amd64-hardened-20160331.tar.bz2 |
+|                  |                                        |
+| portage snapshot |                                        |
 
 http://ftp.jaist.ac.jp/pub/Linux/Gentoo/releases/amd64/autobuilds/current-stage3-amd64/hardened/
 
@@ -39,8 +42,12 @@ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/snapshots/
 |       |                            |
 |    20 | extract 2 big files        |
 |       |                            |
+|    30 | nano make.conf             |
+|       |                            |
+|    40 | chroot                     |
 |       |                            |
 |       |                            |
+|-------+----------------------------|
 |    20 | generate excluding file    |
 |       |                            |
 |    30 | generate tar               |
@@ -67,6 +74,7 @@ du -hd1 .  | grep gentoo
 
 #+RESULTS:
 0	./gentoo
+0	./gentoo
 
 
 
@@ -79,11 +87,16 @@ du -hd1 .  | grep gentoo
 
 pwd
 
-ls /mnt/fs1/stage3-amd64-hardened-20160317.tar.bz2
+ls /mnt/fs1/stage3*
 
-ls /mnt/fs1/portage-20160330.tar.xz
+ls /mnt/fs1/portage*
 
 #+END_SRC
+
+#+RESULTS:
+/tmp/gentoo
+/mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2
+/mnt/fs1/portage-20160405.tar.xz
 
 #+HEADERS: :results silent
 #+HEADERS: :results raw
@@ -97,6 +110,136 @@ cd usr
 tar xvpf /mnt/fs1/portage-20160330.tar.xz --xattrs
 
 #+END_SRC
+
+
+#+HEADERS: :results silent
+#+HEADERS: :results raw
+#+HEADERS: :dir /su::/tmp/gentoo
+#+BEGIN_SRC sh
+
+tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2 --xattrs  
+
+cd usr
+
+tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
+
+#+END_SRC
+
+cd /tmp/gentoo
+
+tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2 --xattrs  
+
+cd usr
+
+tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
+
+
+
+*** 30 nano make.conf
+
+nano /tmp/gentoo/etc/portage/make.conf
+
+MAKEOPTS="-j3"
+PORTAGE_NICENESS=10
+
+GENTOO_MIRRORS="http://ftp.twaren.net/Linux/Gentoo/ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/ http://ftp.iij.ad.jp/pub/linux/gentoo/"
+
+
+
+mkdir /tmp/gentoo/etc/portage/repos.conf
+
+cp /tmp/gentoo/usr/share/portage/config/repos.conf /tmp/gentoo/etc/portage/repos.conf/gentoo.conf
+
+nano /tmp/gentoo/etc/portage/repos.conf/gentoo.conf
+
+[gentoo]
+location = /usr/portage
+sync-type = rsync
+sync-uri = rsync://rsync.tw.gentoo.org/gentoo-portage
+auto-sync = yes
+
+*** 40 chroot
+
+
+cp -L /etc/resolv.conf etc/
+
+mount -t proc proc  /mnt/zram0/proc
+mount --rbind /sys  /mnt/zram0/sys
+mount --make-rslave /mnt/zram0/sys
+mount --rbind /dev  /mnt/zram0/dev
+mount --make-rslave /mnt/zram0/dev
+
+
+chroot /mnt/zram0/ /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"
+
+
+mount -o subvol=fs2/snapshot20160210,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag /dev/sdd /mnt/fs2
+
+
+cp -L /etc/resolv.conf /mnt/fs2/etc/
+
+mount -t proc proc  /mnt/fs2/proc
+mount --rbind /sys  /mnt/fs2/sys
+mount --make-rslave /mnt/fs2/sys
+mount --rbind /dev  /mnt/fs2/dev
+mount --make-rslave /mnt/fs2/dev
+
+
+chroot /mnt/fs2/ /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"
+
+
+mount -o size=90%,noatime,nodiratime -t tmpfs tmpfs /tmp
+
+mkdir /var/tmp/portage
+
+mount -o size=90%,noatime,nodiratime,uid=portage,gid=portage,mode=775 -t tmpfs tmpfs /var/tmp/portage 
+
+
+
+exit
+cd
+
+umount -l /mnt/fs3/dev{/shm,/pts,}
+umount -l /mnt/fs3{/boot,/sys,/proc,}
+
+
+emerge --sync
+
+
+root #exit
+
+cdimage ~#cd
+cdimage ~#umount -l /mnt/gentoo/dev{/shm,/pts,}
+cdimage ~#umount /mnt/gentoo{/boot,/sys,/proc,}
+cdimage ~#reboot
+
+inside the chroot shell
+
+#
+
+exit
+
+
+in host shell
+
+#
+umount -l /var/tmp/gentoo/dev{/shm,/pts,}
+umount -l /var/tmp/gentoo{/boot,/sys,/proc,}
+
+umount -l /mnt/gentoo/dev{/shm,/pts,}
+umount /mnt/gentoo{/sys,/proc,}
+
+
+umount -l /mnt/fs2/dev{/shm,/pts,}
+umount -l /mnt/fs2{/sys,/proc,}
+
+
+
+
 
 
 
