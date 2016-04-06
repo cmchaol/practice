@@ -1,6 +1,16 @@
 
 
 
+* gentoo 2 big files
+
+| stage3           |
+|                  |
+| portage snapshot |
+
+http://ftp.jaist.ac.jp/pub/Linux/Gentoo/releases/amd64/autobuilds/current-stage3-amd64/hardened/
+
+http://ftp.jaist.ac.jp/pub/Linux/Gentoo/snapshots/
+
 
   
 * stage4
@@ -14,6 +24,152 @@
 | extract tar             |
 |                         |
 |                         |
+
+
+
+** steps tmpfs M4A87TD/USB3 [2016-04-06 Wed 16:56]
+
+
+
+
+
+| steps | aims                       |
+|-------+----------------------------|
+|    10 | generate working directory |
+|       |                            |
+|    20 | extract 2 big files        |
+|       |                            |
+|       |                            |
+|       |                            |
+|    20 | generate excluding file    |
+|       |                            |
+|    30 | generate tar               |
+|       |                            |
+|    40 | extract tar                |
+|       |                            |
+|    50 | adjust grub                |
+|       |                            |
+|    60 | adjust fstab               |
+|       |                            |
+
+
+*** 10 generate working directory
+
+#+HEADERS: :results raw
+#+HEADERS: :dir /su::/tmp
+#+BEGIN_SRC sh
+
+mkdir gentoo
+
+du -hd1 .  | grep gentoo
+
+#+END_SRC
+
+#+RESULTS:
+0	./gentoo
+
+
+
+*** 20 extract 2 big files
+
+
+#+HEADERS: :results raw
+#+HEADERS: :dir /su::/tmp/gentoo
+#+BEGIN_SRC sh
+
+pwd
+
+ls /mnt/fs1/stage3-amd64-hardened-20160317.tar.bz2
+
+ls /mnt/fs1/portage-20160330.tar.xz
+
+#+END_SRC
+
+#+HEADERS: :results silent
+#+HEADERS: :results raw
+#+HEADERS: :dir /su::/tmp/gentoo
+#+BEGIN_SRC sh
+
+tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160317.tar.bz2 --xattrs  
+
+cd usr
+
+tar xvpf /mnt/fs1/portage-20160330.tar.xz --xattrs
+
+#+END_SRC
+
+
+
+*** 20 generate excluding file 
+
+
+/tmp/stage4.excl 
+
+
+.bash_history
+/mnt/*
+/tmp/*
+/proc/*
+/sys/*
+/dev/*
+
+
+
+*** 30 generate tar 
+
+
+tar cvjf stage4_fs3b_20160329.tar.bz2 / -X /tmp/stage4.excl  
+
+
+*** 40 extract tar 
+
+cd /tmp/gentoo
+
+tar -xvjpf /mnt/fs1/stage4_fs3b_20160329.tar.bz2 
+
+*** 50 adjust grub
+
+
+mount -t proc proc  /mnt/sda/fs2/proc
+mount --rbind /sys  /mnt/sda/fs2/sys
+mount --make-rslave /mnt/sda/fs2/sys
+mount --rbind /dev  /mnt/sda/fs2/dev
+mount --make-rslave /mnt/sda/fs2/dev
+
+
+chroot /mnt/sda/fs2/ /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"
+
+
+grub2-install /dev/sda --recheck
+
+
+grub2-mkconfig -o /boot/grub/grub.cfg
+
+grub2-mkconfig -o /mnt/sda/fs2/boot/grub/grub.cfg
+
+
+exit
+cd
+
+umount -l /mnt/sda/fs2/dev{/shm,/pts,}
+umount -l /mnt/sda/fs2{/boot,/sys,/proc,}
+
+
+*** 60 adjust fstab
+
+blkid
+
+
+UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a/ btrfs subvol=fs2,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
+
+UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a/mnt/fs1 btrfs subvol=fs1,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
+
+tmpfs           /var/tmp/portage        tmpfs   uid=portage,gid=portage,mode=0775,size=90%,noatime    0 0
+tmpfs   /tmp         tmpfs   nodev,nosuid,size=90%          0  0
+
+
 
 
 

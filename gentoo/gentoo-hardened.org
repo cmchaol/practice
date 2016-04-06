@@ -59,7 +59,22 @@ https://wiki.gentoo.org/wiki/Hardened/PaX_Quickstart
 
 ** Building a PaX kernel
 
+| kernel    |
+|-----------|
+| download  |
+|           |
+| configure |
+|           |
+| generate  |
+|           |
+| dispatch  |
+|           |
+
 emerge --ask sys-kernel/hardened-sources
 
 We recommend starting off with as much hardening as possible and relaxing only when there is no other workaround.
+
+** Marking for PaX
+
+the preferred approach is to use XATTR_PAX
 
