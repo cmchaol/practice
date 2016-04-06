@@ -13,6 +13,7 @@ File systems  --->
 
 mount -t tmpfs tmpfs /MOUNTPOINT
 
+
 * Portage TMPDIR on tmpfs
 
 https://wiki.gentoo.org/wiki/Portage_TMPDIR_on_tmpfs
@@ -28,4 +29,49 @@ tmpfs		/tmp		tmpfs	mode=777	0 0
 * kernel.org
 
 https://www.kernel.org/doc/Documentation/filesystems/tmpfs.txt
+
+
+* zram
+
+/etc/local.d zram1 for swap
+
+https://wiki.gentoo.org/wiki/Zram#Gentoo.2FOpenRC_init_script
+
+
+# 
+
+generate 2 files with +x inside /etc/local.d
+
+|       | G |      |
+|-------+---+------|
+| zram0 | 1 | swap |
+|       |   |      |
+
+** zram.start
+
+#!/bin/bash
+
+modprobe zram num_devices=2
+
+echo lz4 > /sys/block/zram0/comp_algorithm
+
+echo 2G > /sys/block/zram0/disksize 
+
+
+mkswap /dev/zram0
+swapon /dev/zram0 -p 10
+
+
+** zram.stop
+
+#!/bin/bash
+
+swapoff /dev/zram0
+
+echo 1 > /sys/block/zram0/reset
+
+modprobe -r zram
+
+
+
 
