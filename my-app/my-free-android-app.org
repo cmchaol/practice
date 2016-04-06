@@ -1,0 +1,106 @@
+* gps related
+
+wikiloc
+
+https://play.google.com/store/apps/details?id=com.wikiloc.wikilocandroid&hl=zh-TW
+
+
+
+androits gps test
+
+gps test
+
+https://play.google.com/store/apps/details?id=com.chartcross.gpstest&hl=zh-TW
+
+sygic
+
+https://play.google.com/store/apps/details?id=net.hubalek.android.reborn.beta&hl=zh-TW
+
+
+
+* flashlight
+
+color flashlight
+彩色手電筒 HD (LED 手電筒 手電 電筒)
+
+https://play.google.com/store/apps/details?id=com.socialnmobile.hd.flashlight&hl=zh-TW
+
+
+
+
+* ssh server
+
+ssh server
+
+https://play.google.com/store/apps/details?id=com.icecoldapps.sshserver&hl=zh-TW
+
+
+
+
+* fuel
+
+fuel buddy
+
+https://play.google.com/store/apps/details?id=mrigapps.andriod.fuelcons&hl=zh-TW
+
+
+
+fuelio
+
+* chime
+
+caynax hourly chime
+
+* image
+
+picpac
+
+flickr
+
+
+* wifi
+
+Wifi 分析儀
+
+
+VMware Horizon Client
+
+https://play.google.com/store/apps/details?id=com.vmware.view.client.android&hl=zh-TW
+
+10.161.0.100
+
+* game
+
+中國象棋 (Chinese Chess)
+
+https://play.google.com/store/apps/details?id=com.cchess&hl=zh-TW
+
+
+Battery Widget Reborn (Free)
+
+https://play.google.com/store/apps/details?id=net.hubalek.android.reborn.beta&hl=zh-TW
+
+
+My Data Manager
+
+https://play.google.com/store/apps/details?id=com.mobidia.android.mdm&hl=zh-TW
+
+
+|              2016-6-20 | due       |
+|                        | remain Mb |
+|------------------------+-----------|
+| [2016-04-06 Wed 10:08] | 960       |
+|                        |           |
+
+
+* gold
+
+Gold Silver Live Prices
+
+https://play.google.com/store/apps/details?id=com.terrylau.goldsilvermonitor&hl=zh-TW
+
+Gold Live!
+
+https://play.google.com/store/apps/details?id=com.kitco.android.free.activities&hl=zh-TW
+
+
