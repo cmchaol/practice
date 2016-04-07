@@ -29,6 +29,37 @@ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/snapshots/
 |                         |
 
 
+|                  |   |
+|------------------+---|
+| stage3           |   |
+|                  |   |
+| portage snapshot |   |
+|                  |   |
+| kernel           |   |
+|                  |   |
+| tmpfs            |   |
+|                  |   |
+| zram             |   |
+|                  |   |
+| zswap            |   |
+|                  |   |
+| xorg             |   |
+|                  |   |
+| emacs            |   |
+|                  |   |
+| browser          |   |
+|                  |   |
+| wifi             |   |
+|                  |   |
+| hardened         |   |
+|                  |   |
+| docker           |   |
+|                  |   |
+| audio            |   |
+|                  |   |
+| livecd           |   |
+|                  |   |
+|                  |   |
 
 ** steps tmpfs M4A87TD/USB3 [2016-04-06 Wed 16:56]
 
@@ -62,9 +93,6 @@ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/snapshots/
 |    94 | extract tar                |
 |       |                            |
 |    96 | adjust grub                |
-|       |                            |
-|    60 | adjust fstab               |
-|       |                            |
 
 
 *** 10 generate working directory
@@ -164,7 +192,13 @@ auto-sync = yes
 
 *** 40 chroot
 
+mount -o subvol=fs3,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag /dev/sda /mnt/fs3
+
+destdir=/mnt/fs3
+
 destdir=/tmp/gentoo
+
+
 
 cp -L /etc/resolv.conf $destdir/etc/
 
@@ -185,6 +219,14 @@ source /etc/profile
 export PS1="(chroot) $PS1"
 
 emerge --sync
+
+
+mount -o size=90%,noatime,nodiratime,mode=777 -t tmpfs tmpfs /tmp
+
+mount -o size=90%,noatime,nodiratime,uid=portage,gid=portage,mode=775 -t tmpfs tmpfs /var/tmp/portage 
+
+
+
 
 exit
 cd
@@ -310,6 +352,8 @@ in host terminal:
 
 tail -f /tmp/gentoo/var/log/emerge-fetch.log
 
+tail -f /mnt/fs3/var/log/emerge-fetch.log
+
 
 ls -l /usr/src/linux
 
@@ -331,42 +375,42 @@ make menuconfig
 make && make modules_install
 
 
-|       | 1 | 2 | 3 | 4 | 5 | 6 |                                       | default |           |
-|-------+---+---+---+---+---+---+---------------------------------------+---------+-----------|
-| net   |   |   |   |   |   |   |                                       |         |           |
-|       | v |   |   |   |   |   | Device Drivers                        |         |           |
-|       |   | v |   |   |   |   | Network device suppor                 |         |           |
-|       |   |   | v |   |   |   | Ethernet driver support               |         |           |
-|       |   |   |   |   |   |   |                                       |         |           |
-|       |   |   |   | v |   |   | Atheros devices                       |         |           |
-|       |   |   |   |   | v |   | Atheros L1C Gigabit Ethernet support  |         | h77md3h   |
-|       |   |   |   |   |   |   |                                       |         |           |
-|       |   |   |   | v |   |   | Marvell devices                       |         |           |
-|       |   |   |   |   | v |   | Marvell Yukon 2                       |         | b1 lenovo |
-|       |   |   |   |   |   |   |                                       |         |           |
-|       |   |   |   | v |   |   | Realtek devices                       |         |           |
-|       |   |   |   |   | v |   | Realtek 8169 gigabit                  |         | b1 asus   |
-|       |   |   |   |   |   |   |                                       |         |           |
-|-------+---+---+---+---+---+---+---------------------------------------+---------+-----------|
-| btrfs |   |   |   |   |   |   |                                       |         |           |
-|       | v |   |   |   |   |   | File systems                          |         |           |
-|       |   | v |   |   |   |   | <*> Btrfs filesystem support          |         |           |
-|       |   |   |   |   |   |   |                                       |         |           |
-|       |   | v |   |   |   |   | DOS/FAT/NT Filesystems  --->          |         |           |
-|       |   |   | v |   |   |   | <M> NTFS file system support          |         |           |
-|       |   |   |   |   |   |   |                                       |         |           |
-|-------+---+---+---+---+---+---+---------------------------------------+---------+-----------|
-| zram  |   |   |   |   |   |   |                                       |         |           |
-|       | v |   |   |   |   |   | Processor type and features           |         |           |
-|       |   | v |   |   |   |   | Memory allocator for compressed pages | blank   |           |
-|       |   |   |   |   |   |   |                                       |         |           |
-|       | v |   |   |   |   |   | Device Drivers                        |         |           |
-|       |   | v |   |   |   |   | Block devices                         |         |           |
-|       |   |   | v |   |   |   | Compressed RAM block device support   | blank   |           |
-|       |   |   |   | v |   |   | Enable LZ4 algorithm support          | blank   |           |
-|       |   |   |   |   |   |   |                                       |         |           |
-|-------+---+---+---+---+---+---+---------------------------------------+---------+-----------|
-|       |   |   |   |   |   |   |                                       |         |           |
+|       | 1 | 2 | 3 | 4 | 5 | 6 |                                       | defconfig |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+-----------|
+| net   |   |   |   |   |   |   |                                       |           |           |
+|       | v |   |   |   |   |   | Device Drivers                        |           |           |
+|       |   | v |   |   |   |   | Network device suppor                 |           |           |
+|       |   |   | v |   |   |   | Ethernet driver support               |           |           |
+|       |   |   |   |   |   |   |                                       |           |           |
+|       |   |   |   | v |   |   | Atheros devices                       |           |           |
+|       |   |   |   |   | v |   | Atheros L1C Gigabit Ethernet support  |           | h77md3h   |
+|       |   |   |   |   |   |   |                                       |           |           |
+|       |   |   |   | v |   |   | Marvell devices                       |           |           |
+|       |   |   |   |   | v |   | Marvell Yukon 2                       |           | b1 lenovo |
+|       |   |   |   |   |   |   |                                       |           |           |
+|       |   |   |   | v |   |   | Realtek devices                       |           |           |
+|       |   |   |   |   | v |   | Realtek 8169 gigabit                  |           | b1 asus   |
+|       |   |   |   |   |   |   |                                       |           |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+-----------|
+| btrfs |   |   |   |   |   |   |                                       |           |           |
+|       | v |   |   |   |   |   | File systems                          |           |           |
+|       |   | v |   |   |   |   | <*> Btrfs filesystem support          |           |           |
+|       |   |   |   |   |   |   |                                       |           |           |
+|       |   | v |   |   |   |   | DOS/FAT/NT Filesystems  --->          |           |           |
+|       |   |   | v |   |   |   | <M> NTFS file system support          |           |           |
+|       |   |   |   |   |   |   |                                       |           |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+-----------|
+| zram  |   |   |   |   |   |   |                                       |           |           |
+|       | v |   |   |   |   |   | Processor type and features           |           |           |
+|       |   | v |   |   |   |   | Memory allocator for compressed pages | blank     |           |
+|       |   |   |   |   |   |   |                                       |           |           |
+|       | v |   |   |   |   |   | Device Drivers                        |           |           |
+|       |   | v |   |   |   |   | Block devices                         |           |           |
+|       |   |   | v |   |   |   | Compressed RAM block device support   | blank     |           |
+|       |   |   |   | v |   |   | Enable LZ4 algorithm support          | blank     |           |
+|       |   |   |   |   |   |   |                                       |           |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+-----------|
+|       |   |   |   |   |   |   |                                       |           |           |
 
 btrfs
 
@@ -387,6 +431,12 @@ Processor type and features
 Device Drivers > Block devices
 <M>   Compressed RAM block device support  
  [*]     Enable LZ4 algorithm support 
+
+
+What is the output of sensors-detect? Coretemp is only for Intel processors. You probably want k10temp.
+
+https://bbs.archlinux.org/viewtopic.php?id=104723
+
 
 
 
@@ -508,26 +558,16 @@ tar -xvjpf /mnt/fs1/stage4_fs3_20160407.tar.bz2
 
 *** 96 adjust grub
 
-destdir=/mnt/fs3
-
-cp -L /etc/resolv.conf $destdir/etc/
-
-mount -t proc proc  $destdir/proc
-mount --rbind /sys  $destdir/sys
-mount --make-rslave $destdir/sys
-mount --rbind /dev  $destdir/dev
-mount --make-rslave $destdir/dev
-
-chroot $destdir /bin/bash
-source /etc/profile
-export PS1="(chroot) $PS1"
-
 
 
 grub2-install /dev/sda --recheck
 
 grub2-mkconfig -o /boot/grub/grub.cfg
 
+
+mount -o size=90%,noatime,nodiratime,mode=777 -t tmpfs tmpfs /tmp
+
+mount -o size=90%,noatime,nodiratime,uid=portage,gid=portage,mode=775 -t tmpfs tmpfs /var/tmp/portage 
 
 
 
@@ -538,20 +578,6 @@ destdir=/mnt/fs3
 
 umount -l $destdir/dev{/shm,/pts,}
 umount -l $destdir{/boot,/sys,/proc,}
-
-
-*** 60 adjust fstab
-
-blkid
-
-
-UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a/ btrfs subvol=fs2,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
-
-UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a/mnt/fs1 btrfs subvol=fs1,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
-
-tmpfs           /var/tmp/portage        tmpfs   uid=portage,gid=portage,mode=0775,size=90%,noatime    0 0
-tmpfs   /tmp         tmpfs   nodev,nosuid,size=90%          0  0
-
 
 
 
@@ -861,32 +887,41 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 
 ** inventory
 
-|             | [2016-04-01 Fri 09:20] |
-|             | M4A87TD/USB3           |
-|             | 280g/fs3               |
-|-------------+------------------------|
-| shell group |                        |
-|             |                        |
-| proxychains | [2016-04-01 Fri 09:30] |
-|             |                        |
-| grub        | [2016-04-01 Fri 09:31] |
-|             |                        |
-| dhcpcd      | [2016-04-01 Fri 09:35] |
-|             |                        |
-| keychain    |                        |
-|             |                        |
-|             |                        |
-|-------------+------------------------|
-| xorg group  |                        |
-|             |                        |
-| xorg-server | [2016-04-01 Fri 12:18] |
-|             |                        |
-| xrandr      | [2016-04-01 Fri 12:18] |
-|             |                        |
-| xterm       | [2016-04-01 Fri 12:19] |
-|             |                        |
-| spectrwm    | [2016-04-01 Fri 12:23] |
-|             |                        |
+|               | M4A87TD/USB3 280g/fs3  |
+|---------------+------------------------|
+| shell group   |                        |
+|               |                        |
+| proxychains   | [2016-04-07 Thu 15:13] |
+|               |                        |
+| grub          | [2016-04-07 Thu 15:13] |
+|               |                        |
+| dhcpcd        | [2016-04-07 Thu 15:13] |
+|               |                        |
+| keychain      |                        |
+|               |                        |
+| parallel      |                        |
+|               |                        |
+| git           |                        |
+|               |                        |
+|---------------+------------------------|
+| xorg group    |                        |
+|               |                        |
+| xorg-server   | [2016-04-07 Thu 15:13] |
+|               |                        |
+| xrandr        | [2016-04-07 Thu 16:12] |
+|               |                        |
+| xterm         | [2016-04-07 Thu 16:12] |
+|               |                        |
+| spectrwm      | [2016-04-07 Thu 16:12] |
+|               |                        |
+|---------------+------------------------|
+| editors       |                        |
+|               |                        |
+| emacs         | [2016-04-07 Thu 17:06] |
+|               |                        |
+| google-chrome | [2016-04-07 Thu 17:11] |
+|               |                        |
+| firefox       |                        |
 
 
 
@@ -1180,11 +1215,64 @@ tlsdate -V -n -H www.google.com.tw
 emerge sys-boot/mbr
 
 
+*** parallel
+
+emerge  sys-process/parallel
+
+**** my modification
+
+ls -1 *.tif | parallel convert '{}' '{.}.jpg'
+
+ls -1 *.tif | parallel convert '{}' '{.}.jpg'
+
+ls -1 *.tif | parallel convert '{}' -rotate -90 '{.}-90.jpg'
+
+**** examples
+
+http://superuser.com/questions/71028/batch-converting-png-to-jpg-in-linux
+
+The simplest solution is like most already posted. A simple bash for loop.
+
+for i in *.png ; do convert "$i" "${i%.*}.jpg" ; done
+For some reason I tend to avoid loops in bash so here is a more unixy xargs approach, using bash for the name-mangling.
+
+ls -1 *.png | xargs -n 1 bash -c 'convert "$0" "${0%.*}.jpg"'
+The one I use. It uses GNU Parallel to run multiple jobs at once, giving you a performance boost. It is installed by default on many systems and is almost definitely in your repo (it is a good program to have around).
+
+ls -1 *.png | parallel convert '{}' '{.}.jpg'
+The number of jobs defaults to the number of processes you have. I found better CPU usage using 3 jobs on my dual-core system.
+
+ls -1 *.png | parallel -j 3 convert '{}' '{.}.jpg'
+And if you want some stats (an ETA, jobs completed, average time per job...)
+
+ls -1 *.png | parallel --eta convert '{}' '{.}.jpg'
+There is also an alternative syntax if you are using GNU Parallel.
+
+parallel convert '{}' '{.}.jpg' ::: *.png
+And a similar syntax for some other versions (including debian).
+
+parallel convert '{}' '{.}.jpg' -- *.png
+
+
+
+
+*** git
+
+
+emerge dev-vcs/git
+
+
 
 
 ** xorg group
-
+   
 *** x11-base/xorg-server
+
+| kernel               |
+|                      |
+| make.conf            |
+|                      |
+| download and compile |
 
 **** kernel
 
@@ -1194,29 +1282,32 @@ https://wiki.gentoo.org/wiki/Nouveau
 
 
 
-| 1 | 2 | 3 | 4 |   | kernel option                     | default | change to |
-|---+---+---+---+---+-----------------------------------+---------+-----------|
-| v |   |   |   |   | Device Drivers                    |         |           |
-|   | v |   |   |   | Input device support              |         |           |
-|   |   | v |   |   | Event interface                   | *       |           |
-|---+---+---+---+---+-----------------------------------+---------+-----------|
-|   |   |   |   |   |                                   |         |           |
-|   | v |   |   |   | Graphics support                  |         |           |
-|   |   | v |   |   | Frame buffer Devices              |         |           |
-|   |   |   | v |   | Support for frame buffer devices  | none    |           |
-|---+---+---+---+---+-----------------------------------+---------+-----------|
-|   |   |   |   |   |                                   |         |           |
-|   |   | v |   |   | Console display driver support    |         |           |
-|   |   |   | v |   | Framebuffer Console support       | *       |           |
-|---+---+---+---+---+-----------------------------------+---------+-----------|
-|   |   |   |   |   |                                   |         |           |
-|   |   | v |   |   | Direct Rendering Manager (XFree86 |         |           |
-|   |   |   | v |   | Enable legacy fbdev support for   | *       |           |
-|---+---+---+---+---+-----------------------------------+---------+-----------|
-|   |   |   |   |   |                                   |         |           |
-|   |   | v |   |   | Nouveau (NVIDIA) cards            | none    | M         |
+| 1 | 2 | 3 | 4 |   | kernel option                     | defconfig | change to |
+|---+---+---+---+---+-----------------------------------+-----------+-----------|
+| v |   |   |   |   | Device Drivers                    |           |           |
+|   | v |   |   |   | Input device support              |           |           |
+|   |   | v |   |   | Event interface                   | *         |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |
+|   | v |   |   |   | Graphics support                  |           |           |
+|   |   | v |   |   | Frame buffer Devices              |           |           |
+|   |   |   | v |   | Support for frame buffer devices  | none      |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |
+|   |   | v |   |   | Console display driver support    |           |           |
+|   |   |   | v |   | Framebuffer Console support       | *         |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |
+|   |   | v |   |   | Direct Rendering Manager (XFree86 |           |           |
+|   |   |   | v |   | Enable legacy fbdev support for   | *         |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |
+|   |   | v |   |   | Nouveau (NVIDIA) cards            | none      | M         |
+
 
 **** make.conf
+
+
 
 Sample make.conf entries
 ## (For mouse, keyboard, and Synaptics touchpad support)
@@ -1231,6 +1322,9 @@ nano /etc/portage/make.conf
 INPUT_DEVICES="evdev"
 
 VIDEO_CARDS="nouveau"
+
+
+**** download and compile
 
 emerge --ask x11-base/xorg-server
 
@@ -1478,11 +1572,144 @@ ls -lha
   bar_action		= baraction.sh              # external app failed: no such file or directory.
 
 
+** editors
+
+*** google-chrome
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge www-client/google-chrome  --autounmask-write
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+
+emerge -pv www-client/google-chrome  
+
+
+dispatch-conf
+
+
+emerge www-client/google-chrome  
 
 
 
 
-** imagemagick
+
+
+
+*** emacs
+
+https://wiki.gentoo.org/wiki/GNU_Emacs
+
+
+**** flag
+
+echo "app-editors/emacs xft X jpeg png svg tiff alsa gif imagemagick sound" >> /etc/portage/package.use/emacs
+
+
+dispatch-conf
+
+
+emerge app-editors/emacs  --autounmask-write
+
+
+USE flag
+
+USE="X acl alsa dbus gif gpm gtk gtk3 inotify jpeg png svg tiff xft xpm zlib
+
+ -Xaw3d (-aqua) -athena -games -gconf -gfile -gnutls -gsettings -gzip-el -hesiod -imagemagick -kerberos -libxml2 -livecd -m17n-lib -motif -pax_kernel (-selinux) -sound -source -toolkit-scroll-bars -wide-int" 0 KiB
+
+nano -w /etc/portage/package.use/emacs
+
+X acl alsa dbus gif gpm gtk gtk3 inotify jpeg png svg tiff xft xpm zlib
+
+**** chinese
+
+
+(set-fontset-font (frame-parameter nil 'font)
+      'han '("Noto Sans TC Thin"))
+
+ (setq face-font-rescale-alist '(("Noto Sans TC Thin" . 1.3)))
+
+no function at [2016-01-14 Thu 11:49]
+
+http://superuser.com/questions/781924/unexpected-result-from-face-font-rescale-alist-in-emacs
+
+;; in .emacs
+(defadvice frame-notice-user-settings (before my:rescale-alist)
+  (message "Set face-font-rescale-alist")
+  (add-to-list 'face-font-rescale-alist
+               (cons (font-spec :family "STIXGeneral") 0.95) t))
+(ad-activate 'frame-notice-user-settings)
+
+;; in .emacs
+(defadvice frame-notice-user-settings (before my:rescale-alist)
+  (message "Set face-font-rescale-alist")
+  (add-to-list 'face-font-rescale-alist
+               (cons (font-spec :family "Noto Sans TC Thin") 1.3) t))
+(ad-activate 'frame-notice-user-settings)
+
+;; in .emacs
+(defadvice frame-notice-user-settings (before my:rescale-alist)
+  (message "Set face-font-rescale-alist")
+  (add-to-list 'face-font-rescale-alist
+               (cons (font-spec :family "Noto Sans TC Thin") 1.3) t))
+  (message "Set face-font-rescale-alist")
+  (add-to-list 'face-font-rescale-alist
+               (cons (font-spec :family "Noto Sans TC Thin") 1.3) t))
+(ad-activate 'frame-notice-user-settings)
+
+**** emacs click url
+
+| step      | C-h v                       |
+|-----------+-----------------------------|
+| 1         | Browse Url Browser Function |
+|           |                             |
+| default   | browse-url-default-browser  |
+|           |                             |
+| change to | browse-url-firefox          |
+|           |                             |
+|           | [2016-02-18 Thu 16:35]      |
+|           | browse-url-chromium         |
+|-----------+-----------------------------|
+| 2         | Browse Url Firefox Program  |
+|           |                             |
+| default   | firefox                     |
+| change to | firefox-bin                 |
+|           |                             |
+| 2.1       | Browse Url Chromium Program |
+|           |                             |
+| default   | chromium                    |
+|           |                             |
+|           | [2016-02-18 Thu 16:38]      |
+|           | google-chrome-stable        |
+|           |                             |
+|-----------+-----------------------------|
+| 3         | org-file-apps               |
+|           | Extension: \.x?html?\'      |
+|           |                             |
+| default   | Use default                 |
+| change to | firefox-bin %s              |
+|           |                             |
+|           | [2016-02-18 Thu 16:40]      |
+|           |                             |
+
+
+
+
+
+*** firefox
+
+emerge -pv firefox
+
+echo "www-client/firefox dbus" > /etc/portage/package.use/firefox
+
+emerge -pv firefox
+
+emerge firefox
+
+
+
+*** imagemagick
 
 echo "media-gfx/imagemagick jpeg tiff" > /etc/portage/package.use/imagemagick 
 
@@ -1491,7 +1718,7 @@ emerge -pv media-gfx/imagemagick
 emerge media-gfx/imagemagick
 
 
-** gthumb
+*** gthumb
 
 
 echo "media-gfx/gthumb jpeg tiff" > /etc/portage/package.use/gthumb
@@ -1507,45 +1734,6 @@ echo " dev-libs/libxml2 -icu" > /etc/portage/package.use/libxml2
 emerge -pv dev-libs/libxml2
 
 emerge dev-libs/libxml2
-
-
-** parallel
-
-emerge  sys-process/parallel
-
-*** my modification
-
-ls -1 *.tif | parallel convert '{}' '{.}.jpg'
-
-ls -1 *.tif | parallel convert '{}' '{.}.jpg'
-
-ls -1 *.tif | parallel convert '{}' -rotate -90 '{.}-90.jpg'
-
-*** examples
-
-http://superuser.com/questions/71028/batch-converting-png-to-jpg-in-linux
-
-The simplest solution is like most already posted. A simple bash for loop.
-
-for i in *.png ; do convert "$i" "${i%.*}.jpg" ; done
-For some reason I tend to avoid loops in bash so here is a more unixy xargs approach, using bash for the name-mangling.
-
-ls -1 *.png | xargs -n 1 bash -c 'convert "$0" "${0%.*}.jpg"'
-The one I use. It uses GNU Parallel to run multiple jobs at once, giving you a performance boost. It is installed by default on many systems and is almost definitely in your repo (it is a good program to have around).
-
-ls -1 *.png | parallel convert '{}' '{.}.jpg'
-The number of jobs defaults to the number of processes you have. I found better CPU usage using 3 jobs on my dual-core system.
-
-ls -1 *.png | parallel -j 3 convert '{}' '{.}.jpg'
-And if you want some stats (an ETA, jobs completed, average time per job...)
-
-ls -1 *.png | parallel --eta convert '{}' '{.}.jpg'
-There is also an alternative syntax if you are using GNU Parallel.
-
-parallel convert '{}' '{.}.jpg' ::: *.png
-And a similar syntax for some other versions (including debian).
-
-parallel convert '{}' '{.}.jpg' -- *.png
 
 
 ** app-text/tesseract

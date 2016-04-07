@@ -155,3 +155,54 @@ tar Jcvf file_name.tar.xz dir_name
 解壓縮 tar.xz：
 
 tar Jxvf file_name.tar.xz
+
+
+* tar lz4
+
+
+app-arch/lz4
+
+
+
+tar cvf - folderABC | lz4 > folderABC.tar.lz4
+
+or
+
+tar cvf - folderABC | lz4 - folderABC.tar.lz4
+
+First one compresses silently, like gzip. Second one is a bit more lz4-specific, and will also display summarized compression stats.
+
+http://stackoverflow.com/questions/24063846/how-to-use-tar-with-lz4
+
+
+* performance
+
+
+http://catchchallenger.first-world.info//wiki/Quick_Benchmark:_Gzip_vs_Bzip2_vs_LZMA_vs_XZ_vs_LZ4_vs_LZO
+
+
+Compression ratio
+
+|   |  gzip | bzip2 |    xz | lz4   |
+|---+-------+-------+-------+-------|
+| 1 | 26.8% | 20.2% | 18.4% | 35.6% |
+| 2 | 25.5% | 18.8% | 17.5% | 35.6% |
+| 3 | 24.7% | 18.2% | 17.1% | 35.6% |
+
+
+Compression time
+
+|   | gzip | bzip2 | xz    | lz4  |
+|---+------+-------+-------+------|
+| 1 | 8.1s | 58.3s | 32.2s | 1.3s |
+| 2 | 8.5s | 58.4s | 41.9s | 1.4s |
+| 3 | 9.6s | 59.1s | 1m1s  | 1.3s |
+
+
+Decompression time
+
+|   | gzip | bzip2 | xz   | lz4  |
+|---+------+-------+------+------|
+| 1 | 3.5s | 3.4s  | 7.2s | 0.4s |
+| 2 | 3s   | 15.7  | 6.8s | 0.3s |
+| 3 | 3.2s | 15.9s | 6.7s | 0.4s |

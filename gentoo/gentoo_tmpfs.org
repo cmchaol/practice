@@ -44,7 +44,7 @@ generate 2 files with +x inside /etc/local.d
 
 |       | G |      |
 |-------+---+------|
-| zram0 | 1 | swap |
+| zram0 | 2 | swap |
 |       |   |      |
 
 ** zram.start
@@ -75,3 +75,11 @@ modprobe -r zram
 
 
 
+
+* zswap
+
+** 
+
+** reference
+
+https://www.kernel.org/doc/Documentation/vm/zswap.txt
