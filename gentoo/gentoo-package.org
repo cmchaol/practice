@@ -46,17 +46,22 @@ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/snapshots/
 |       |                            |
 |    60 | fstab                      |
 |       |                            |
+|    70 | kernel                     |
 |       |                            |
+|    80 | network                    |
 |       |                            |
+|    82 | basic packages             |
 |       |                            |
 |-------+----------------------------|
-|    20 | generate excluding file    |
+|       | stage4                     |
 |       |                            |
-|    30 | generate tar               |
+|    90 | generate excluding file    |
 |       |                            |
-|    40 | extract tar                |
+|    92 | generate tar               |
 |       |                            |
-|    50 | adjust grub                |
+|    94 | extract tar                |
+|       |                            |
+|    96 | adjust grub                |
 |       |                            |
 |    60 | adjust fstab               |
 |       |                            |
@@ -75,6 +80,7 @@ du -hd1 .  | grep gentoo
 #+END_SRC
 
 #+RESULTS:
+0	./gentoo
 0	./gentoo
 
 
@@ -96,8 +102,8 @@ ls /mnt/fs1/portage*
 
 #+RESULTS:
 /tmp/gentoo
-/mnt/fs1/stage3-amd64-hardened-20160317.tar.bz2
-/mnt/fs1/portage-20160330.tar.xz
+/mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2
+/mnt/fs1/portage-20160405.tar.xz
 
 
 **** 14f
@@ -106,7 +112,7 @@ cd /tmp/gentoo
 
 tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2 --xattrs  
 
-cd usr
+cd /tmp/gentoo/usr
 
 tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
 
@@ -118,42 +124,23 @@ tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
 
 tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2 --xattrs  
 
-cd usr
+cd /tmp/gentoo/usr
 
 tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
 
 #+END_SRC
 
 
-**** b1 asus
-
-cd /tmp/gentoo
-
-tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160317.tar.bz2 --xattrs  
-
-cd usr
-
-tar xvpf /mnt/fs1/portage-20160330.tar.xz --xattrs
-
-
-#+HEADERS: :results silent
-#+HEADERS: :results raw
-#+HEADERS: :dir /su::/tmp/gentoo
-#+BEGIN_SRC sh
-
-tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160317.tar.bz2 --xattrs  
-
-cd usr
-
-tar xvpf /mnt/fs1/portage-20160330.tar.xz --xattrs
-
-#+END_SRC
-
 
 
 *** 30 nano make.conf
 
-nano /tmp/gentoo/etc/portage/make.conf
+destdir=/tmp/gentoo
+
+echo $destdir
+
+
+nano $destdir/etc/portage/make.conf
 
 MAKEOPTS="-j3"
 PORTAGE_NICENESS=10
@@ -162,11 +149,11 @@ GENTOO_MIRRORS="http://ftp.twaren.net/Linux/Gentoo/ http://ftp.jaist.ac.jp/pub/L
 
 
 
-mkdir /tmp/gentoo/etc/portage/repos.conf
+mkdir $destdir/etc/portage/repos.conf
 
-cp /tmp/gentoo/usr/share/portage/config/repos.conf /tmp/gentoo/etc/portage/repos.conf/gentoo.conf
+cp $destdir/usr/share/portage/config/repos.conf $destdir/etc/portage/repos.conf/gentoo.conf
 
-nano /tmp/gentoo/etc/portage/repos.conf/gentoo.conf
+nano $destdir/etc/portage/repos.conf/gentoo.conf
 
 [gentoo]
 location = /usr/portage
@@ -263,7 +250,7 @@ UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a   /mnt/fs1 btrfs subvol=fs1,defaults,n
 
 tmpfs   /var/tmp/portage        tmpfs   uid=portage,gid=portage,mode=0775,size=5g,noatime    0 0
 
-tmpfs   /tmp         tmpfs   mode=777          0  0
+tmpfs   /tmp         tmpfs   size=5g,mode=777          0  0
 
 
 
@@ -291,7 +278,20 @@ overlay / overlay lowerdir=/mnt/rootfs1,upperdir=/mnt/rootfs2/upper,workdir=/mnt
 
 *** 70 kernel
 
-# emerge sys-kernel/gentoo-sources
+**** steps
+
+| steps |                     |
+|-------+---------------------|
+|    20 | download            |
+|       |                     |
+|    30 | configure & compile |
+|       |                     |
+|    40 | deploy              |
+|       |                     |
+|    50 | grub                |
+
+
+**** 20 download
 
 
 emerge sys-kernel/hardened-sources -pv
@@ -306,29 +306,21 @@ emerge sys-kernel/hardened-sources -pv
 emerge sys-kernel/hardened-sources
 
 
-
-
-
 in host terminal:
 
 tail -f /tmp/gentoo/var/log/emerge-fetch.log
 
 
-
 ls -l /usr/src/linux
 
-
-
 ls -l /usr/src
-total 0
-drwxr-xr-x 7 root root 320 Jan  7 17:16 linux-4.1.7-hardened-r1
 
-https://wiki.gentoo.org/wiki/Kernel/Configuration
 
-ln -sf /usr/src/linux-3.4.9-gentoo /usr/src/linux 
+lrwxrwxrwx  1 root root  20 Apr  7 11:47 linux -> linux-4.4.2-hardened
+drwxr-xr-x 25 root root 720 Apr  7 11:47 linux-4.4.2-hardened
 
-ln -sf /usr/src/linux-4.1.7-hardened-r1 /usr/src/linux 
 
+**** 30 configure & compile
 
 cd /usr/src/linux
 
@@ -339,28 +331,42 @@ make menuconfig
 make && make modules_install
 
 
-|       | 1 | 2 | 3 | 4 | 5 | 6 |                                      |           |
-|-------+---+---+---+---+---+---+--------------------------------------+-----------|
-| net   |   |   |   |   |   |   |                                      |           |
-|       |   |   |   |   |   |   | Device Drivers                       |           |
-|       |   |   |   |   |   |   | Network device suppor                |           |
-|       |   |   |   |   |   |   | Ethernet driver support              |           |
-|       |   |   |   |   |   |   | Atheros devices                      |           |
-|       |   |   |   |   |   |   |                                      |           |
-|       |   |   |   |   |   |   | Atheros L1C Gigabit Ethernet support | h77md3h   |
-|       |   |   |   |   |   |   |                                      |           |
-|       |   |   |   |   |   |   | Marvell Yukon 2                      | b1 lenovo |
-|       |   |   |   |   |   |   |                                      |           |
-|       |   |   |   |   |   |   |                                      | b1 asus   |
-|       |   |   |   |   |   |   |                                      |           |
-|-------+---+---+---+---+---+---+--------------------------------------+-----------|
-| btrfs |   |   |   |   |   |   |                                      |           |
-|       |   |   |   |   |   |   |                                      |           |
-|-------+---+---+---+---+---+---+--------------------------------------+-----------|
-| zram  |   |   |   |   |   |   |                                      |           |
-|       |   |   |   |   |   |   |                                      |           |
-|-------+---+---+---+---+---+---+--------------------------------------+-----------|
-|       |   |   |   |   |   |   |                                      |           |
+|       | 1 | 2 | 3 | 4 | 5 | 6 |                                       | default |           |
+|-------+---+---+---+---+---+---+---------------------------------------+---------+-----------|
+| net   |   |   |   |   |   |   |                                       |         |           |
+|       | v |   |   |   |   |   | Device Drivers                        |         |           |
+|       |   | v |   |   |   |   | Network device suppor                 |         |           |
+|       |   |   | v |   |   |   | Ethernet driver support               |         |           |
+|       |   |   |   |   |   |   |                                       |         |           |
+|       |   |   |   | v |   |   | Atheros devices                       |         |           |
+|       |   |   |   |   | v |   | Atheros L1C Gigabit Ethernet support  |         | h77md3h   |
+|       |   |   |   |   |   |   |                                       |         |           |
+|       |   |   |   | v |   |   | Marvell devices                       |         |           |
+|       |   |   |   |   | v |   | Marvell Yukon 2                       |         | b1 lenovo |
+|       |   |   |   |   |   |   |                                       |         |           |
+|       |   |   |   | v |   |   | Realtek devices                       |         |           |
+|       |   |   |   |   | v |   | Realtek 8169 gigabit                  |         | b1 asus   |
+|       |   |   |   |   |   |   |                                       |         |           |
+|-------+---+---+---+---+---+---+---------------------------------------+---------+-----------|
+| btrfs |   |   |   |   |   |   |                                       |         |           |
+|       | v |   |   |   |   |   | File systems                          |         |           |
+|       |   | v |   |   |   |   | <*> Btrfs filesystem support          |         |           |
+|       |   |   |   |   |   |   |                                       |         |           |
+|       |   | v |   |   |   |   | DOS/FAT/NT Filesystems  --->          |         |           |
+|       |   |   | v |   |   |   | <M> NTFS file system support          |         |           |
+|       |   |   |   |   |   |   |                                       |         |           |
+|-------+---+---+---+---+---+---+---------------------------------------+---------+-----------|
+| zram  |   |   |   |   |   |   |                                       |         |           |
+|       | v |   |   |   |   |   | Processor type and features           |         |           |
+|       |   | v |   |   |   |   | Memory allocator for compressed pages | blank   |           |
+|       |   |   |   |   |   |   |                                       |         |           |
+|       | v |   |   |   |   |   | Device Drivers                        |         |           |
+|       |   | v |   |   |   |   | Block devices                         |         |           |
+|       |   |   | v |   |   |   | Compressed RAM block device support   | blank   |           |
+|       |   |   |   | v |   |   | Enable LZ4 algorithm support          | blank   |           |
+|       |   |   |   |   |   |   |                                       |         |           |
+|-------+---+---+---+---+---+---+---------------------------------------+---------+-----------|
+|       |   |   |   |   |   |   |                                       |         |           |
 
 btrfs
 
@@ -383,105 +389,11 @@ Device Drivers > Block devices
  [*]     Enable LZ4 algorithm support 
 
 
-proxychains -f /home/c5766/.proxychains/proxychains.conf \
-emerge --ask zram-init --autounmask-write 
 
-dispatch-conf
+**** 40 deploy
 
-modify netcard driver
-
-
-KERNELVER=4.3.3 
-EXTENSION=20160209-hardened-defconfig
-
-cp .config /boot/config-${KERNELVER}-${EXTENSION}
-cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
-cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
-/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
-cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
-
-
-KERNELVER=4.3.3 
-EXTENSION=20160212-hardened-hwmon
-
-cp .config /boot/config-${KERNELVER}-${EXTENSION}
-cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
-cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
-/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
-cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
-
-
-KERNELVER=4.3.3 
-EXTENSION=20160213-hardened-audio-coretemp
-
-cp .config /boot/config-${KERNELVER}-${EXTENSION}
-cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
-cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
-/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
-cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
-
-
-KERNELVER=4.3.3 
-EXTENSION=20160214-hardened-audio-coretemp-zswap-zram
-
-cp .config /boot/config-${KERNELVER}-${EXTENSION}
-cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
-cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
-/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
-cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
-
-
-KERNELVER=4.3.3 
-EXTENSION=20160214-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64
-
-cp .config /boot/config-${KERNELVER}-${EXTENSION}
-cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
-cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
-/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
-cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
-
-
-KERNELVER=4.3.3 
-EXTENSION=20160214-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64-radeon-MarvellYukon2 
-
-cp .config /boot/config-${KERNELVER}-${EXTENSION}
-cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
-cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
-/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
-cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
-
-
-KERNELVER=4.3.3 
-EXTENSION=20160224-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64-radeon-MarvellYukon2-fuse
-
-cp .config /boot/config-${KERNELVER}-${EXTENSION}
-cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
-cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
-/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
-cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
-
-
-KERNELVER=4.3.3 
-EXTENSION=20160303-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64-radeon-MarvellYukon2-fuse-docker
-
-cp .config /boot/config-${KERNELVER}-${EXTENSION}
-cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
-cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
-/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
-cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
-
-KERNELVER=4.3.3 
-EXTENSION=20160304-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64-radeon-MarvellYukon2-fuse-docker-wifi
-
-cp .config /boot/config-${KERNELVER}-${EXTENSION}
-cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
-cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
-/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
-cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
-
-
-KERNELVER=4.3.3 
-EXTENSION=20160312-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64-radeon-MarvellYukon2-fuse-docker-wifi-r8169
+KERNELVER=4.4.2 
+EXTENSION=20160407-hardened-net-zram
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}
 cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
@@ -491,13 +403,75 @@ cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
 
 
 
+**** 50 grub
+
+after deploy the stage4 in the final destination, configure grub
 
 
 
-*** 20 generate excluding file 
+
+*** 80 Networking 
+
+https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System
 
 
-/tmp/stage4.excl 
+nano -w /etc/conf.d/hostname
+
+hostname="b1asus"
+
+
+nano -w /etc/conf.d/net
+
+
+dns_domain_lo="b1network"
+config_enp3s0="dhcp"
+config_enp2s0="dhcp"
+config_enp1s0="dhcp"
+
+
+emerge --noreplace net-misc/netifrc
+
+cd /etc/init.d
+ln -s net.lo net.enp3s0
+rc-update add net.enp3s0 default
+
+cd /etc/init.d
+ln -s net.lo net.enp2s0
+rc-update add net.enp2s0 default
+
+
+cd /etc/init.d
+ln -s net.lo net.enp1s0
+rc-update add net.enp1s0 default
+
+passwd
+
+useradd -m -G users,wheel c5766 
+
+passwd c5766
+
+
+nano -w /etc/conf.d/hwclock
+
+clock="local"
+
+
+
+
+
+
+*** 82 basic packages
+
+emerge net-misc/dhcpcd
+
+emerge sys-boot/grub
+
+emerge proxychains
+
+
+*** 90 generate excluding file 
+
+nano /tmp/stage4.excl 
 
 
 .bash_history
@@ -509,46 +483,61 @@ cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
 
 
 
-*** 30 generate tar 
+*** 92 generate tar 
+
+cd /mnt/fs1
+
+pwd
+
+tar cvjf stage4_fs3_20160407.tar.bz2 / -X /tmp/stage4.excl  
 
 
-tar cvjf stage4_fs3b_20160329.tar.bz2 / -X /tmp/stage4.excl  
+*** 94 extract tar 
+
+inside host
+
+mount -o subvol=fs3,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag \
+/dev/sda /mnt/fs3
+
+cd /mnt/fs3
+
+tar -xvjpf /mnt/fs1/stage4_fs3_20160407.tar.bz2
 
 
-*** 40 extract tar 
-
-cd /tmp/gentoo
-
-tar -xvjpf /mnt/fs1/stage4_fs3b_20160329.tar.bz2 
-
-*** 50 adjust grub
 
 
-mount -t proc proc  /mnt/sda/fs2/proc
-mount --rbind /sys  /mnt/sda/fs2/sys
-mount --make-rslave /mnt/sda/fs2/sys
-mount --rbind /dev  /mnt/sda/fs2/dev
-mount --make-rslave /mnt/sda/fs2/dev
+*** 96 adjust grub
 
+destdir=/mnt/fs3
 
-chroot /mnt/sda/fs2/ /bin/bash
+cp -L /etc/resolv.conf $destdir/etc/
+
+mount -t proc proc  $destdir/proc
+mount --rbind /sys  $destdir/sys
+mount --make-rslave $destdir/sys
+mount --rbind /dev  $destdir/dev
+mount --make-rslave $destdir/dev
+
+chroot $destdir /bin/bash
 source /etc/profile
 export PS1="(chroot) $PS1"
 
 
-grub2-install /dev/sda --recheck
 
+grub2-install /dev/sda --recheck
 
 grub2-mkconfig -o /boot/grub/grub.cfg
 
-grub2-mkconfig -o /mnt/sda/fs2/boot/grub/grub.cfg
+
 
 
 exit
 cd
 
-umount -l /mnt/sda/fs2/dev{/shm,/pts,}
-umount -l /mnt/sda/fs2{/boot,/sys,/proc,}
+destdir=/mnt/fs3
+
+umount -l $destdir/dev{/shm,/pts,}
+umount -l $destdir{/boot,/sys,/proc,}
 
 
 *** 60 adjust fstab
@@ -932,9 +921,9 @@ grub2-install /dev/sda
 grub2-mkconfig -o /boot/grub/grub.cfg
 
 
-*** resolution
+**** resolution
 
-**** steps
+***** steps
 
 | steps |                                       |
 |-------+---------------------------------------|
@@ -943,7 +932,7 @@ grub2-mkconfig -o /boot/grub/grub.cfg
 |       |                                       |
 |       | grub2-mkconfig -o /boot/grub/grub.cfg |
 
-**** reference
+***** reference
 
 
 http://askubuntu.com/questions/54067/how-do-i-safely-change-grub2-screen-resolution
