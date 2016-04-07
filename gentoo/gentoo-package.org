@@ -32,10 +32,6 @@ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/snapshots/
 
 ** steps tmpfs M4A87TD/USB3 [2016-04-06 Wed 16:56]
 
-
-
-
-
 | steps | aims                       |
 |-------+----------------------------|
 |    10 | generate working directory |
@@ -45,6 +41,12 @@ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/snapshots/
 |    30 | nano make.conf             |
 |       |                            |
 |    40 | chroot                     |
+|       |                            |
+|    50 | profile                    |
+|       |                            |
+|    60 | fstab                      |
+|       |                            |
+|       |                            |
 |       |                            |
 |       |                            |
 |-------+----------------------------|
@@ -74,7 +76,6 @@ du -hd1 .  | grep gentoo
 
 #+RESULTS:
 0	./gentoo
-0	./gentoo
 
 
 
@@ -95,8 +96,45 @@ ls /mnt/fs1/portage*
 
 #+RESULTS:
 /tmp/gentoo
-/mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2
-/mnt/fs1/portage-20160405.tar.xz
+/mnt/fs1/stage3-amd64-hardened-20160317.tar.bz2
+/mnt/fs1/portage-20160330.tar.xz
+
+
+**** 14f
+
+cd /tmp/gentoo
+
+tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2 --xattrs  
+
+cd usr
+
+tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
+
+
+#+HEADERS: :results silent
+#+HEADERS: :results raw
+#+HEADERS: :dir /su::/tmp/gentoo
+#+BEGIN_SRC sh
+
+tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2 --xattrs  
+
+cd usr
+
+tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
+
+#+END_SRC
+
+
+**** b1 asus
+
+cd /tmp/gentoo
+
+tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160317.tar.bz2 --xattrs  
+
+cd usr
+
+tar xvpf /mnt/fs1/portage-20160330.tar.xz --xattrs
+
 
 #+HEADERS: :results silent
 #+HEADERS: :results raw
@@ -110,28 +148,6 @@ cd usr
 tar xvpf /mnt/fs1/portage-20160330.tar.xz --xattrs
 
 #+END_SRC
-
-
-#+HEADERS: :results silent
-#+HEADERS: :results raw
-#+HEADERS: :dir /su::/tmp/gentoo
-#+BEGIN_SRC sh
-
-tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2 --xattrs  
-
-cd usr
-
-tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
-
-#+END_SRC
-
-cd /tmp/gentoo
-
-tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2 --xattrs  
-
-cd usr
-
-tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
 
 
 
@@ -158,85 +174,320 @@ sync-type = rsync
 sync-uri = rsync://rsync.tw.gentoo.org/gentoo-portage
 auto-sync = yes
 
+
 *** 40 chroot
 
+destdir=/tmp/gentoo
 
-cp -L /etc/resolv.conf etc/
+cp -L /etc/resolv.conf $destdir/etc/
 
-mount -t proc proc  /mnt/zram0/proc
-mount --rbind /sys  /mnt/zram0/sys
-mount --make-rslave /mnt/zram0/sys
-mount --rbind /dev  /mnt/zram0/dev
-mount --make-rslave /mnt/zram0/dev
+mount -t proc proc  $destdir/proc
+mount --rbind /sys  $destdir/sys
+mount --make-rslave $destdir/sys
+mount --rbind /dev  $destdir/dev
+mount --make-rslave $destdir/dev
+
+mkdir $destdir/mnt/fs1
+
+mount --bind /mnt/fs1 $destdir/mnt/fs1
 
 
-chroot /mnt/zram0/ /bin/bash
+
+chroot $destdir /bin/bash
 source /etc/profile
 export PS1="(chroot) $PS1"
 
-
-mount -o subvol=fs2/snapshot20160210,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag /dev/sdd /mnt/fs2
-
-
-cp -L /etc/resolv.conf /mnt/fs2/etc/
-
-mount -t proc proc  /mnt/fs2/proc
-mount --rbind /sys  /mnt/fs2/sys
-mount --make-rslave /mnt/fs2/sys
-mount --rbind /dev  /mnt/fs2/dev
-mount --make-rslave /mnt/fs2/dev
-
-
-chroot /mnt/fs2/ /bin/bash
-source /etc/profile
-export PS1="(chroot) $PS1"
-
-
-mount -o size=90%,noatime,nodiratime -t tmpfs tmpfs /tmp
-
-mkdir /var/tmp/portage
-
-mount -o size=90%,noatime,nodiratime,uid=portage,gid=portage,mode=775 -t tmpfs tmpfs /var/tmp/portage 
-
-
+emerge --sync
 
 exit
 cd
 
-umount -l /mnt/fs3/dev{/shm,/pts,}
-umount -l /mnt/fs3{/boot,/sys,/proc,}
+destdir=/tmp/gentoo
+umount -l $destdir/dev{/shm,/pts,}
+umount -l $destdir{/boot,/sys,/proc,}
 
 
-emerge --sync
+*** 50 profile
 
 
-root #exit
+eselect profile list
 
-cdimage ~#cd
-cdimage ~#umount -l /mnt/gentoo/dev{/shm,/pts,}
-cdimage ~#umount /mnt/gentoo{/boot,/sys,/proc,}
-cdimage ~#reboot
+ [14]  hardened/linux/amd64 *
 
-inside the chroot shell
+eselect profile set 14
 
-#
-
-exit
+eselect profile list
 
 
-in host shell
 
-#
-umount -l /var/tmp/gentoo/dev{/shm,/pts,}
-umount -l /var/tmp/gentoo{/boot,/sys,/proc,}
-
-umount -l /mnt/gentoo/dev{/shm,/pts,}
-umount /mnt/gentoo{/sys,/proc,}
+ls /usr/share/zoneinfo
 
 
-umount -l /mnt/fs2/dev{/shm,/pts,}
-umount -l /mnt/fs2{/sys,/proc,}
 
+echo "Asia/Taipei" > /etc/timezone
+
+emerge --config sys-libs/timezone-data
+
+nano -w /etc/locale.gen
+
+locale-gen
+
+
+eselect locale list
+
+eselect locale set 2
+
+eselect locale list
+
+env-update && source /etc/profile
+
+
+*** 60 fstab
+
+blkid | grep sda
+
+ls -l /dev/disk/by-uuid | grep sda
+
+
+/dev/sda: UUID="cdc17294-c2aa-414f-bf3c-83f36a3e503a" UUID_SUB="114232ef-f0d2-48b2-936a-ccfc531e36d3" TYPE="btrfs" PTTYPE="dos"
+
+lrwxrwxrwx 1 root root  9 Apr  7  2016 cdc17294-c2aa-414f-bf3c-83f36a3e503a -> ../../sda
+
+
+
+nano -w /etc/fstab
+
+UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a   / btrfs subvol=fs3,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
+
+UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a   /mnt/fs1 btrfs subvol=fs1,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
+
+tmpfs   /var/tmp/portage        tmpfs   uid=portage,gid=portage,mode=0775,size=5g,noatime    0 0
+
+tmpfs   /tmp         tmpfs   mode=777          0  0
+
+
+
+
+http://gaijin-nippon.blogspot.jp/2012/05/installing-archlinux-on-btrfs-with.html
+
+# overlay /merged overlay noauto,x-systemd.automount,lowerdir=/lower,upperdir=/upper,workdir=/work 0 0
+https://wiki.archlinux.org/index.php/Overlay_filesystem
+
+mount -t overlayfs -o lowerdir=/filesystem.squashfs,upperdir=/overlay overlayfs /
+
+http://askubuntu.com/questions/109413/how-do-i-use-overlayfs/109441#109441
+
+overlay / overlay lowerdir=/mnt/rootfs1,upperdir=/mnt/rootfs2/upper,workdir=/mnt/rootfs2/work 0 0
+
+
+
+
+
+
+
+
+
+
+
+*** 70 kernel
+
+# emerge sys-kernel/gentoo-sources
+
+
+emerge sys-kernel/hardened-sources -pv
+
+ Install the kernel sources with the symlink USE flag active.  https://wiki.gentoo.org/wiki/Kernel/Configuration
+
+
+echo "sys-kernel/hardened-sources symlink" >> /etc/portage/package.use/hardened-sources
+
+emerge sys-kernel/hardened-sources -pv
+
+emerge sys-kernel/hardened-sources
+
+
+
+
+
+in host terminal:
+
+tail -f /tmp/gentoo/var/log/emerge-fetch.log
+
+
+
+ls -l /usr/src/linux
+
+
+
+ls -l /usr/src
+total 0
+drwxr-xr-x 7 root root 320 Jan  7 17:16 linux-4.1.7-hardened-r1
+
+https://wiki.gentoo.org/wiki/Kernel/Configuration
+
+ln -sf /usr/src/linux-3.4.9-gentoo /usr/src/linux 
+
+ln -sf /usr/src/linux-4.1.7-hardened-r1 /usr/src/linux 
+
+
+cd /usr/src/linux
+
+make defconfig
+
+make menuconfig
+
+make && make modules_install
+
+
+|       | 1 | 2 | 3 | 4 | 5 | 6 |                                      |           |
+|-------+---+---+---+---+---+---+--------------------------------------+-----------|
+| net   |   |   |   |   |   |   |                                      |           |
+|       |   |   |   |   |   |   | Device Drivers                       |           |
+|       |   |   |   |   |   |   | Network device suppor                |           |
+|       |   |   |   |   |   |   | Ethernet driver support              |           |
+|       |   |   |   |   |   |   | Atheros devices                      |           |
+|       |   |   |   |   |   |   |                                      |           |
+|       |   |   |   |   |   |   | Atheros L1C Gigabit Ethernet support | h77md3h   |
+|       |   |   |   |   |   |   |                                      |           |
+|       |   |   |   |   |   |   | Marvell Yukon 2                      | b1 lenovo |
+|       |   |   |   |   |   |   |                                      |           |
+|       |   |   |   |   |   |   |                                      | b1 asus   |
+|       |   |   |   |   |   |   |                                      |           |
+|-------+---+---+---+---+---+---+--------------------------------------+-----------|
+| btrfs |   |   |   |   |   |   |                                      |           |
+|       |   |   |   |   |   |   |                                      |           |
+|-------+---+---+---+---+---+---+--------------------------------------+-----------|
+| zram  |   |   |   |   |   |   |                                      |           |
+|       |   |   |   |   |   |   |                                      |           |
+|-------+---+---+---+---+---+---+--------------------------------------+-----------|
+|       |   |   |   |   |   |   |                                      |           |
+
+btrfs
+
+
+File systems  --->
+    <*> Btrfs filesystem
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge  sys-fs/btrfs-progs
+
+
+zram
+
+Processor type and features
+ <*> Memory allocator for compressed pages 
+
+Device Drivers > Block devices
+<M>   Compressed RAM block device support  
+ [*]     Enable LZ4 algorithm support 
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge --ask zram-init --autounmask-write 
+
+dispatch-conf
+
+modify netcard driver
+
+
+KERNELVER=4.3.3 
+EXTENSION=20160209-hardened-defconfig
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
+
+
+KERNELVER=4.3.3 
+EXTENSION=20160212-hardened-hwmon
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
+
+
+KERNELVER=4.3.3 
+EXTENSION=20160213-hardened-audio-coretemp
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
+
+
+KERNELVER=4.3.3 
+EXTENSION=20160214-hardened-audio-coretemp-zswap-zram
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
+
+
+KERNELVER=4.3.3 
+EXTENSION=20160214-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
+
+
+KERNELVER=4.3.3 
+EXTENSION=20160214-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64-radeon-MarvellYukon2 
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
+
+
+KERNELVER=4.3.3 
+EXTENSION=20160224-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64-radeon-MarvellYukon2-fuse
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
+
+
+KERNELVER=4.3.3 
+EXTENSION=20160303-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64-radeon-MarvellYukon2-fuse-docker
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
+
+KERNELVER=4.3.3 
+EXTENSION=20160304-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64-radeon-MarvellYukon2-fuse-docker-wifi
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
+
+
+KERNELVER=4.3.3 
+EXTENSION=20160312-hardened-audio-coretemp-zswap-zram-pulseaudio-160-64-radeon-MarvellYukon2-fuse-docker-wifi-r8169
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
 
 
 
