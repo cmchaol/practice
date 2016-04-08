@@ -377,42 +377,46 @@ make menuconfig
 make && make modules_install
 
 
-|       | 1 | 2 | 3 | 4 | 5 | 6 |                                       | defconfig |           |
-|-------+---+---+---+---+---+---+---------------------------------------+-----------+-----------|
-| net   |   |   |   |   |   |   |                                       |           |           |
-|       | v |   |   |   |   |   | Device Drivers                        |           |           |
-|       |   | v |   |   |   |   | Network device suppor                 |           |           |
-|       |   |   | v |   |   |   | Ethernet driver support               |           |           |
-|       |   |   |   |   |   |   |                                       |           |           |
-|       |   |   |   | v |   |   | Atheros devices                       |           |           |
-|       |   |   |   |   | v |   | Atheros L1C Gigabit Ethernet support  |           | h77md3h   |
-|       |   |   |   |   |   |   |                                       |           |           |
-|       |   |   |   | v |   |   | Marvell devices                       |           |           |
-|       |   |   |   |   | v |   | Marvell Yukon 2                       |           | b1 lenovo |
-|       |   |   |   |   |   |   |                                       |           |           |
-|       |   |   |   | v |   |   | Realtek devices                       |           |           |
-|       |   |   |   |   | v |   | Realtek 8169 gigabit                  |           | b1 asus   |
-|       |   |   |   |   |   |   |                                       |           |           |
-|-------+---+---+---+---+---+---+---------------------------------------+-----------+-----------|
-| btrfs |   |   |   |   |   |   |                                       |           |           |
-|       | v |   |   |   |   |   | File systems                          |           |           |
-|       |   | v |   |   |   |   | <*> Btrfs filesystem support          |           |           |
-|       |   |   |   |   |   |   |                                       |           |           |
-|       |   | v |   |   |   |   | DOS/FAT/NT Filesystems  --->          |           |           |
-|       |   |   | v |   |   |   | <M> NTFS file system support          |           |           |
-|       |   |   |   |   |   |   |                                       |           |           |
-|-------+---+---+---+---+---+---+---------------------------------------+-----------+-----------|
-| zram  |   |   |   |   |   |   |                                       |           |           |
-|       | v |   |   |   |   |   | Processor type and features           |           |           |
-|       |   | v |   |   |   |   | Memory allocator for compressed pages | blank     |           |
-|       |   |   |   |   |   |   |                                       |           |           |
-|       | v |   |   |   |   |   | Device Drivers                        |           |           |
-|       |   | v |   |   |   |   | Block devices                         |           |           |
-|       |   |   | v |   |   |   | Compressed RAM block device support   | blank     |           |
-|       |   |   |   | v |   |   | Enable LZ4 algorithm support          | blank     |           |
-|       |   |   |   |   |   |   |                                       |           |           |
-|-------+---+---+---+---+---+---+---------------------------------------+-----------+-----------|
-|       |   |   |   |   |   |   |                                       |           |           |
+|       | 1 | 2 | 3 | 4 | 5 | 6 |                                       | defconfig |   |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
+| net   |   |   |   |   |   |   |                                       |           |   |           |
+|       | v |   |   |   |   |   | Device Drivers                        |           |   |           |
+|       |   | v |   |   |   |   | Network device suppor                 |           |   |           |
+|       |   |   | v |   |   |   | Ethernet driver support               |           |   |           |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|       |   |   |   | v |   |   | Atheros devices                       |           |   |           |
+|       |   |   |   |   | v |   | Atheros L1C Gigabit Ethernet support  |           |   | h77md3h   |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|       |   |   |   | v |   |   | Marvell devices                       |           |   |           |
+|       |   |   |   |   | v |   | Marvell Yukon 2                       |           |   | b1 lenovo |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|       |   |   |   | v |   |   | Realtek devices                       |           |   |           |
+|       |   |   |   |   | v |   | Realtek 8169 gigabit                  |           |   | b1 asus   |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
+| btrfs |   |   |   |   |   |   |                                       |           |   |           |
+|       | v |   |   |   |   |   | File systems                          |           |   |           |
+|       |   | v |   |   |   |   | <*> Btrfs filesystem support          |           |   |           |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|       |   | v |   |   |   |   | DOS/FAT/NT Filesystems  --->          |           |   |           |
+|       |   |   | v |   |   |   | <M> NTFS file system support          |           |   |           |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
+| zram  |   |   |   |   |   |   |                                       |           |   |           |
+|       | v |   |   |   |   |   | Processor type and features           |           |   |           |
+|       |   | v |   |   |   |   | Memory allocator for compressed pages | blank     |   |           |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|       | v |   |   |   |   |   | Device Drivers                        |           |   |           |
+|       |   | v |   |   |   |   | Block devices                         |           |   |           |
+|       |   |   | v |   |   |   | Compressed RAM block device support   | blank     |   |           |
+|       |   |   |   | v |   |   | Enable LZ4 algorithm support          | blank     |   |           |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
+| temp  | v |   |   |   |   |   | Device Drivers                        |           |   |           |
+|       |   | v |   |   |   |   | Hardware Monitoring support           |           |   |           |
+|       |   |   | v |   |   |   | AMD Family 10h+ temperature sensor    | blank     | * | b1 asus   |
+|       |   |   | v |   |   |   | ASUS ATK0110                          | blank     | * | b1 asus   |
+|       |   |   |   |   |   |   |                                       |           |   |           |
 
 btrfs
 
@@ -449,6 +453,8 @@ EXTENSION=20160407-hardened-net-zram
 EXTENSION=20160408-hardened-net-zram-disable_legacy_fbdev 
 
 EXTENSION=20160408-hardened-net-zram-nouveau_buildin
+
+EXTENSION=20160408-hardened-net-zram-nouveau_buildin-amdtemp-hdaudio
 
 KERNELVER=4.4.2 
 
@@ -1834,6 +1840,10 @@ http://miphol.com/muse/2013/05/tesseract-ocr.html
 04:00.0 0101: 197b:2368
 05:00.0 0300: 10de:0e22 (rev a1)
 05:00.1 0403: 10de:0beb (rev a1)
+
+If you have an ASUS mother board it's fairly easy. If you look under Drivers -> Hardware Monitoring Support right at the bottom of the page there is "ASUS ATK0110" and "STMicroeletronics LIS3* three-axis digital accelerometer". I'm not sure how I found it but the atk0110 seems to work well on my newer M4A87TD EVO board and my old P5Q-E. 
+
+https://forums.gentoo.org/viewtopic-t-813030-highlight-lmsensors.html
 
 
 ** driver
