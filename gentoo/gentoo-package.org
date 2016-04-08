@@ -444,8 +444,12 @@ https://bbs.archlinux.org/viewtopic.php?id=104723
 
 **** 40 deploy
 
-KERNELVER=4.4.2 
 EXTENSION=20160407-hardened-net-zram
+
+EXTENSION=20160408-hardened-net-zram-disable_legacy_fbdev 
+
+
+KERNELVER=4.4.2 
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}
 cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
@@ -1284,27 +1288,48 @@ https://wiki.gentoo.org/wiki/Nouveau
 
 
 
-| 1 | 2 | 3 | 4 |   | kernel option                     | defconfig | change to |
-|---+---+---+---+---+-----------------------------------+-----------+-----------|
-| v |   |   |   |   | Device Drivers                    |           |           |
-|   | v |   |   |   | Input device support              |           |           |
-|   |   | v |   |   | Event interface                   | *         |           |
-|---+---+---+---+---+-----------------------------------+-----------+-----------|
-|   |   |   |   |   |                                   |           |           |
-|   | v |   |   |   | Graphics support                  |           |           |
-|   |   | v |   |   | Frame buffer Devices              |           |           |
-|   |   |   | v |   | Support for frame buffer devices  | none      |           |
-|---+---+---+---+---+-----------------------------------+-----------+-----------|
-|   |   |   |   |   |                                   |           |           |
-|   |   | v |   |   | Console display driver support    |           |           |
-|   |   |   | v |   | Framebuffer Console support       | *         |           |
-|---+---+---+---+---+-----------------------------------+-----------+-----------|
-|   |   |   |   |   |                                   |           |           |
-|   |   | v |   |   | Direct Rendering Manager (XFree86 |           |           |
-|   |   |   | v |   | Enable legacy fbdev support for   | *         |           |
-|---+---+---+---+---+-----------------------------------+-----------+-----------|
-|   |   |   |   |   |                                   |           |           |
-|   |   | v |   |   | Nouveau (NVIDIA) cards            | none      | M         |
+| 1 | 2 | 3 | 4 |   | kernel option                     | defconfig | change to | reference |
+|   |   |   |   |   |                                   |           |           |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
+| v |   |   |   |   | Device Drivers                    |           |           |           |
+|   | v |   |   |   | Input device support              |           |           |           |
+|   |   | v |   |   | Event interface                   | *         |           |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |           |
+|   | v |   |   |   | Graphics support                  |           |           |           |
+|   |   | v |   |   | Frame buffer Devices              |           |           |           |
+|   |   |   | v |   | Support for frame buffer devices  | none      |           |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |           |
+|   |   | v |   |   | Console display driver support    |           |           |           |
+|   |   |   | v |   | Framebuffer Console support       | *         |           |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |           |
+|   |   | v |   |   | Direct Rendering Manager (XFree86 |           |           |           |
+|   |   |   | v |   | Enable legacy fbdev support for   | *         |           |           |
+|   |   |   |   |   |                                   |           |           |         2 |
+|   |   |   |   |   |                                   |           | no        |         3 |
+|   |   |   |   |   |                                   |           |           |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |           |
+|   |   | v |   |   | Nouveau (NVIDIA) cards            | none      | M         |           |
+
+reference
+
+1
+
+https://wiki.gentoo.org/wiki/Xorg/Guide
+
+
+2
+
+https://wiki.gentoo.org/wiki/Nouveau
+
+
+3
+
+https://forums.gentoo.org/viewtopic-p-6655021.html
+
 
 
 **** make.conf
@@ -1331,6 +1356,14 @@ VIDEO_CARDS="nouveau"
 emerge --ask x11-base/xorg-server
 
 gpasswd -a c5766 video
+
+
+**** errors
+
+[  1072.674] (EE) Failed to load module "nv" (module does not exist, 0)
+
+[  1072.685] (EE) open /dev/dri/card0: No such file or directory
+
 
 
 *** xrandr
