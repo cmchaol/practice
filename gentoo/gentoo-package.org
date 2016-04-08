@@ -235,7 +235,7 @@ destdir=/tmp/gentoo
 
 
 umount -l $destdir/dev{/shm,/pts,}
-umount -l $destdir{/boot,/sys,/proc,}
+umount -l $destdir{/sys,/proc,}
 
 
 *** 50 profile
@@ -448,6 +448,7 @@ EXTENSION=20160407-hardened-net-zram
 
 EXTENSION=20160408-hardened-net-zram-disable_legacy_fbdev 
 
+EXTENSION=20160408-hardened-net-zram-nouveau_buildin
 
 KERNELVER=4.4.2 
 
@@ -1288,31 +1289,39 @@ https://wiki.gentoo.org/wiki/Nouveau
 
 
 
-| 1 | 2 | 3 | 4 |   | kernel option                     | defconfig | change to | reference |
-|   |   |   |   |   |                                   |           |           |           |
-|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
-| v |   |   |   |   | Device Drivers                    |           |           |           |
-|   | v |   |   |   | Input device support              |           |           |           |
-|   |   | v |   |   | Event interface                   | *         |           |           |
-|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
-|   |   |   |   |   |                                   |           |           |           |
-|   | v |   |   |   | Graphics support                  |           |           |           |
-|   |   | v |   |   | Frame buffer Devices              |           |           |           |
-|   |   |   | v |   | Support for frame buffer devices  | none      |           |           |
-|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
-|   |   |   |   |   |                                   |           |           |           |
-|   |   | v |   |   | Console display driver support    |           |           |           |
-|   |   |   | v |   | Framebuffer Console support       | *         |           |           |
-|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
-|   |   |   |   |   |                                   |           |           |           |
-|   |   | v |   |   | Direct Rendering Manager (XFree86 |           |           |           |
-|   |   |   | v |   | Enable legacy fbdev support for   | *         |           |           |
-|   |   |   |   |   |                                   |           |           |         2 |
-|   |   |   |   |   |                                   |           | no        |         3 |
-|   |   |   |   |   |                                   |           |           |           |
-|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
-|   |   |   |   |   |                                   |           |           |           |
-|   |   | v |   |   | Nouveau (NVIDIA) cards            | none      | M         |           |
+| 1 | 2 | 3 | 4 | 5 | kernel option                     | defconfig | change to  | reference |
+|   |   |   |   |   |                                   |           |            |           |
+|---+---+---+---+---+-----------------------------------+-----------+------------+-----------|
+| v |   |   |   |   | Device Drivers                    |           |            |           |
+|   | v |   |   |   | Input device support              |           |            |           |
+|   |   | v |   |   | Event interface                   | *         |            |           |
+|---+---+---+---+---+-----------------------------------+-----------+------------+-----------|
+|   |   |   |   |   |                                   |           |            |           |
+|   | v |   |   |   | Graphics support                  |           |            |           |
+|   |   | v |   |   | Frame buffer Devices              |           |            |           |
+|   |   |   | v |   | Support for frame buffer devices  | none      |            |           |
+|   |   |   |   | v | Enable firmware EDID              | none      |            |           |
+|   |   |   |   |   |                                   |           |            |           |
+|   |   |   | v |   | Console display driver support    |           |            |           |
+|   |   |   |   |   | Framebuffer Console support       | *         |            |           |
+|   |   |   |   |   |                                   |           |            |           |
+|---+---+---+---+---+-----------------------------------+-----------+------------+-----------|
+|   |   |   |   |   |                                   |           |            |           |
+|   |   | v |   |   | Console display driver support    |           |            |           |
+|   |   |   | v |   | Framebuffer Console support       | *         |            |           |
+|---+---+---+---+---+-----------------------------------+-----------+------------+-----------|
+|   |   |   |   |   |                                   |           |            |           |
+|   |   | v |   |   | Direct Rendering Manager (XFree86 |           |            |           |
+|   |   |   | v |   | Enable legacy fbdev support for   | *         |            |           |
+|   |   |   |   |   |                                   |           |            |         2 |
+|   |   |   |   |   |                                   |           |            |           |
+|   |   |   |   |   |                                   |           | no, failed |         3 |
+|   |   |   |   |   |                                   |           |            |           |
+|---+---+---+---+---+-----------------------------------+-----------+------------+-----------|
+|   |   |   |   |   |                                   |           |            |           |
+|   |   | v |   |   | Nouveau (NVIDIA) cards            | none      | M          |           |
+|   |   |   |   |   |                                   |           | *          |           |
+|   |   |   |   |   |                                   |           |            |           |
 
 reference
 
