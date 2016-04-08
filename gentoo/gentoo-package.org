@@ -232,6 +232,8 @@ exit
 cd
 
 destdir=/tmp/gentoo
+
+
 umount -l $destdir/dev{/shm,/pts,}
 umount -l $destdir{/boot,/sys,/proc,}
 
@@ -1328,7 +1330,7 @@ VIDEO_CARDS="nouveau"
 
 emerge --ask x11-base/xorg-server
 
-
+gpasswd -a c5766 video
 
 
 *** xrandr
