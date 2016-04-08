@@ -1417,6 +1417,24 @@ https://wiki.archlinux.org/index.php/Spectrwm#Statusbar_configuration
 
 **** baraction.sh
 
+***** temperature b1 asus
+
+# 
+
+find /sys -name *temp*_input*
+
+/sys/devices/pci0000:00/0000:00:02.0/0000:05:00.0/hwmon/hwmon0/temp1_input
+/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input
+/sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon2/temp1_input
+/sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon2/temp2_input
+
+Tcpu1_
+/sys/devices/pci0000:00/0000:00:02.0/0000:05:00.0/hwmon/hwmon0/temp1_input
+/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input
+/sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon2/temp1_input
+/sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon2/temp2_input
+
+
 ***** temperature h77md3h [2016-02-13 Sat 19:12]
 
 
