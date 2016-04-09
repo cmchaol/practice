@@ -20,9 +20,15 @@ https://wiki.gentoo.org/wiki/Portage_TMPDIR_on_tmpfs
 
 FILE /etc/fstabtmpfs fstab example
 
-tmpfs		/var/tmp/portage		tmpfs	size=4G,uid=portage,gid=portage,mode=775,noatime	0 0
-tmpfs		/tmp		tmpfs	mode=777	0 0
+tmpfs		/var/tmp/portage		tmpfs	size=6g,uid=portage,gid=portage,mode=775,noatime	0 0
 
+tmpfs		/tmp		tmpfs	size=6g,defaults,noatime,nosuid,nodev,noexec,mode=1777	0 0
+
+
+Where N is in the form of bytes. It can also be suffixed with k, m, or g to respectively have the form of (k)ilobytes, (m)egabytes or (g)igabytes. It can also be suffixed with a % to limit the tmpfs instance to the percentage of current physical RAM, the default being 50% when the parameter is not specified.
+
+
+http://askubuntu.com/questions/173094/how-can-i-use-ram-storage-for-the-tmp-directory-and-how-to-set-a-maximum-amount
 
 
 
@@ -45,13 +51,12 @@ generate 2 files with +x inside /etc/local.d
 |       | G |      |
 |-------+---+------|
 | zram0 | 2 | swap |
-|       |   |      |
 
 ** zram.start
 
 #!/bin/bash
 
-modprobe zram num_devices=2
+modprobe zram num_devices=1
 
 echo lz4 > /sys/block/zram0/comp_algorithm
 
