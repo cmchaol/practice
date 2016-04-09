@@ -15,6 +15,12 @@ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/releases/amd64/autobuilds/current-stage3
 http://ftp.jaist.ac.jp/pub/Linux/Gentoo/snapshots/
 
 
+| .CONTENTS   | files list            |
+|             |                       |
+| .DIGESTS    | checksums             |
+|             |                       |
+| .DIGEST.asc | checksums + signature |
+|             |                       |
   
 * stage4
 
