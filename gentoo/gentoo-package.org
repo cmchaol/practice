@@ -15,13 +15,83 @@ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/releases/amd64/autobuilds/current-stage3
 http://ftp.jaist.ac.jp/pub/Linux/Gentoo/snapshots/
 
 
-| .CONTENTS   | files list            |
-|             |                       |
-| .DIGESTS    | checksums             |
-|             |                       |
-| .DIGEST.asc | checksums + signature |
-|             |                       |
-  
+** Verifying the downloaded files
+
+https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Media
+
+| file extension | contain               |
+|----------------+-----------------------|
+|                |                       |
+| .CONTENTS      | files list            |
+|                |                       |
+| .DIGESTS       | checksums             |
+|                |                       |
+| .DIGEST.asc    | checksums + signature |
+|                |                       |
+
+| steps | validate  |                                 |
+|-------+-----------+---------------------------------|
+|    10 | signature |                                 |
+|       |           | get public key                  |
+|       |           |                                 |
+|       |           | verify signature of .DIGEST.asc |
+|       |           |                                 |
+|-------+-----------+---------------------------------|
+|    20 | checksum  |                                 |
+|       |           | get HASH from .DIGEST.asc       |
+|       |           |                                 |
+|       |           | get HASH from the file          |
+|       |           |                                 |
+|       |           | compare the 2                   |
+
+*** 10 validate signature
+
+$
+
+gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xBB572E0E2D182910
+
+
+gpg: requesting key 2D182910 from hkp server hkps.pool.sks-keyservers.net
+gpg: /home/c5766/.gnupg/trustdb.gpg: trustdb created
+gpg: key 2D182910: public key "Gentoo Linux Release Engineering (Automated Weekly Release Key) <releng@gentoo.org>" imported
+gpg: no ultimately trusted keys found
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+
+
+gpg --verify stage3-amd64-hardened-20160407.tar.bz2.DIGESTS.asc 
+
+
+gpg: Signature made Fri 08 Apr 2016 04:41:03 PM CST using RSA key ID 2D182910
+gpg: Good signature from "Gentoo Linux Release Engineering (Automated Weekly Release Key) <releng@gentoo.org>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 13EB BDBE DE7A 1277 5DFD  B1BA BB57 2E0E 2D18 2910
+
+*** 20 validate checksum
+
+grep -A 1 -i sha512 stage3-amd64-hardened-20160407.tar.bz2.DIGESTS.asc 
+
+# SHA512 HASH
+7a9d527f6de00153fe0d73458762f41dd34d369d53523ec03ad7602944b6ccaad325fb6374b1a8022b8c30554390672f1bfa06304e5198687a3cbd88ad8a3ddd  stage3-amd64-hardened-20160407.tar.bz2
+--
+# SHA512 HASH
+bec5596a075b1e78e3d7779c425c49ecf84f2688ea054ebd0334d0e799db58f688ee14cbc62782cb3cc3ef5552da5d191cb661cae546ddee06b23f1b9f201a9a  stage3-amd64-hardened-20160407.tar.bz2.CONTENTS
+
+
+sha512sum stage3-amd64-hardened-20160407.tar.bz2
+
+7a9d527f6de00153fe0d73458762f41dd34d369d53523ec03ad7602944b6ccaad325fb6374b1a8022b8c30554390672f1bfa06304e5198687a3cbd88ad8a3ddd  stage3-amd64-hardened-20160407.tar.bz2
+
+** stage4 cloud
+
+https://mthode.org/posts/2016/Jan/stage4-tarballs-minimal-and-cloud/
+
+
+https://gitweb.gentoo.org/proj/releng.git/tree/releases/weekly/specs/amd64/stage4-minimal.spec
+
+
+
 * stage4
 
 ** steps
@@ -66,6 +136,549 @@ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/snapshots/
 | livecd           |   |
 |                  |   |
 |                  |   |
+
+** steps tmpfs h77md3h [2016-04-10 Sun 11:43]
+
+
+| steps | aims                       |
+|-------+----------------------------|
+|    10 | generate working directory |
+|       |                            |
+|    20 | extract 2 big files        |
+|       |                            |
+|    30 | nano make.conf             |
+|       |                            |
+|    40 | chroot                     |
+|       |                            |
+|    50 | profile                    |
+|       |                            |
+|    60 | fstab                      |
+|       |                            |
+|    70 | kernel                     |
+|       |                            |
+|    80 | network                    |
+|       |                            |
+|    82 | basic packages             |
+|       |                            |
+|-------+----------------------------|
+|       | stage4                     |
+|       |                            |
+|    90 | generate excluding file    |
+|       |                            |
+|    92 | generate tar               |
+|       |                            |
+|    94 | extract tar                |
+|       |                            |
+|    96 | adjust grub                |
+
+
+*** 10 generate working directory
+
+#+HEADERS: :results raw
+#+HEADERS: :dir /su::/tmp
+#+BEGIN_SRC sh
+
+mkdir gentoo
+
+du -hd1 .  | grep gentoo
+
+#+END_SRC
+
+
+*** 20 extract 2 big files
+
+
+#+HEADERS: :results raw
+#+HEADERS: :dir /su::/tmp/gentoo
+#+BEGIN_SRC sh
+
+pwd
+
+ls /mnt/fs1/stage3*
+
+ls /mnt/fs1/portage*
+
+#+END_SRC
+
+#+RESULTS:
+/tmp/gentoo
+/mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2
+/mnt/fs1/stage3-amd64-hardened-20160407.tar.bz2
+/mnt/fs1/portage-20160405.tar.xz
+
+
+
+
+**** 14f [2016-04-10 Sun 11:49]
+
+#
+
+cd /tmp/gentoo
+
+tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160407.tar.bz2 --xattrs  
+
+
+
+
+
+cd /tmp/gentoo/usr
+
+tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
+
+
+#+HEADERS: :results silent
+#+HEADERS: :results raw
+#+HEADERS: :dir /su::/tmp/gentoo
+#+BEGIN_SRC sh
+
+tar xvjpf /mnt/fs1/stage3-amd64-hardened-20160331.tar.bz2 --xattrs  
+
+cd /tmp/gentoo/usr
+
+tar xvpf /mnt/fs1/portage-20160405.tar.xz --xattrs
+
+#+END_SRC
+
+
+
+
+*** 30 nano make.conf
+
+destdir=/tmp/gentoo
+
+echo $destdir
+
+nano $destdir/etc/portage/make.conf
+
+
+
+MAKEOPTS="-j3"
+PORTAGE_NICENESS=10
+
+GENTOO_MIRRORS="http://ftp.twaren.net/Linux/Gentoo/ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/ http://ftp.iij.ad.jp/pub/linux/gentoo/"
+
+
+
+mkdir $destdir/etc/portage/repos.conf
+
+cp $destdir/usr/share/portage/config/repos.conf $destdir/etc/portage/repos.conf/gentoo.conf
+
+nano $destdir/etc/portage/repos.conf/gentoo.conf
+
+
+
+[gentoo]
+location = /usr/portage
+sync-type = rsync
+sync-uri = rsync://rsync.tw.gentoo.org/gentoo-portage
+auto-sync = yes
+
+
+*** 40 chroot
+
+mount -o subvol=fs3,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag /dev/sda /mnt/fs3
+
+destdir=/mnt/fs3
+
+destdir=/tmp/gentoo
+
+
+
+cp -L /etc/resolv.conf $destdir/etc/
+
+mount -t proc proc  $destdir/proc
+mount --rbind /sys  $destdir/sys
+mount --make-rslave $destdir/sys
+mount --rbind /dev  $destdir/dev
+mount --make-rslave $destdir/dev
+
+mkdir $destdir/mnt/fs1
+
+mount --bind /mnt/fs1 $destdir/mnt/fs1
+
+
+
+chroot $destdir /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"
+
+emerge --sync
+
+
+mount -o size=90%,noatime,nodiratime,mode=777 -t tmpfs tmpfs /tmp
+
+mount -o size=90%,noatime,nodiratime,uid=portage,gid=portage,mode=775 -t tmpfs tmpfs /var/tmp/portage 
+
+
+
+
+exit
+cd
+
+destdir=/tmp/gentoo
+
+
+umount -l $destdir/dev{/shm,/pts,}
+umount -l $destdir{/sys,/proc,}
+
+
+*** 50 profile
+
+
+eselect profile list
+
+ [14]  hardened/linux/amd64 *
+
+eselect profile set 14
+
+eselect profile list
+
+
+
+ls /usr/share/zoneinfo
+
+
+
+echo "Asia/Taipei" > /etc/timezone
+
+emerge --config sys-libs/timezone-data
+
+nano -w /etc/locale.gen
+
+locale-gen
+
+
+eselect locale list
+
+eselect locale set 2
+
+eselect locale list
+
+env-update && source /etc/profile
+
+
+*** 60 fstab
+
+blkid | grep sda
+
+ls -l /dev/disk/by-uuid | grep sda
+
+
+/dev/sda: UUID="cdc17294-c2aa-414f-bf3c-83f36a3e503a" UUID_SUB="114232ef-f0d2-48b2-936a-ccfc531e36d3" TYPE="btrfs" PTTYPE="dos"
+
+lrwxrwxrwx 1 root root  9 Apr  7  2016 cdc17294-c2aa-414f-bf3c-83f36a3e503a -> ../../sda
+
+
+
+nano -w /etc/fstab
+
+UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a   / btrfs subvol=fs3,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
+
+UUID=cdc17294-c2aa-414f-bf3c-83f36a3e503a   /mnt/fs1 btrfs subvol=fs1,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag 0 0
+
+tmpfs   /var/tmp/portage        tmpfs   uid=portage,gid=portage,mode=0775,size=5g,noatime    0 0
+
+tmpfs   /tmp         tmpfs   size=5g,mode=777          0  0
+
+
+
+
+http://gaijin-nippon.blogspot.jp/2012/05/installing-archlinux-on-btrfs-with.html
+
+# overlay /merged overlay noauto,x-systemd.automount,lowerdir=/lower,upperdir=/upper,workdir=/work 0 0
+https://wiki.archlinux.org/index.php/Overlay_filesystem
+
+mount -t overlayfs -o lowerdir=/filesystem.squashfs,upperdir=/overlay overlayfs /
+
+http://askubuntu.com/questions/109413/how-do-i-use-overlayfs/109441#109441
+
+overlay / overlay lowerdir=/mnt/rootfs1,upperdir=/mnt/rootfs2/upper,workdir=/mnt/rootfs2/work 0 0
+
+
+
+
+
+
+
+
+
+
+
+*** 70 kernel
+
+**** steps
+
+| steps |                     |
+|-------+---------------------|
+|    20 | download            |
+|       |                     |
+|    30 | configure & compile |
+|       |                     |
+|    40 | deploy              |
+|       |                     |
+|    50 | grub                |
+
+
+**** 20 download
+
+
+emerge sys-kernel/hardened-sources -pv
+
+ Install the kernel sources with the symlink USE flag active.  https://wiki.gentoo.org/wiki/Kernel/Configuration
+
+
+echo "sys-kernel/hardened-sources symlink" >> /etc/portage/package.use/hardened-sources
+
+emerge sys-kernel/hardened-sources -pv
+
+emerge sys-kernel/hardened-sources
+
+
+in host terminal:
+
+tail -f /tmp/gentoo/var/log/emerge-fetch.log
+
+tail -f /mnt/fs3/var/log/emerge-fetch.log
+
+
+ls -l /usr/src/linux
+
+ls -l /usr/src
+
+
+lrwxrwxrwx  1 root root  20 Apr  7 11:47 linux -> linux-4.4.2-hardened
+drwxr-xr-x 25 root root 720 Apr  7 11:47 linux-4.4.2-hardened
+
+
+**** 30 configure & compile
+
+cd /usr/src/linux
+
+make defconfig
+
+make menuconfig
+
+make && make modules_install
+
+
+|       | 1 | 2 | 3 | 4 | 5 | 6 |                                       | defconfig |   |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
+| net   |   |   |   |   |   |   |                                       |           |   |           |
+|       | v |   |   |   |   |   | Device Drivers                        |           |   |           |
+|       |   | v |   |   |   |   | Network device suppor                 |           |   |           |
+|       |   |   | v |   |   |   | Ethernet driver support               |           |   |           |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|       |   |   |   | v |   |   | Atheros devices                       |           |   |           |
+|       |   |   |   |   | v |   | Atheros L1C Gigabit Ethernet support  |           |   | h77md3h   |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|       |   |   |   | v |   |   | Marvell devices                       |           |   |           |
+|       |   |   |   |   | v |   | Marvell Yukon 2                       |           |   | b1 lenovo |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|       |   |   |   | v |   |   | Realtek devices                       |           |   |           |
+|       |   |   |   |   | v |   | Realtek 8169 gigabit                  |           |   | b1 asus   |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
+| btrfs |   |   |   |   |   |   |                                       |           |   |           |
+|       | v |   |   |   |   |   | File systems                          |           |   |           |
+|       |   | v |   |   |   |   | <*> Btrfs filesystem support          |           |   |           |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|       |   | v |   |   |   |   | DOS/FAT/NT Filesystems  --->          |           |   |           |
+|       |   |   | v |   |   |   | <M> NTFS file system support          |           |   |           |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
+| zram  |   |   |   |   |   |   |                                       |           |   |           |
+|       | v |   |   |   |   |   | Processor type and features           |           |   |           |
+|       |   | v |   |   |   |   | Memory allocator for compressed pages | blank     |   |           |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|       | v |   |   |   |   |   | Device Drivers                        |           |   |           |
+|       |   | v |   |   |   |   | Block devices                         |           |   |           |
+|       |   |   | v |   |   |   | Compressed RAM block device support   | blank     |   |           |
+|       |   |   |   | v |   |   | Enable LZ4 algorithm support          | blank     |   |           |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
+| temp  | v |   |   |   |   |   | Device Drivers                        |           |   |           |
+|       |   | v |   |   |   |   | Hardware Monitoring support           |           |   |           |
+|       |   |   | v |   |   |   | AMD Family 10h+ temperature sensor    | blank     | * | b1 asus   |
+|       |   |   | v |   |   |   | ASUS ATK0110                          | blank     | * | b1 asus   |
+|       |   |   |   |   |   |   |                                       |           |   |           |
+
+btrfs
+
+
+File systems  --->
+    <*> Btrfs filesystem
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge  sys-fs/btrfs-progs
+
+
+zram
+
+Processor type and features
+ <*> Memory allocator for compressed pages 
+
+Device Drivers > Block devices
+<M>   Compressed RAM block device support  
+ [*]     Enable LZ4 algorithm support 
+
+
+What is the output of sensors-detect? Coretemp is only for Intel processors. You probably want k10temp.
+
+https://bbs.archlinux.org/viewtopic.php?id=104723
+
+
+
+
+**** 40 deploy
+
+EXTENSION=20160407-hardened-net-zram
+
+EXTENSION=20160408-hardened-net-zram-disable_legacy_fbdev 
+
+EXTENSION=20160408-hardened-net-zram-nouveau_buildin
+
+EXTENSION=20160408-hardened-net-zram-nouveau_buildin-amdtemp-hdaudio
+
+KERNELVER=4.4.2 
+
+cp .config /boot/config-${KERNELVER}-${EXTENSION}
+cp System.map /boot/System.map-${KERNELVER}-${EXTENSION}
+cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-${EXTENSION}
+/usr/sbin/grub2-mkconfig -o /boot/grub/grub.cfg
+cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
+
+
+
+**** 50 grub
+
+after deploy the stage4 in the final destination, configure grub
+
+
+
+
+*** 80 Networking 
+
+https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System
+
+
+nano -w /etc/conf.d/hostname
+
+hostname="b1asus"
+
+
+nano -w /etc/conf.d/net
+
+
+dns_domain_lo="b1network"
+config_enp3s0="dhcp"
+config_enp2s0="dhcp"
+config_enp1s0="dhcp"
+
+
+emerge --noreplace net-misc/netifrc
+
+cd /etc/init.d
+ln -s net.lo net.enp3s0
+rc-update add net.enp3s0 default
+
+cd /etc/init.d
+ln -s net.lo net.enp2s0
+rc-update add net.enp2s0 default
+
+
+cd /etc/init.d
+ln -s net.lo net.enp1s0
+rc-update add net.enp1s0 default
+
+passwd
+
+useradd -m -G users,wheel c5766 
+
+passwd c5766
+
+
+nano -w /etc/conf.d/hwclock
+
+clock="local"
+
+
+
+
+
+
+*** 82 basic packages
+
+emerge net-misc/dhcpcd
+
+emerge sys-boot/grub
+
+emerge proxychains
+
+
+*** 90 generate excluding file 
+
+nano /tmp/stage4.excl 
+
+
+.bash_history
+/mnt/*
+/tmp/*
+/proc/*
+/sys/*
+/dev/*
+
+
+
+*** 92 generate tar 
+
+cd /mnt/fs1
+
+pwd
+
+tar cvjf stage4_fs3_20160407.tar.bz2 / -X /tmp/stage4.excl  
+
+
+*** 94 extract tar 
+
+inside host
+
+mount -o subvol=fs3,defaults,noatime,noacl,compress=lzo,inode_cache,space_cache,autodefrag \
+/dev/sda /mnt/fs3
+
+cd /mnt/fs3
+
+tar -xvjpf /mnt/fs1/stage4_fs3_20160407.tar.bz2
+
+
+
+
+*** 96 adjust grub
+
+
+
+grub2-install /dev/sda --recheck
+
+grub2-mkconfig -o /boot/grub/grub.cfg
+
+
+mount -o size=90%,noatime,nodiratime,mode=777 -t tmpfs tmpfs /tmp
+
+mount -o size=90%,noatime,nodiratime,uid=portage,gid=portage,mode=775 -t tmpfs tmpfs /var/tmp/portage 
+
+
+
+exit
+cd
+
+destdir=/mnt/fs3
+
+umount -l $destdir/dev{/shm,/pts,}
+umount -l $destdir{/boot,/sys,/proc,}
+
+
+
+
 
 ** steps tmpfs M4A87TD/USB3 [2016-04-06 Wed 16:56]
 

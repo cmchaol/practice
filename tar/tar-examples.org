@@ -159,8 +159,7 @@ tar Jxvf file_name.tar.xz
 
 * tar lz4
 
-
-app-arch/lz4
+emerge app-arch/lz4
 
 
 
