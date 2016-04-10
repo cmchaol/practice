@@ -1646,41 +1646,51 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 
 ** inventory
 
-|               | M4A87TD/USB3 280g/fs3  |
-|---------------+------------------------|
-| shell group   |                        |
-|               |                        |
-| proxychains   | [2016-04-07 Thu 15:13] |
-|               |                        |
-| grub          | [2016-04-07 Thu 15:13] |
-|               |                        |
-| dhcpcd        | [2016-04-07 Thu 15:13] |
-|               |                        |
-| keychain      |                        |
-|               |                        |
-| parallel      |                        |
-|               |                        |
-| git           |                        |
-|               |                        |
-|---------------+------------------------|
-| xorg group    |                        |
-|               |                        |
-| xorg-server   | [2016-04-07 Thu 15:13] |
-|               |                        |
-| xrandr        | [2016-04-07 Thu 16:12] |
-|               |                        |
-| xterm         | [2016-04-07 Thu 16:12] |
-|               |                        |
-| spectrwm      | [2016-04-07 Thu 16:12] |
-|               |                        |
-|---------------+------------------------|
-| editors       |                        |
-|               |                        |
-| emacs         | [2016-04-07 Thu 17:06] |
-|               |                        |
-| google-chrome | [2016-04-07 Thu 17:11] |
-|               |                        |
-| firefox       |                        |
+|               | h77md3h fs2             | M4A87TD/USB3 280g/fs3  |
+|               |                         |                        |
+|---------------+-------------------------+------------------------|
+| shell group   |                         |                        |
+|               |                         |                        |
+| proxychains   |                         | [2016-04-07 Thu 15:13] |
+|               |                         |                        |
+| grub          |                         | [2016-04-07 Thu 15:13] |
+|               |                         |                        |
+| dhcpcd        |                         | [2016-04-07 Thu 15:13] |
+|               |                         |                        |
+| keychain      |                         |                        |
+|               |                         |                        |
+| parallel      |                         |                        |
+|               |                         |                        |
+| git           | [2016-04-10 Sun 20:54]  |                        |
+|               |                         |                        |
+| mc            |                         |                        |
+|               |                         |                        |
+|               |                         |                        |
+|---------------+-------------------------+------------------------|
+| xorg group    |                         |                        |
+|               |                         |                        |
+| xorg-server   | [2016-04-10 Sun 21:22]  | [2016-04-07 Thu 15:13] |
+|               |                         |                        |
+| xorg-drivers  | automatically installed |                        |
+| intel         |                         |                        |
+|               |                         |                        |
+| mesa          | automatically installed |                        |
+| i915          |                         |                        |
+|               |                         |                        |
+| xrandr        | [2016-04-10 Sun 22:22]  | [2016-04-07 Thu 16:12] |
+|               |                         |                        |
+| xterm         |                         | [2016-04-07 Thu 16:12] |
+|               |                         |                        |
+| spectrwm      |                         | [2016-04-07 Thu 16:12] |
+|               |                         |                        |
+|---------------+-------------------------+------------------------|
+| editors       |                         |                        |
+|               |                         |                        |
+| emacs         |                         | [2016-04-07 Thu 17:06] |
+|               |                         |                        |
+| google-chrome |                         | [2016-04-07 Thu 17:11] |
+|               |                         |                        |
+| firefox       |                         |                        |
 
 
 
@@ -2020,6 +2030,10 @@ parallel convert '{}' '{.}.jpg' -- *.png
 
 emerge dev-vcs/git
 
+*** mc
+
+emerge app-misc/mc
+
 
 
 
@@ -2035,47 +2049,35 @@ emerge dev-vcs/git
 
 **** kernel
 
-https://wiki.gentoo.org/wiki/Xorg/Guide
-
-https://wiki.gentoo.org/wiki/Nouveau
-
-
-
-| 1 | 2 | 3 | 4 | 5 | kernel option                     | defconfig | change to  | reference |
-|   |   |   |   |   |                                   |           |            |           |
-|---+---+---+---+---+-----------------------------------+-----------+------------+-----------|
-| v |   |   |   |   | Device Drivers                    |           |            |           |
-|   | v |   |   |   | Input device support              |           |            |           |
-|   |   | v |   |   | Event interface                   | *         |            |           |
-|---+---+---+---+---+-----------------------------------+-----------+------------+-----------|
-|   |   |   |   |   |                                   |           |            |           |
-|   | v |   |   |   | Graphics support                  |           |            |           |
-|   |   | v |   |   | Frame buffer Devices              |           |            |           |
-|   |   |   | v |   | Support for frame buffer devices  | none      |            |           |
-|   |   |   |   | v | Enable firmware EDID              | none      |            |           |
-|   |   |   |   |   |                                   |           |            |           |
-|   |   |   | v |   | Console display driver support    |           |            |           |
-|   |   |   |   |   | Framebuffer Console support       | *         |            |           |
-|   |   |   |   |   |                                   |           |            |           |
-|---+---+---+---+---+-----------------------------------+-----------+------------+-----------|
-|   |   |   |   |   |                                   |           |            |           |
-|   |   | v |   |   | Console display driver support    |           |            |           |
-|   |   |   | v |   | Framebuffer Console support       | *         |            |           |
-|---+---+---+---+---+-----------------------------------+-----------+------------+-----------|
-|   |   |   |   |   |                                   |           |            |           |
-|   |   | v |   |   | Direct Rendering Manager (XFree86 |           |            |           |
-|   |   |   | v |   | Enable legacy fbdev support for   | *         |            |           |
-|   |   |   |   |   |                                   |           |            |         2 |
-|   |   |   |   |   |                                   |           |            |           |
-|   |   |   |   |   |                                   |           | no, failed |         3 |
-|   |   |   |   |   |                                   |           |            |           |
-|---+---+---+---+---+-----------------------------------+-----------+------------+-----------|
-|   |   |   |   |   |                                   |           |            |           |
-|   |   | v |   |   | Nouveau (NVIDIA) cards            | none      | M          |           |
-|   |   |   |   |   |                                   |           | *          |           |
-|   |   |   |   |   |                                   |           |            |           |
+| 1 | 2 | 3 | 4 | 5 | kernel option                     | defconfig | change to | reference |
+|   |   |   |   |   |                                   |           |           |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
+| v |   |   |   |   | Device Drivers                    |           |           |           |
+|   | v |   |   |   | Input device support              |           |           |           |
+|   |   | v |   |   | Event interface                   | *         |           |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |           |
+|   | v |   |   |   | Graphics support                  |           |           |           |
+|   |   | v |   |   | Frame buffer Devices              |           |           |           |
+|   |   |   | v |   | Support for frame buffer devices  |           |           |           |
+|   |   |   |   | v | Enable firmware EDID              | none      |           |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |           |
+|   |   | v |   |   | Console display driver support    |           |           |           |
+|   |   |   | v |   | Framebuffer Console support       | *         |           |           |
+|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |           |
+|   |   | v |   |   | Direct Rendering Manager (XFree86 |           |           |           |
+|   |   |   | v |   | Enable legacy fbdev support for   | *         |           |         2 |
+|---+---+---+---+---+-----------------------------------+-----------+-----------+-----------|
+|   |   |   |   |   |                                   |           |           |           |
+|   |   | v |   |   | Nouveau (NVIDIA) cards            | none      | M         |           |
+|   |   |   |   |   |                                   |           | *         |           |
+|   |   | v |   |   | Intel 8xx/9xx/G3x/G4x/HD Graphics |           | M         |   h77md3h |
+|   |   |   |   |   |                                   |           |           |           |
 
 reference
+
 
 1
 
@@ -2095,6 +2097,7 @@ https://forums.gentoo.org/viewtopic-p-6655021.html
 
 **** make.conf
 
+nano /etc/portage/make.conf
 
 
 Sample make.conf entries
@@ -2105,18 +2108,19 @@ VIDEO_CARDS="nouveau"
 ## (For AMD/ATI cards)
 VIDEO_CARDS="radeon"
 
-nano /etc/portage/make.conf
-
 INPUT_DEVICES="evdev"
 
 VIDEO_CARDS="nouveau"
+
+VIDEO_CARDS="intel i915"
+
 
 
 **** download and compile
 
 emerge --ask x11-base/xorg-server
 
-gpasswd -a c5766 video
+gpasswd -a user1 video  # for 
 
 
 **** errors
@@ -2124,6 +2128,17 @@ gpasswd -a c5766 video
 [  1072.674] (EE) Failed to load module "nv" (module does not exist, 0)
 
 [  1072.685] (EE) open /dev/dri/card0: No such file or directory
+
+
+
+*** xorg-drivers
+
+emerge xorg-drivers  # for intel
+
+*** mesa
+
+emerge media-libs/mesa # for i915
+
 
 
 
