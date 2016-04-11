@@ -1202,6 +1202,8 @@ EXTENSION=20160408-hardened-net-zram-nouveau_buildin
 
 EXTENSION=20160408-hardened-net-zram-nouveau_buildin-amdtemp-hdaudio
 
+EXTENSION=20160411-hardened-net-zram-nouveau_buildin-amdtemp-hdaudio(M)
+
 KERNELVER=4.4.2 
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}
@@ -2627,38 +2629,38 @@ https://forums.gentoo.org/viewtopic-t-813030-highlight-lmsensors.html
 
 ** driver
 
-| Device                                                    | Vendor                                 |   PCI ID | Works? | Driver               | Kernel   |
-|-----------------------------------------------------------+----------------------------------------+----------+--------+----------------------+----------|
-| RX780/RX790 Host Bridge                                   | Advanced Micro Devices, Inc. [AMD/ATI] | 10025957 |        |                      |          |
-| RX780/RD790 PCI to PCI bridge (external gfx0 port A)      | Advanced Micro Devices, Inc. [AMD/ATI] | 10025978 |        |                      |          |
-| RD790 PCI to PCI bridge (PCI express gpp port E)          | Advanced Micro Devices, Inc. [AMD/ATI] | 1002597e |        |                      |          |
-| RD790 PCI to PCI bridge (PCI express gpp port F)          | Advanced Micro Devices, Inc. [AMD/ATI] | 1002597f |        |                      |          |
-| SB7x0/SB8x0/SB9x0 SATA Controller [IDE mode]              | Advanced Micro Devices, Inc. [AMD/ATI] | 10024390 | Yes    | ahci                 | v2.6.25- |
-| SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024397 |        |                      |          |
-| SB7x0/SB8x0/SB9x0 USB EHCI Controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 10024396 |        |                      |          |
-| SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024397 |        |                      |          |
-| SB7x0/SB8x0/SB9x0 USB EHCI Controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 10024396 |        |                      |          |
-| SBx00 SMBus Controller                                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024385 | Yes    | i2c_piix4,sp5100_tco | v2.6.25- |
-| SB7x0/SB8x0/SB9x0 IDE Controller                          | Advanced Micro Devices, Inc. [AMD/ATI] | 1002439c | Yes    | pata_atiixp          |          |
-| SBx00 Azalia (Intel HDA)                                  | Advanced Micro Devices, Inc. [AMD/ATI] | 10024383 | Yes    | snd_hda_intel        | v2.6.25- |
-| SB7x0/SB8x0/SB9x0 LPC host controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 1002439d |        |                      |          |
-| SBx00 PCI to PCI Bridge                                   | Advanced Micro Devices, Inc. [AMD/ATI] | 10024384 |        |                      |          |
-| SB7x0/SB8x0/SB9x0 USB OHCI2 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024399 |        |                      |          |
-| SB700/SB800/SB900 PCI to PCI bridge (PCIE port 0)         | Advanced Micro Devices, Inc. [AMD/ATI] | 100243a0 |        |                      |          |
-| SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024397 |        |                      |          |
-| SB7x0/SB8x0/SB9x0 USB EHCI Controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 10024396 |        |                      |          |
-| Family 10h Processor HyperTransport Configuration         | Advanced Micro Devices, Inc. [AMD]     | 10221200 |        |                      |          |
-| Family 10h Processor Address Map                          | Advanced Micro Devices, Inc. [AMD]     | 10221201 |        |                      |          |
-| Family 10h Processor DRAM Controller                      | Advanced Micro Devices, Inc. [AMD]     | 10221202 | Yes    | amd64_edac_mod       | v3.16.0- |
-| Family 10h Processor Miscellaneous Control                | Advanced Micro Devices, Inc. [AMD]     | 10221203 | Yes    | k10temp              | v2.6.33- |
-| Family 10h Processor Link Control                         | Advanced Micro Devices, Inc. [AMD]     | 10221204 |        |                      |          |
-| RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller | Realtek Semiconductor Co., Ltd.        | 10ec8168 | Yes    | r8169                |          |
-| uPD720200 USB 3.0 Host Controller                         | NEC Corporation                        | 10330194 |        |                      |          |
-| JMB368 IDE controller                                     | JMicron Technology Corp.               | 197b2368 | Yes    | jmicron              |          |
-| GF104 [GeForce GTX 460]                                   | NVIDIA Corporation                     | 10de0e22 |        |                      |          |
-| GF104 High Definition Audio Controller                    | NVIDIA Corporation                     | 10de0beb |        |                      |          |
-|                                                           |                                        |          |        |                      |          |
-|                                                           |                                        |          |        |                      |          |
+| Driver               | Device                                                    | Vendor                                 |   PCI ID | Works? | Kernel   |
+|----------------------+-----------------------------------------------------------+----------------------------------------+----------+--------+----------|
+|                      | RX780/RX790 Host Bridge                                   | Advanced Micro Devices, Inc. [AMD/ATI] | 10025957 |        |          |
+|                      | RX780/RD790 PCI to PCI bridge (external gfx0 port A)      | Advanced Micro Devices, Inc. [AMD/ATI] | 10025978 |        |          |
+|                      | RD790 PCI to PCI bridge (PCI express gpp port E)          | Advanced Micro Devices, Inc. [AMD/ATI] | 1002597e |        |          |
+|                      | RD790 PCI to PCI bridge (PCI express gpp port F)          | Advanced Micro Devices, Inc. [AMD/ATI] | 1002597f |        |          |
+| ahci                 | SB7x0/SB8x0/SB9x0 SATA Controller [IDE mode]              | Advanced Micro Devices, Inc. [AMD/ATI] | 10024390 | Yes    | v2.6.25- |
+|                      | SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024397 |        |          |
+|                      | SB7x0/SB8x0/SB9x0 USB EHCI Controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 10024396 |        |          |
+|                      | SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024397 |        |          |
+|                      | SB7x0/SB8x0/SB9x0 USB EHCI Controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 10024396 |        |          |
+| i2c_piix4,sp5100_tco | SBx00 SMBus Controller                                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024385 | Yes    | v2.6.25- |
+| pata_atiixp          | SB7x0/SB8x0/SB9x0 IDE Controller                          | Advanced Micro Devices, Inc. [AMD/ATI] | 1002439c | Yes    |          |
+| snd_hda_intel        | SBx00 Azalia (Intel HDA)                                  | Advanced Micro Devices, Inc. [AMD/ATI] | 10024383 | Yes    | v2.6.25- |
+|                      | SB7x0/SB8x0/SB9x0 LPC host controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 1002439d |        |          |
+|                      | SBx00 PCI to PCI Bridge                                   | Advanced Micro Devices, Inc. [AMD/ATI] | 10024384 |        |          |
+|                      | SB7x0/SB8x0/SB9x0 USB OHCI2 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024399 |        |          |
+|                      | SB700/SB800/SB900 PCI to PCI bridge (PCIE port 0)         | Advanced Micro Devices, Inc. [AMD/ATI] | 100243a0 |        |          |
+|                      | SB7x0/SB8x0/SB9x0 USB OHCI0 Controller                    | Advanced Micro Devices, Inc. [AMD/ATI] | 10024397 |        |          |
+|                      | SB7x0/SB8x0/SB9x0 USB EHCI Controller                     | Advanced Micro Devices, Inc. [AMD/ATI] | 10024396 |        |          |
+|                      | Family 10h Processor HyperTransport Configuration         | Advanced Micro Devices, Inc. [AMD]     | 10221200 |        |          |
+|                      | Family 10h Processor Address Map                          | Advanced Micro Devices, Inc. [AMD]     | 10221201 |        |          |
+| amd64_edac_mod       | Family 10h Processor DRAM Controller                      | Advanced Micro Devices, Inc. [AMD]     | 10221202 | Yes    | v3.16.0- |
+| k10temp              | Family 10h Processor Miscellaneous Control                | Advanced Micro Devices, Inc. [AMD]     | 10221203 | Yes    | v2.6.33- |
+|                      | Family 10h Processor Link Control                         | Advanced Micro Devices, Inc. [AMD]     | 10221204 |        |          |
+| r8169                | RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller | Realtek Semiconductor Co., Ltd.        | 10ec8168 | Yes    |          |
+|                      | uPD720200 USB 3.0 Host Controller                         | NEC Corporation                        | 10330194 |        |          |
+| jmicron              | JMB368 IDE controller                                     | JMicron Technology Corp.               | 197b2368 | Yes    |          |
+|                      | GF104 [GeForce GTX 460]                                   | NVIDIA Corporation                     | 10de0e22 |        |          |
+|                      | GF104 High Definition Audio Controller                    | NVIDIA Corporation                     | 10de0beb |        |          |
+|                      |                                                           |                                        |          |        |          |
+|                      |                                                           |                                        |          |        |          |
 
 
 ** cpu
