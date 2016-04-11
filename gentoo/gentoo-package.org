@@ -1204,6 +1204,8 @@ EXTENSION=20160408-hardened-net-zram-nouveau_buildin-amdtemp-hdaudio
 
 EXTENSION=20160411-hardened-net-zram-nouveau_buildin-amdtemp-hdaudio(M)
 
+EXTENSION=20160411-hardened-net-zram-nouveau_buildin-amdtemp-hdaudio(M)-zswap
+
 KERNELVER=4.4.2 
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}
