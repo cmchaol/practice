@@ -83,7 +83,7 @@ modprobe -r zram
 
 * zswap
 
-** 
+
 
 ** reference
 

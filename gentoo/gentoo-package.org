@@ -1685,6 +1685,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | spectrwm      |                         | [2016-04-07 Thu 16:12] |
 |               |                         |                        |
+| vnc           |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | editors       |                         |                        |
 |               |                         |                        |
@@ -1693,8 +1695,18 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 | google-chrome |                         | [2016-04-07 Thu 17:11] |
 |               |                         |                        |
 | firefox       |                         |                        |
+|               |                         |                        |
+|---------------+-------------------------+------------------------|
+| audio         |                         |                        |
+|               |                         |                        |
+|               |                         |                        |
 
+** audio
 
+*** alsa-lib
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge media-libs/alsa-lib
 
 ** shell group
 
@@ -1770,6 +1782,23 @@ save, then type
 $ sudo update-grub
 
 
+
+
+
+**** zram
+
+
+http://askubuntu.com/questions/361320/how-can-i-enable-zswap
+
+https://help.ubuntu.com/community/Grub2/Setup#A.2BAC8-etc.2BAC8-default.2BAC8-grub
+
+nano /etc/default/grub
+
+GRUB_CMDLINE_LINUX_DEFAULT="rootwait"
+
+GRUB_CMDLINE_LINUX_DEFAULT="rootwait zswap.enabled=1 zswap.compressor=lz4"
+
+GRUB_CMDLINE_LINUX_DEFAULT="zswap.enabled=1 zswap.compressor=lz4"
 
 
 
@@ -2401,6 +2430,38 @@ ls -lha
   bar_action		= /home/c5766/baraction.sh  # valid
   bar_action		= ~/baraction.sh            # valid
   bar_action		= baraction.sh              # external app failed: no such file or directory.
+
+
+
+*** TightVNC
+
+http://wiki.gentoo.org/wiki/TightVNC
+
+**** just installing the client,
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge --ask --update --newuse net-misc/tightvnc
+
+
+**** server
+USE="server" emerge -uN tightvnc
+
+
+echo "app-editors/emacs xft" >> /etc/portage/package.use
+
+su
+
+echo "net-misc/tightvnc server" >> /etc/portage/package.use
+
+emerge -uN tightvnc
+
+|    |   tsghcloud |   |
+| ip | 10.161.0.97 |   |
+|    |             |   |
+
+vncviewer 10.161.0.97
+
+
 
 
 ** editors
