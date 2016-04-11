@@ -1647,7 +1647,6 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 ** inventory
 
 |               | h77md3h fs2             | M4A87TD/USB3 280g/fs3  |
-|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | shell group   |                         |                        |
 |               |                         |                        |
@@ -1665,7 +1664,7 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | mc            |                         |                        |
 |               |                         |                        |
-|               |                         |                        |
+| tree          |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -2066,6 +2065,13 @@ emerge app-misc/mc
 
 
 
+
+*** tree
+
+
+emerge app-text/tree
+
+
 ** xorg group
    
 *** x11-base/xorg-server
@@ -2207,25 +2213,33 @@ https://wiki.archlinux.org/index.php/Spectrwm#Statusbar_configuration
 
 **** baraction.sh
 
-***** temperature b1 asus
+***** temperature 
 
+| M4A87TD/USB3 |
+|              |
+| h77md3h      |
+|              |
+
+M4A87TD/USB3
 # 
 
-find /sys -name *temp*_input*
+find /sys -name *temp*input*
 
-/sys/devices/pci0000:00/0000:00:02.0/0000:05:00.0/hwmon/hwmon0/temp1_input
-/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input
-/sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon2/temp1_input
-/sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon2/temp2_input
+TB0=$(cat /sys/devices/pci0000:00/0000:00:02.0/0000:05:00.0/hwmon/hwmon0/temp1_input)
+TC1=$(cat /sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon1/temp1_input)
+TC2=$(cat /sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon1/temp2_input)
+echo -n "|" $(($TB0/1000)) $(($TC1/1000)) $(($TC2/1000)) °C
 
-Tcpu1_
-/sys/devices/pci0000:00/0000:00:02.0/0000:05:00.0/hwmon/hwmon0/temp1_input
-/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input
-/sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon2/temp1_input
-/sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon2/temp2_input
+	# comment for M4A87TD/USB3
+	TB0=$(cat /sys/devices/pci0000:00/0000:00:02.0/0000:05:00.0/hwmon/hwmon0/temp1_input)
+	TC1=$(cat /sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon1/temp1_input)
+	TC2=$(cat /sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/device:2f/ATK0110:00/hwmon/hwmon1/temp2_input)
+	echo -n " ("$(($TB0/1000)) $(($TC1/1000)) $(($TC2/1000)) °C")"
 
 
-***** temperature h77md3h [2016-02-13 Sat 19:12]
+
+
+h77md3h [2016-02-13 Sat 19:12]
 
 
 Linux wusb 4.3.3-hardened-r4 #2 SMP Sat Feb 13 16:58:02 CST 2016 x86_64 Intel(R) Celeron(R) CPU G530 @ 2.40GHz GenuineIntel GNU/Linux
@@ -2365,6 +2379,17 @@ mount | awk '$3 ~ /^\/$/ {print $1}' | awk 'BEGIN{ FS="[/]"} {print $3}'
 #+RESULTS:
 sdb
 
+
+
+***** ip addr
+	
+#	ip_dev=$(ip addr | awk '$0 ~ /global/ {print $NF $2}')
+	ip_addr=$(ip addr | awk '$0 ~ /global/ {print $NF, $2}' | sed 's/\/..//')
+#	ip_addr=$(ip addr | awk '$0 ~ /global/ {print $2}' | sed 's/\/..//')
+	echo -n "" $ip_addr
+
+#	pidssh=$(netstat -tpln | grep ssh | awk '$1 ~ /tcp$/ {print $NF, $4}'); echo "" $pidssh
+	pidssh=$(ps -e | grep -w 'ssh$' | awk '{print $1}'); echo " ssh" $pidssh
 
 
 **** temperature kernel
