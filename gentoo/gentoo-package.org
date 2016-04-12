@@ -1693,6 +1693,13 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | firefox       |                         |                        |
 |               |                         |                        |
+| pdfshuffler   |                         |                        |
+|               |                         |                        |
+| libreoffice   |                         |                        |
+|               |                         |                        |
+| gimp          |                         |                        |
+|               |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | audio         |                         |                        |
 |               |                         |                        |
@@ -2511,6 +2518,17 @@ emerge www-client/google-chrome
 
 
 
+
+*** gimp
+
+
+
+echo "media-gfx/gimp jpeg jpeg2k pdf png svg tiff" >> /etc/portage/package.use/gimp
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge media-gfx/gimp  
+
+
 *** emacs
 
 https://wiki.gentoo.org/wiki/GNU_Emacs
@@ -2649,6 +2667,32 @@ echo " dev-libs/libxml2 -icu" > /etc/portage/package.use/libxml2
 emerge -pv dev-libs/libxml2
 
 emerge dev-libs/libxml2
+
+
+*** pdfshuffler
+
+
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge app-text/pdfshuffler --autounmask-write
+
+dispatch-conf
+
+
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge app-text/pdfshuffler
+
+
+*** libreoffice-bin
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge app-office/libreoffice-bin  --autounmask-write
+
+dispatch-conf
+
 
 
 ** app-text/tesseract
