@@ -1665,6 +1665,9 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 | mc            |                         |                        |
 |               |                         |                        |
 | tree          |                         |                        |
+|               |                         |                        |
+| megatools     |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -2077,6 +2080,30 @@ emerge app-misc/mc
 
 
 emerge app-text/tree
+
+
+
+*** megatools
+
+echo "net-misc/megatools fuse" >> /etc/portage/package.use/fuse
+
+emerge -pv megatools
+
+emerge net-misc/megatools --autounmask-write 
+
+dispatch-conf
+
+
+**** megarc
+
+http://albertolarripa.com/2013/07/10/megatools-synchronizing-your-backups-to-mega/
+
+cat /root/.megarc 
+[Login]
+Username = email@albertolarripa.com
+Password = yourpassword
+
+
 
 
 ** xorg group
@@ -2692,6 +2719,124 @@ proxychains -f /home/c5766/.proxychains/proxychains.conf \
 emerge app-office/libreoffice-bin  --autounmask-write
 
 dispatch-conf
+
+
+
+*** doc docx
+
+**** app-text/docx2txt
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge --ask app-text/docx2txt
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge app-text/docx2txt --autounmask-write 
+
+dispatch-conf
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge app-text/docx2txt
+
+
+find / -name docx2txt*
+/var/db/pkg/app-text/docx2txt-1.4
+/var/db/pkg/app-text/docx2txt-1.4/docx2txt-1.4.ebuild
+/usr/bin/docx2txt
+/usr/share/doc/docx2txt-1.4
+/usr/share/doc/docx2txt-1.4/docx2txt.config.bz2
+/usr/portage/distfiles/docx2txt-1.4.tgz
+/usr/portage/app-text/docx2txt
+/usr/portage/app-text/docx2txt/docx2txt-1.3.ebuild
+/usr/portage/app-text/docx2txt/docx2txt-1.4.ebuild
+/usr/portage/app-text/docx2txt/files/docx2txt-1.1-paragraph-newline.patch
+/usr/portage/app-text/docx2txt/docx2txt-1.2.ebuild
+/usr/portage/metadata/md5-cache/app-text/docx2txt-1.3
+/usr/portage/metadata/md5-cache/app-text/docx2txt-1.2
+/usr/portage/metadata/md5-cache/app-text/docx2txt-1.4
+
+
+3. Emacs Editor
+   ------------
+
+You can add following lines in your ~/.emacs file to view the text content of
+a .docx file directly when using emacs.
+
+(add-to-list 'auto-mode-alist '("\\.docx\\'" . docx2txt))
+
+(defun docx2txt ()
+  "Run docx2txt on the entire buffer."
+  (shell-command-on-region (point-min) (point-max) "docx2txt.pl" t t))
+
+Be warned that with above ~/.emacs code addition, if you happen to save the
+buffer/file, it will overwrite the .docx file with the text content.
+
+
+but docx2txt.pl not available. I remove the .pl and it works. [2015-09-17 Thu 09:57]
+
+
+
+**** antiword
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge --ask app-text/antiword
+
+
+**** DONE dotemacs
+
+http://www.emacswiki.org/emacs/AntiWord
+
+(add-to-list 'auto-mode-alist '("\\.doc\\'" . no-word))
+
+    (defun no-word ()
+      "Run antiword on the entire buffer."
+      (shell-command-on-region (point-min) (point-max) "antiword - " t t))
+
+confirmed effective
+
+**** ms word
+
+|          |         | last   | official                                                     |           |
+|          |         | modify | website                                                      |           |
+|          | version | year   |                                                              |           |
+|          |         |        |                                                              |           |
+|----------+---------+--------+--------------------------------------------------------------+-----------|
+| antiword |    0.37 | 2005   | http://www.winfield.demon.nl/                                | official  |
+|          |         |        |                                                              |           |
+|          |         |        | http://archive09.linux.com/articles/113959                   |           |
+|          |         |        |                                                              |           |
+|          |         |        | http://www.emacswiki.org/emacs-en/AntiWord                   | eamcswiki |
+|          |         |        |                                                              |           |
+|----------+---------+--------+--------------------------------------------------------------+-----------|
+|          |         |        |                                                              |           |
+| catdoc   |  0.94.4 | 2005   | http://www.wagner.pp.ru/~vitus/software/catdoc/              | official  |
+|          |         |        |                                                              |           |
+|          |         |        | http://www.wagner.pp.ru/~vitus/software/catdoc/catdoc.1.html | man       |
+|          |         |        |                                                              |           |
+|          |         |        |                                                              |           |
+
+
+man antiword
+
+antiword
+      -w width
+              In text mode this is the line width in characters. A value of zero puts an entire paragraph on a line, useful when the text is to used as input for another wordprocessor. This value is ignored in PostScript mode.
+
+
+antiword -w 0 word.doc
+
+
+catdoc
+
+-w
+
+disables word wrapping. By default catdoc output is splitted into lines not longer than 72 (or number, specified by -m option) characters and paragraphs are separated by blank line. With this option each paragraph is one long line.
+
+catdoc -w  (equal to catdoc -m 0)
+
+-m number
+
+Specifies right margin for text (default 72). -m 0 is equivalent to -w
+
 
 
 
