@@ -1702,6 +1702,7 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | gimp          |                         |                        |
 |               |                         |                        |
+| imagemagick   |                         |                        |
 |               |                         |                        |
 |---------------+-------------------------+------------------------|
 | audio         |                         |                        |
@@ -2672,6 +2673,9 @@ emerge firefox
 *** imagemagick
 
 echo "media-gfx/imagemagick jpeg tiff" > /etc/portage/package.use/imagemagick 
+
+echo "media-gfx/imagemagick jpeg jpeg2k tiff png svg" > /etc/portage/package.use/imagemagick 
+
 
 emerge -pv media-gfx/imagemagick
 
