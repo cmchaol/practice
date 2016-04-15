@@ -1202,6 +1202,9 @@ EXTENSION=20160408-hardened-net-zram-nouveau_buildin
 
 EXTENSION=20160411-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap
 
+EXTENSION=20160415-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core
+
+
 KERNELVER=4.4.2 
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}
