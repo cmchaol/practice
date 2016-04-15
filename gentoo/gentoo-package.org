@@ -1690,6 +1690,7 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | vnc           |                         |                        |
 |               |                         |                        |
+| gtk+          |                         |                        |
 |---------------+-------------------------+------------------------|
 | editors       |                         |                        |
 |               |                         |                        |
@@ -2524,6 +2525,11 @@ vncviewer 10.161.0.97
 
 
 
+
+*** gtk+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge -pv gtk+:2
 
 ** editors
 

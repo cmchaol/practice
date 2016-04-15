@@ -1,0 +1,2348 @@
+* Custom installation with TeX Live					:tex:
+
+
+|    | installation |   |
+|----+--------------+---|
+| 10 | tex          |   |
+|    |              |   |
+| 20 | latex        |   |
+|    |              |   |
+|    | lualatex     |   |
+|    |              |   |
+|    | chinese font |   |
+|    |              |   |
+
+
+
+
+** 10 minimal installation 68 Mb
+
+| step |                |
+|------+----------------|
+|    1 | download       |
+|      |                |
+|    2 | su root        |
+|      |                |
+|    3 | umask 022      |
+|      |                |
+|    4 | install-tl     |
+|      |                |
+|    5 | minimal scheme |
+|      |                |
+|    6 | texmf          |
+|      |                |
+
+step 1
+
+http://en.wikibooks.org/wiki/LaTeX/Installation#Minimal_installation
+
+http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz 
+
+step 4
+
+tar zxvpf 
+
+umask 022
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+perl install-tl-20150904/install-tl
+
+see installation schemes
+
+3.4 Post-install actions
+
+https://www.tug.org/texlive/doc/texlive-en/texlive-en.html#installation
+
+check the shell
+
+env
+
+I added the following to ~/.bashrc
+
+PATH=/usr/local/texlive/2015/bin/x86_64-linux:$PATH; export PATH
+MANPATH=/usr/local/texlive/2015/texmf-dist/doc/man:$MANPATH; export MANPATH
+INFOPATH=/usr/local/texlive/2015/texmf-dist/doc/info:$INFOPATH; export INFOPATH
+
+
+[2016-04-15 Fri 12:38]
+
+Add /usr/local/texlive/2015/texmf-dist/doc/info to INFOPATH.
+Add /usr/local/texlive/2015/texmf-dist/doc/man to MANPATH
+   (if not dynamically found).
+
+Most importantly, add /usr/local/texlive/2015/bin/x86_64-linux
+ 
+log out and log in again
+
+$ pdftex '\empty Hello world!\bye'
+and view the pdf
+
+
+installation schemes 
+
+======================> TeX Live installation procedure <=====================
+
+======>   Letters/digits in <angle brackets>
+======>   me
+
+ Detected platform: GNU/Linux on x86_64
+ 
+ <B> binary platforms: 1 out of 21
+
+ <S> set installation scheme (scheme-full)
+
+ <C> customizing installation collections
+     47 collections out of 48, disk space required: 3891 MB
+
+ <D> directories:
+   TEXDIR (the main TeX directory):
+     /usr/local/texlive/2014
+   TEXMFLOCAL (directory for site-wide local
+     /usr/local/texlive/texmf-local
+   TEXMFSYSVAR (directory for variable and automatically generated data):
+     /usr/local/texlive/2014/texmf-var
+   TEXMFSYSCONFIG (directory for local config):
+     /usr/local/texlive/2014/texmf-config
+   TEXMFVAR (personal directory for variable
+     ~/.texlive2014/texmf-var
+   TEXMFCONFIG (personal directory for local
+     ~/.texlive2014/texmf-config
+   TEXMFHOME (directory for user-specific files):
+     ~/texmf
+
+ <O> options:
+   [ ] use letter size instead of A4 by default
+   [X] allow execution of restricted list of
+   [X] create all format files
+   [X] install macro/font doc tree
+   [X] install macro/font source tree
+
+ <V> set up for portable installation
+
+Actions:
+ <I> start i
+ <H> help
+ <Q> quit
+
+Enter command: S
+
+
+===============================================================================
+Select scheme:
+
+ a [ ] full scheme (everything)
+ b [ ] medium
+ c [ ] small scheme (basic + xetex, metapost, a few languages)
+ d [ ] basic scheme (plain and latex)
+ e [X] minimal scheme (plain only)
+ f [ ] ConTeXt scheme
+ g [ ] GUST TeX Live scheme
+ h [ ] teTeX scheme (more than medium, but nowhere near full)
+ i [ ] XML scheme
+ j [ ] custom
+
+Actions: (disk space required: 79 MB)
+ <R> return to main menu
+ <Q> quit
+
+Enter letter to select scheme: e
+
+<I> start installation to hard disk
+
+Options setup:
+
+ <P> use letter size instead of A4 by default: [ ]
+ <E> execution of restricted list of programs: [X]
+ <F> create format files:                      [X]
+ <D> install font/macro doc tree:              [ ]
+ <S> install font/macro source tree:           [ ]
+ <L> create symlinks in standard directories:  [ ]
+            binaries to: 
+            manpages to: 
+                info to: 
+
+Actions: (disk space required: 68 MB)
+ <R> return to main menu
+ <Q> quit
+
+Enter command: 
+
+
+
+** 20 tlmgr install latex
+    
+which tlmgr
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr
+
+su
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install latex
+
+
+results in minibuffer
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install latex latex-bin
+
+
+#+END_SRC
+
+I installed latex alone with the above src block.
+
+I can verify it with tlmgr info latex.
+
+tlmgr info latex
+tlmgr: package repository http://ftp.yzu.edu.tw/CTAN/systems/texlive/tlnet
+package:     latex
+category:    Package
+shortdesc:   A TeX macro package that defines LaTeX.
+longdesc:    LaTeX is a widely-used macro package for TeX, providing many basic document formating commands extended by a wide range of packages. It is a development of Leslie Lamport's LaTeX 2.09, and superseded the older system in June 1994. The basic distribution is catalogued separately, at latex-base; apart from a large set of contributed packages and third-party documentation (elsewhere on the archive), the distribution includes: - a bunch of required packages, which LaTeX authors are "entitled to assume" will be present on any system running LaTeX; and - a minimal set of documentation detailing differences from the 'old' version of LaTeX in the areas of user commands, font selection and control, class and package writing, font encodings, configuration options and modification of LaTeX. For downloading details, see the linked catalogue entries above.
+installed:   Yes
+revision:    35577
+sizes:       src: 3393k, doc: 9081k, run: 1493k
+relocatable: No
+cat-date:    2013-03-06 18:48:43 +0100
+cat-license: lppl
+collection:  collection-latex
+
+but 
+which latex
+which: no latex in (/usr/local/texlive/2014/bin/x86_64-linux:/usr/local/texlive/2014/bin/x86_64-linux:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/x86_64-pc-linux-gnu/gcc-bin/4.8.3)
+
+I installed latex-bin again and it work.
+I can edit i
+
+Both latex a
+
+
+** latex export
+
+*** steps for luatex english
+
+|   |                                     | error message | missing item | package    | verify missing | install package |
+|---+-------------------------------------+---------------+--------------+------------+----------------+-----------------|
+|   | export template 1 into latex buffer |            10 | luatex.sty   | oberdiek   |             11 |              12 |
+|   |                                     |            20 | xkeyval.sty  | xkeyval    |             21 |              22 |
+|   |                                     |            30 | lualibs      | lualibs    |             31 |              32 |
+|   |                                     |            40 | filehook.sty | filehook   |             41 |              42 |
+|   |                                     |            50 | eu2enc.def   | euenc      |             51 |              52 |
+|   |                                     |            60 | xunicode.sty | xunicode   |             61 |              62 |
+|   |                                     |            70 | graphicx.sty | graphics   |             71 |              72 |
+|   |                                     |            80 | pdftex.def   | pdftex-def |             81 |              82 |
+|   |                                     |            90 | hypersetup   | hyperref   |             91 |              92 |
+|---+-------------------------------------+---------------+--------------+------------+----------------+-----------------|
+|   |                                     |               |              |            |                |                 |
+
+
+**** error message 10
+
+
+
+ERROR: LaTeX Error: File `luatex.sty' not found.
+
+--- TeX said ---
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+/usr/local/texlive/2015/texmf-dist/tex/luatex/luatexbase/luatexbase.sty:78: Emer
+gency stop.
+<read *> 
+   
+l.78 \fi
+      
+--- HELP ---
+From the .log file...
+
+ (cannot \read from terminal in nonstop modes)
+
+
+**** verify missing 11
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+luatex.sty
+
+Packages containing files matching `luatex.sty':
+fontspec:
+        texmf-dist/tex/latex/fontspec/fontspec-luatex.sty
+ifluatex:
+        texmf-dist/tex/generic/oberdiek/ifluatex.sty
+oberdiek:
+        texmf-dist/tex/generic/oberdiek/luatex.sty
+unicode-math:
+        texmf-dist/tex/latex/unicode-math/unicode-math-luatex.sty
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+oberdiek
+
+
+tlmgr: package repository ftp://ftp.ccu.edu.tw/pub/tex/systems/texlive/tlnet
+package:     oberdiek
+category:    Package
+shortdesc:   A bundle of packages submitted by Heiko Oberdiek.
+longdesc:    The bundle comprises packages to provide: accsupp: better accessibility support for PDF files; aliascnt: 'alias counters'; alphalph: multiple-alphabetic counting (a...z,aa...zz,... -- up to the full extent of a TeX counter); askinclude: replaces \includeonly by an interactive user interface; atbegshi: a modern reimplementation of package everyshi; atenddvi: provides \AtEndDvi command; attachfile2: attach files to PDF files; atveryend: hooks the very end of a document; auxhook: stick stuff at the start of the .aux file; bigintcalc: expandable arithmetic operations with big integers that can exceed TeX's number limits; bitset: defines and implements the data type bit set, a vector of bits; bmpsize: get bitmap size and resolution data; bookmark: alternative bookmark (outline) organization for package hyperref; catchfile: collects the contents of a file and puts it in a macro; centernot: a horizontally-centred \not symbol; chemarr: extensible chemists' reaction arrows; classlist: record information about document class(es) used; colonequals: poor man's mathematical relation symbols; dvipscol: dvips colour stack management; embedfile: embed files in PDF documents; engord: define counter-printing operations producing English ordinals; eolgrab: collect arguments delimited by end of line; epstopdf: conversion to epstopdf on the fly; etexcmds: adds a prefix to eTeX's commands, to avoid conflicts with existing macros; flags: setting and clearing flags in bit fields and converting the bit field into a decimal number; gettitlestring: clean up the string containing the title of a section, etc.; grfext: macros for adding and reordering the list of graphics file extensions recognised by the graphics package; grffile: extend file name processing in the graphics bundle; hosub: build collections of packages; holtxdoc: extra documentation macros; hologo: bookmark-enabled logos; hopatch: safely apply package patches; hycolor: implements the color option stuff that is used by packages hyperref and bookmark; hypbmsec: bookmarks in sectioning commands; hypcap: anjusting anchors of captions; hypdestopt: optimising hyperref's pdftex driver destinations; hypdoc: hyper-references in the LaTeX standard doc package; hypgotoe: experimental package for links to embedded files; hyphsubst: substitute hyphenation patterns; ifdraft: switch for option draft; iflang: provides expandable checks for the current language; ifluatex: looks for LuaTeX regardless of its mode and provides the switch \ifluatex; ifpdf: provides the \ifpdf switch; ifvtex: provides the \ifvtex switch; infwarerr: provides a complete set of macros for informations, warnings and error messages with support for plain TeX; inputenx: enhanced handling of input encoding; intcalc: provides expandable arithmetic operations with integers; kvdefinekeys: define key-value keys in the same manner as keyval; kvoptions: use package options in key value format ; kvsetkeys: a variant of the \setkeys command; letltxmacro: Let assignment for LaTeX macros; listingsutf8: (partially) extends the listings package to UTF-8 encoding; ltxcmds: exports some utility macros from the LaTeX kernel into a separate namespace and also provides them for other formats such as plain-TeX; luacolor: implements colour support based on LuaTeX's node attributes; luatex: utilises new and extended features and resources that LuaTeX provides; magicnum: allows to access magic numbers by a hierarchical name system; makerobust: make a command robust; pagegrid: prints a page grid in the background; pagesel: select pages of a document for output; pdfcolfoot: using pdftex's color stack for footnotes; pdfcol: macros for setting and maintaining new color stacks; pdfcolmk: PDFTeX COLour MarK -- fake a PDFTeX colour stack using marks (not needed for PDFTeX 1.40.0 and later); pdfcolparallel: fixes colour problems in package parallel; pdfcolparcolumns: fixes colour problems in package parcolumns; pdfcrypt: setting PDF encryption; pdfescape: pdfTeX's escape features using TeX or e-TeX; pdflscape: landscape pages in PDF; pdfrender: control PDF rendering modes; pdftexcmds: provide PDFTeX primitives missing in LuaTeX; picture: dimens for picture macros; pmboxdraw: poor man's box drawing characters; protecteddef: define a command that protected against expansion; refcount: using the numeric values of references; rerunfilecheck: checksum based rerun checks on auxiliary files; resizegather: automatically resize overly large equations; rotchiffre: performs simple rotation cyphers; scrindex: redefines environment 'theindex' of package 'index', if a class from KOMA-Script is loaded; selinput: select the input encoding by specifying pairs of input characters and their glyph names; setouterhbox: set \hbox in outer horizontal mode; settobox: getting box sizes; soulutf8: extends package soul and adds some support for UTF-8; stackrel: extensions of the \stackrel command; stampinclude: selects the files for \include by inspecting the timestamp of the .aux file(s); stringenc: provides \StringEncodingConvert for converting a string between different encodings; tabularht: tabulars with height specification; tabularkv: key value interface for tabular parameters; telprint: print German telephone numbers; thepdfnumber: canonical numbers for use in PDF files and elsewhere; transparent: using a color stack for transparency with pdftex; twoopt: commands with two optional arguments; uniquecounter: provides unlimited unique counter; zref: a proposed new reference system. Each of the packages is represented by two files, a .dtx (documented source) and a PDF file; the .ins file necessary for installation is extracted by running the .dtx file with Plain TeX.
+installed:   No
+sizes:       src: 5213k, doc: 19693k, run: 2813k
+relocatable: Yes
+cat-date:    2014-10-15 19:24:27 +0200
+cat-license: lppl
+collection:  collection-latex
+
+
+
+
+**** install package 12
+
+#
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+oberdiek
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+oberdiek
+
+
+
+**** error message 20
+
+ERROR: LaTeX Error: File `xkeyval.sty' not found.
+
+--- TeX said ---
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+/usr/local/texlive/2015/texmf-dist/tex/luatex/luatexja/luatexja-core.sty:79: Eme
+rgency stop.
+<read *> 
+   
+l.79   \RequirePackage{xkeyval}    [2012/10/14]
+                                              % v2.6b
+--- HELP ---
+From the .log file...
+
+ (cannot \read from terminal in nonstop modes)
+
+
+**** verify missing 21
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+xkeyval.sty
+
+Packages containing files matching `xkeyval.sty':
+xkeyval:
+        texmf-dist/tex/latex/xkeyval/xkeyval.sty
+
+
+**** install package 22
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+xkeyval
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+xkeyval
+
+
+**** error message 30
+
+ERROR: Lu
+
+--- TeX said ---
+aTeX error ...texlive/2015/texmf-dist/tex/luatex/luatexja/luatexja.lua:2: module
+ 'lualibs' not found:
+	no field package.preload['lualibs']
+	[luatexbase.loader] Search failed
+	[kpse lua searcher] file not found: 'lualibs'
+	[kpse C searcher] file not found: 'lualibs'
+	[oberdiek.luatex.kpse_module_loader]-eroux Search failed
+stack traceback:
+	[C]: in function 'require'
+	...texlive/2015/texmf-dist/tex/luatex/luatexja/luatexja.lua:2: in main chunk
+	[C]: in function 'dofile'
+	[\directlua]:1: in main chunk.
+l.179 }
+     
+--- HELP ---
+From the .log file...
+
+The lua interpreter ran into a problem, so the
+remainder of this lua chunk will be ignored.
+
+
+
+**** verify missing 31
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+lualibs
+
+
+**** install package 32
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+lualibs
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+lualibs
+
+
+**** error message 40
+
+ERROR: LaTeX Error: File `filehook.sty' not found.
+
+--- TeX said ---
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+/usr/local/texlive/2015/texmf-dist/tex/luatex/luatexja/patches/lltjp-geometry.st
+y:21: Emergency stop.
+<read *> 
+   
+l.21 \newif
+         \ifGm@ltj@layoutswitch
+--- HELP ---
+From the .log file...
+
+
+**** verify missing 41
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+filehook.sty
+
+ackages containing `filehook.sty' in their title/description:
+
+Packages containing files matching `filehook.sty':
+filehook:
+        texmf-dist/tex/latex/filehook/filehook.sty
+        texmf-dist/tex/latex/filehook/pgf-filehook.sty
+
+
+
+**** install package 42
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+filehook
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+filehook
+
+
+**** error message 50
+
+ERROR: Package fontenc Error: Encoding file `eu2enc.def' not found.
+
+--- TeX said ---
+(fontenc)                You might have misspelt the name of the encoding.
+
+See the fontenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.104 \ProcessOptions*
+                    
+--- HELP ---
+No help available
+
+**** verify missing 51
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+eu2enc.def
+
+Packages containing files matching `eu2enc.def':
+euenc:
+        texmf-dist/tex/latex/euenc/eu2enc.def
+
+
+**** install package 52
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+euenc
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+euenc
+
+**** error message 60
+
+ERROR: LaTeX Error: File `xunicode.sty' not found.
+
+--- TeX said ---
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+/usr/local/texlive/2015/texmf-dist/tex/latex/fontspec/fontspec-luatex.sty:37: Em
+ergency stop.
+<read *> 
+   
+l.37 \cs_set_eq:NN
+                 \XeTeXpicfile \fontspec_tmp: 
+--- HELP ---
+From the .log file...
+
+ (cannot \read from terminal in nonstop modes)
+
+
+**** verify missing 61
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+xunicode.sty
+
+
+
+Packages containing files matching `xunicode.sty':
+luatexja:
+        texmf-dist/tex/luatex/luatexja/patches/lltjp-xunicode.sty
+xunicode:
+        texmf-dist/tex/xelatex/xunicode/xunicode.sty
+
+**** install package 62
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+xunicode
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+xunicode
+
+**** error message 70
+
+ERROR: LaTeX Error: File `graphicx.sty' not found.
+
+--- TeX said ---
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+/usr/local/texlive/2015/texmf-dist/tex/xelatex/xunicode/xunicode.sty:2766: Emerg
+ency stop.
+<read *> 
+   
+l.2766 \def
+         \TIPAfakertonebar#1{{\TIPAreversedata#1!!@!!%
+--- HELP ---
+From the .log file...
+
+(cannot \read from terminal in nonstop modes)
+
+
+**** verify missing 71
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+graphicx.sty
+
+Packages containing `graphicx.sty' in their title/description:
+
+Packages containing files matching `graphicx.sty':
+graphics:
+        texmf-dist/tex/latex/graphics/graphicx.sty
+latex-make:
+        texmf-dist/tex/latex/latex-make/texgraphicx.sty
+
+
+**** install package 72
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+graphics
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+graphics
+
+
+**** error message 80
+
+ERROR: LaTeX Error: File `pdftex.def' not found.
+
+--- TeX said ---
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: def)
+
+Enter file name: 
+/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphics.sty:95: Emergency
+ stop.
+<read *> 
+   
+l.95 ...ined{ver@\Gin@driver}{\input{\Gin@driver}}{}
+                                                  
+--- HELP ---
+From the .log file...
+
+ (cannot \read from terminal in nonstop modes)
+
+
+**** verify missing 81
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+pdftex.def
+
+
+Packages containing `pdftex.def' in their title/description:
+mptopdf - mpost to PDF, native MetaPost graphics inclusion
+pdftex-def - Colour and Graphics support for PDFTeX.
+
+Packages containing files matching `pdftex.def':
+00texlive.image:
+        tlpkg/tlpsrc/pdftex-def.tlpsrc
+adjustbox:
+        texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+ctex:
+        texmf-dist/tex/latex/ctex/engine/ctex-engine-pdftex.def
+hyperref:
+        texmf-dist/tex/latex/hyperref/hpdftex.def
+microtype:
+        texmf-dist/tex/latex/microtype/microtype-pdftex.def
+oberdiek:
+        texmf-dist/tex/latex/oberdiek/accsupp-pdftex.def
+        texmf-dist/tex/latex/oberdiek/atfi-pdftex.def
+        texmf-dist/tex/latex/oberdiek/bkm-pdftex.def
+pdfpages:
+        texmf-dist/tex/latex/pdfpages/pppdftex.def
+pdftex-def:
+        texmf-dist/tex/latex/pdftex-def/pdftex.def
+pgf:
+        texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
+pgfplots:
+        texmf-dist/tex/generic/pgfplots/sys/pgflibrarypgfplots.surfshading.pgfsys-pdftex.def
+pict2e:
+        texmf-dist/tex/latex/pict2e/p2e-pdftex.def
+
+
+**** install package 82
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+pdftex-def
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+pdftex-def
+
+**** error message 90
+ERROR: Undefined control sequence.
+
+--- TeX said ---
+l.6 \hypersetup
+             {
+--- HELP ---
+TeX encountered an unknown command name. You probably misspelled the
+name. If this message occurs when a LaTeX command is being processed,
+the command is probably in the wrong place---for example, the error
+can be produced by an \item command that's not inside a list-making
+environment. The error can also be caused by a missing \documentclass
+command.
+
+**** verify missing 91
+
+Org Latex With Hyperref
+
+c-h v org-latex-with-hyperref
+
+http://stackoverflow.com/questions/11366425/what-are-the-influences-after-cancelling-hypersetup-in-org-mode
+
+M-x apropos RET hyperref RET
+
+Toggle insertion of \hypersetup{...} in the preamble.
+
+
+**** install package 92
+
+ 
+ Toggle  off (nil)
+
+
+**** error message 
+
+
+**** verify missing 
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+
+
+**** install package 
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+
+**** error message 
+
+
+**** verify missing 
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+
+
+**** install package 
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+
+**** error message 
+
+
+**** verify missing 
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+
+
+**** install package 
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+
+
+
+*** steps for chinese font
+
+|                   | error | fix |
+|-------------------+-------+-----|
+| export template 1 |       |     |
+| export template 2 |       |     |
+| export template 3 |    30 |     |
+|                   |       |     |
+
+**** 30 error 
+
+ERROR: fontspec error: "font-not-found"
+
+--- TeX said ---
+! 
+! The font "TW-Kai" cannot be found.
+! 
+! See the fontspec documentation for further information.
+! 
+! For immediate help type H <return>.
+!...............................................  
+                                                  
+l.11 \setmainjfont{TW-Kai}
+                        
+--- HELP ---
+From the .log file...
+
+|'''''''''''''''''''''''''''''''''''''''''''''''
+| A font might not be found for many reasons.
+| Check the spelling, where the font is installed etc. etc.
+| 
+| When in doubt, ask someone for help!
+|...............................................
+
+
+**** 31 fix
+
+|   | goal                          | command                                 |
+|---+-------------------------------+-----------------------------------------|
+|   |                               |                                         |
+|   | locate chinese font directory | fc-list :lang=zh-TW                     |
+|   |                               |                                         |
+|   | add OSFONTDIR in .bashrc      | OSFONTDIR=/boot/fonts; export OSFONTDIR |
+|   |                               |                                         |
+|   |                               | luaotfload-tool --update                |
+|   |                               |                                         |
+|   |                               | luaotfload-tool --list=*                |
+|   |                               |                                         |
+
+luaotfload-tool --diagnose=files
+
+luaotfload-tool --diagnose=environment 
+
+fc-list :lang=zh-TW
+
+
+[2015-09-09 Wed 16:18]
+
+fc-list :lang=zh-TW
+
+/boot/fonts/notosanstc/NotoSansTC-Regular.otf: Noto Sans TC,Noto Sans TC Regular:style=Regular
+/boot/fonts/TW-Kai-98_1.ttf: TW\-Kai,全字庫正楷體:style=Regular
+/boot/fonts/notosanstc/NotoSansTC-Medium.otf: Noto Sans TC,Noto Sans TC Medium:style=Medium,Regular
+/boot/fonts/notosanstc/NotoSansTC-Thin.otf: Noto Sans TC,Noto Sans TC Thin:style=Thin,Regular
+/boot/fonts/notosanstc/NotoSansTC-Bold.otf: Noto Sans TC,Noto Sans TC Bold:style=Bold,Regular
+/boot/fonts/notosanstc/NotoSansTC-DemiLight.otf: Noto Sans TC,Noto Sans TC DemiLight:style=DemiLight,Regular
+/boot/fonts/notosanstc/NotoSansTC-Black.otf: Noto Sans TC,Noto Sans TC Black:style=Black,Regular
+/boot/fonts/notosanstc/NotoSansTC-Light.otf: Noto Sans TC,Noto Sans TC Light:style=Light,Regular
+
+
+add .bashrc
+
+OSFONTDIR=/boot/fonts; export OSFONTDIR
+
+
+
+Invoked with the argument --update it will perform a database
+update, scan
+
+luaotfload-tool --update
+
+Adding the --force switch will initiate a complete rebuild of the database.
+
+luaotfload-tool --update --force
+
+
+
+
+*** template 1
+
+Hello world!
+
+*** template 2
+
+Hello world!
+
+酸鹼 PH 測量紙
+
+*** template 3
+\setmainjfont{TW-Kai}
+
+Hello world!
+
+酸鹼 PH 測量紙
+
+
+
+
+
+
+
+
+
+*** Org Export LaTeX group
+
+| M-x customize-group                      |
+|------------------------------------------|
+| Emacs group                              |
+| Text group                               |
+| Outlines group                           |
+| Org group                                |
+| Org Export group                         |
+| Org Export LaTeX group                   |
+|------------------------------------------|
+|                                          |
+| Org Latex Default Packages Alist         |
+|                                          |
+| Org Latex Packages Alist                 |
+|                                          |
+| Org Export Latex Title Command           |
+|                                          |
+| Org Export Latex Hyperref Options Format |
+|                                          |
+| Org Latex With Hyperref                  |
+|                                          |
+| org latex toc command                    |
+|                                          |
+
+*** version
+
+LaTeX Export for Org Mode < 8.0
+
+http://orgmode.org/worg/org-tutorials/org-latex-export.html
+
+12.7 LaTeX a
+
+http://orgmode.org/manual/LaTeX-and-PDF-export.html
+
+
+
+*** org-latex-packages-alist    
+
+http://orgmode.org/manual/Header-and-sectioning.html#Header-and-sectioning
+
+default article.
+
+C-h v org-latex-default-class
+
+| org versio |                                |   |
+|------------+--------------------------------+---|
+|     7.8.11 | org-export-latex-default-class |   |
+|            |                                |   |
+|     8.2.5h | org-latex-default-class        |   |
+|     8.2.10 |                                |   |
+|            |                                |   |
+
+
+| C-h v                                   | abbreviation | org version   | modification           |
+|                                         |              |               | [2015-09-09 Wed 11:29] |
+|                                         |              |               |                        |
+|-----------------------------------------+--------------+---------------+------------------------|
+| org-latex-default-packages-alist        |              | 8.2.10        | remove everything      |
+| org-export-latex-default-packages-alist | default      | not in 8.2.10 |                        |
+|                                         |              |               |                        |
+|                                         |              |               |                        |
+| org-latex-packages-alist                |              | 8.2.10        |                        |
+| org-export-latex-packages-alist         | blank        | not in 8.2.10 |                        |
+|                                         |              |               |                        |
+
+|         |          |                   | reference | b1   |
+|         |          |                   |
+|---------+----------+-------------------+-----------+------|
+| default |          |                   |
+|         | remove 3 |                   |
+|         |          | inputenc          |
+|         |          | fontenc           |
+|         |          | textcomp          |
+|         |          |                   |
+|---------+----------+-------------------+-----------+------|
+| blank   |          |                   |
+|         | add 2    |                   |
+|         |          | luatexja-fontspec |
+|         |          |                   |
+|         |          | tikz              |
+
+    
+
+|   | latex    | lualatex              | reference |
+|---+----------+-----------------------+-----------|
+|   | inpute   |                       |           |
+|---+----------+-----------------------+-----------|
+|   | fontenc  | remove                |           |
+|   | textcomp | remove                |           |
+|   |          | add luatexja-fontspec |           |
+|   |          | add fontspec          |           |
+|   |          |                       |           |
+|---+----------+-----------------------+-----------|
+|   | babel    | polyglossia           |           |
+|   |          |                       |           |
+|   |          | add luatexja          |           |
+
+
+reference
+
+1
+
+http://ctan.org/pkg/lualatex-doc
+
+2
+
+http://ctan.org/pkg/luatexja
+
+3
+
+http://ctan.org/tex-archive/macros/luatex/generic/luatexja/doc
+
+
+** luatex chinese
+
+*** scheme
+
+|          | samples |
+| luatex   |         |
+| chinese  |         |
+| luatexja |         |
+|          |         |
+
+*** the luaotfload add fonts steps
+
+| step |                                        |   |
+|------+----------------------------------------+---|
+|    1 | edit .bashrc                           |   |
+|      |                                        |   |
+|      |                                        |   |
+|      |                                        |   |
+|    2 | exit and login                         |   |
+|      |                                        |   |
+|    3 | luaotfload-tool --update               |   |
+|      |                                        |   |
+|    4 | luaotfload-tool --diagnose=environment |   |
+|      |                                        |   |
+|    5 | luaotfload-tool --list=*               |   |
+|      |                                        |   |
+
+**** examples
+
+luaotfload-tool --diagnose=files
+
+ -> check Luaotfload files for modifications;
+
+luaotfload-tool --diagnose=environment 
+
+luaotfload-tool --diagnose=environment 
+luaotfload | diagnose : ============ environment settings =============
+luaotfload | diagnose : system: unix/linux
+luaotfload | diagnose : info: Linux tux 3.16.5-gentoo #1 SMP Wed Nov 19 17:45:11 CST 2014 x86_64 Intel(R) Core(TM)2 Duo CPU E8500 @ 3.16GHz GenuineIntel GNU/Linux
+
+luaotfload | diagnose : 1) *shell environment*
+luaotfload | diagnose :               $SHELL: "/bin/bash"
+luaotfload | diagnose :                $PATH: <7 items>
+luaotfload | diagnose :                    +: "/usr/local/texlive/2014/bin/x86_64-linux"
+luaotfload | diagnose :                    +: "/usr/local/texlive/2014/bin/x86_64-linux"
+luaotfload | diagnose :                    +: "/usr/local/bin"
+luaotfload | diagnose :                    +: "/usr/bin"
+luaotfload | diagnose :                    +: "/bin"
+luaotfload | diagnose :                    +: "/opt/bin"
+luaotfload | diagnose :                    +: "/usr/x86_64-pc-linux-gnu/gcc-bin/4.8.3"
+luaotfload | diagnose :           $OSFONTDIR: <unset>
+luaotfload | diagnose :                $USER: "c5766"
+luaotfload | diagnose :                $HOME: "/home/c5766"
+luaotfload | diagnose :                 $PWD: "/home/c5766"
+luaotfload | diagnose :              $TMPDIR: <unset>
+luaotfload | diagnose : 2) *kpathsea*
+luaotfload | diagnose :       $OPENTYPEFONTS: ".:{/home/c5766/.texlive2014/texmf-config,/home/c5766/.texlive2014/texmf-var,/home/c5766/texmf,!!/usr/local/texlive/2014/texmf-config,!!/usr/local/texlive/2014/texmf-var,!!/usr/local/texlive/texmf-local,!!/usr/local/texlive/2014/texmf-dist}/fonts/{opentype,truetype}//:/please/set/osfontdir/in/the/environment//"
+luaotfload | diagnose :       $OPENTYPEFONTS: <4 items>
+luaotfload | diagnose :                    +: "."
+luaotfload | diagnose :                    +: "/usr/local/texlive/2014/texmf-dist/fonts/opentype"
+luaotfload | diagnose :                    +: "/usr/local/texlive/2014/texmf-dist/fonts/opentype/public"
+luaotfload | diagnose :                    +: "/usr/local/texlive/2014/texmf-dist/fonts/opentype/public/lm"
+luaotfload | diagnose :             $TTFONTS: ".:{/home/c5766/.texlive2014/texmf-config,/home/c5766/.texlive2014/texmf-var,/home/c5766/texmf,!!/usr/local/texlive/2014/texmf-config,!!/usr/local/texlive/2014/texmf-var,!!/usr/local/texlive/texmf-local,!!/usr/local/texlive/2014/texmf-dist}/fonts/{truetype,opentype}//:/please/set/osfontdir/in/the/environment//"
+luaotfload | diagnose :             $TTFONTS: <4 items>
+luaotfload | diagnose :                    +: "."
+luaotfload | diagnose :                    +: "/usr/local/texlive/2014/texmf-dist/fonts/opentype"
+luaotfload | diagnose :                    +: "/usr/local/texlive/2014/texmf-dist/fonts/opentype/public"
+luaotfload | diagnose :                    +: "/usr/local/texlive/2014/texmf-dist/fonts/opentype/public/lm"
+luaotfload | diagnose :          $TEXMFCACHE: "/usr/local/texlive/2014/texmf-var:/home/c5766/.texlive2014/texmf-var"
+luaotfload | diagnose :          $TEXMFCACHE: <2 items>
+luaotfload | diagnose :                    +: "/usr/local/texlive/2014/texmf-var"
+luaotfload | diagnose :                    +: "/home/c5766/.texlive2014/texmf-var"
+luaotfload | diagnose :            $TEXMFVAR: "/home/c5766/.texlive2014/texmf-var"
+luaotfload | diagnose :            $TEXMFVAR: "/home/c5766/.texlive2014/texmf-var"
+luaotfload | diagnose :           $LUAINPUTS: ".:{/home/c5766/.texlive2014/texmf-config,/home/c5766/.texlive2014/texmf-var,/home/c5766/texmf,!!/usr/local/texlive/2014/texmf-config,!!/usr/local/texlive/2014/texmf-var,!!/usr/local/texlive/texmf-local,!!/usr/local/texlive/2014/texmf-dist}/scripts/{luatex,luatex,}/{lua,}//:{/home/c5766/.texlive2014/texmf-config,/home/c5766/.texlive2014/texmf-var,/home/c5766/texmf,!!/usr/local/texlive/2014/texmf-config,!!/usr/local/texlive/2014/texmf-var,!!/usr/local/texlive/texmf-local,!!/usr/local/texlive/2014/texmf-dist}/tex/{luatex,plain,generic,}//"
+luaotfload | diagnose :          $CLUAINPUTS: ".:/usr/local/texlive/2014/bin/x86_64-linux/lib/{luatex,luatex,}/lua//"
+luaotfload | diagnose : Everything appears to be in order, you may sleep well.
+
+
+TTFONTS=/mnt/sdc4/Fonts luaotfload-tool -uf
+https://github.com/lualatex/luaotfload/issues/165
+
+**** manual
+
+
+http://shadow.ind.ntou.edu.tw/ctan/macros/luatex/generic/luaotfload/luaotfload.pdf
+
+http://www.ctan.org/pkg/luaotfload
+
+OpenType fonts are widely deployed and available for all modern operating systems.
+
+LuaTEX has no built-in support for OpenType or technologies other than the original TEX fonts.
+
+LuaTEX with functionality necessary for handling OpenType fonts.
+Additionally, it provides means for accessing fonts known to the operating system
+conveniently by indexing the metadata.
+
+As mentioned above, luaotfload keeps track of which fonts are available to LuaTEX by
+means of a database.
+
+Invoked with the argument --update it will perform a database
+update, scan
+
+luaotfload-tool --update
+
+Adding the --force switch will initiate a complete rebuild of the database.
+
+luaotfload-tool --update --force
+
+
+Search Paths
+luaotfload scans those directories where fonts are expected to be located on a given sys-
+tem. On a Li
+consult man 5 fonts.conf for further information.
+
+
+*** chinese fonts
+
+/home/c5766/sdb6/Fonts/TW-Kai-98_1.ttf
+
+ otfinfo -i /home/c5766/sdb6/Fonts/TW-Kai-98_1.ttf
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install lcdftypetools
+
+
+
+*** setmainfont
+
+
+\setmainfont[
+    Path           = /Users/<username>/Library/Fonts/,
+    Extensio
+    Ligatures      = TeX
+]{Cardo}
+
+If you have bold, italic, and bold-italic variants of your font, you can use them by adding a few extra lines. In this example, I'm using a font called Crimson, which is supplied in the OTF format. The regular version of the font is called Crimson-Roman.otf; the bold, italic, and bold-italic variants are called Crimson-Bold.otf, Crimson-Italic.otf, and Crimson-BoldItalic.otf, respectively.
+
+\setmainfont[
+    Path           = /Users/<username>/Library/Fonts/,
+    Extensio
+    Ligatures      = TeX,
+    BoldFont       = Crimson-Bold,
+    ItalicFo
+    BoldItalicFont = Crimson-BoldItalic
+]{Crimson-Roman}
+
+
+*** list the fonts
+
+	http://tex.stackexchange.com/questions/142245/how-can-i-list-fonts-available-to-luatex-in-context-tex-live-2013
+
+
+If all you need is a list of the registered fonts, you can run
+
+
+luaotfload-tool --list=*
+
+for Lualatex/Luaotfload (see man 1 luaotfload-tool for details).
+
+If you did not yet build the font indices you will have to do so before running above commands, e.g.
+
+luaotfload-tool --update
+
+
+
+
+
+*** examples
+
+**** DONE simple 1
+
+
+\documentclass{article}
+
+\usepackage{fontspec}
+
+\setmainfont[
+    Path           = /home/c5766/sdb6/Fonts/,
+    Extensio
+    Ligatures      = TeX
+]{TW-Kai-98_1}
+
+
+\begin{document}
+
+中文測試。
+
+Hello world!!
+
+\end{document}
+
+**** DONE examples contain kai sung ipaexmincho piaexgothic
+
+
+\documentclass{article}
+
+%\usepackage{fontspec}
+\usepackage{luatexja-fontspec}
+
+\begin{document}
+
+\jfontspec{TW-Kai}
+
+中文測試。Hello world!! TW-Kai
+
+\jfontspec{TW-Kai-Plus}
+
+中文測試。Hello world!! TW-Kai-Plus
+
+\jfontspec{TW-Kai-Ext-B}
+
+中文測試。Hello world!! TW-Kai-Ext-B
+
+\jfontspec{TW-Sung}
+
+中文測試。Hello world!! TW-Sung
+
+\jfontspec{TW-Sung-Plus}
+
+中文測試。Hello world!! TW-Sung-Plus
+
+\jfontspec{TW-Sung-Ext-B}
+
+中文測試。Hello world!! TW-Sung-Ext-B
+
+\jfontspec{IPAexMincho}
+
+中文測試。Hello world!! IPAexMincho
+
+\jfontspec{IPAexGothic}
+
+中文測試。Hello world!! IPAexGothic
+
+
+
+
+
+\end{document}
+
+
+**** DONE value of luatexja-fontspec
+
+\documentclass{article}
+%\usepackage{luatexja-fontspec}
+\usepackage{fontspec}
+
+\begin{document}
+
+\fontspec{TW-Kai}
+
+【聯合報╱記者蔡容喬／高雄報導】
+
+國小退休老師林淑姬在癌夫病逝後成了安寧病房志工，她的安寧下午茶是當天自製養生湯品，不但撫慰了臨終病患和家屬的味蕾，也意外療癒了自己的悲傷。 記者蔡容喬／攝影
+
+
+\fontspec{TW-Sung}
+
+【聯合報╱記者蔡容喬／高雄報導】
+
+國小退休老師林淑姬在癌夫病逝後成了安寧病房志工，她的安寧下午茶是當天自製養生湯品，不但撫慰了臨終病患和家屬的味蕾，也意外療癒了自己的悲傷。 記者蔡容喬／攝影
+
+
+
+\end{document}
+
+
+*** reference
+
+
+The manual i
+
+http://git.sourceforge.jp/view?p=luatex-ja/luatexja.git;a=blob_plain;f=doc/luatexja-en.pdf;hb=HEAD
+
+
+
+
+LuaTeX-ja 现在可以用来排印含有汉字的中文和日文。
+
+http://sourceforge.jp/projects/luatex-ja/wiki/FrontPage%28zh%29
+
+
+
+
+LuaTeX-ja is a macro package to typeset Japanese texts using Lua(La)TeX
+
+http://sourceforge.jp/projects/luatex-ja/wiki/FrontPage%28en%29
+
+
+
+LuaTeX-ja 中文排版测试 (马起园) 
+
+
+*** error
+
+ERROR: LuaTeX error ...xlive/2014/texmf-dist/tex/luatex/luatexja/ltj-rmlgbm.lua:90: b
+
+--- TeX said ---
+ad argument #1 to 'open' (string expected, got nil).
+
+
+1
+UniJIS2004-UTF32-H
+and
+Adobe-Japan1-UCS2
+
+
+
+http://www.tug.org/texlive//Contents/live/texmf-dist/doc/luatex/luatexja/luatexja-en.pdf
+
+Note for MiKT
+E
+X users
+LuaT
+E
+X-ja requires that several CMap files
+1
+must be found from LuaT
+E
+X.
+Strictly speaking, those CMaps are needed only in the first run of LuaT
+E
+X-ja after i
+ing. But it seems that MiKT
+E
+X does not satisfy this condition, so you will encounter an error like the
+following:
+! LuaTeX error ...iles (x86)/MiKTeX 2.9/tex/luatex/luatexja/ltj-rmlgbm.lua
+bad argument #1 to 'open' (string expected, got nil)
+Ifso,pleaseexecuteabatchfilewhichiswrittenon
+theProjectWiki(English)
+.Thisbatchfilecreatesa
+temporalydirectory,copyCMapsinit,runLuaT
+E
+X-jainthisdirectory,andfinallydeletethetemporaly
+
+Notes for MiKTeX users
+
+The first ru
+
+But it seems that MiKTeX does not satisfy this condition, so you will encounter an error like the following:
+
+! LuaTeX error ...iles (x86)/MiKTeX 2.9/tex/luatex/luatexja/ltj-rmlgbm.lua
+bad argument #1 to 'open' (string expected, got nil)
+
+http://sourceforge.jp/projects/luatex-ja/wiki/FrontPage%28en%29
+
+
+
+To resolve thi
+
+copy %CMAP%\Adobe-CNS1\Adobe-CNS1-UCS2 .
+copy %CMAP%\Adobe-CNS1\UniCNS-UTF32-H .
+copy %CMAP%\Adobe-CNS1\UniCNS-UTF32-V .
+
+
+Notes for MiKTeX users
+
+The first ru
+
+But it seems that MiKTeX does not satisfy this condition, so you will encounter an error like the following:
+
+! LuaTeX error ...iles (x86)/MiKTeX 2.9/tex/luatex/luatexja/ltj-rmlgbm.lua
+bad argument #1 to 'open' (string expected, got nil)
+
+To resolve thi
+
+REM --------
+set TEST=%TEMP%\ltj-test                
+set MIKTEX="C:\Program Files\MiKTeX 2.9"
+set CMAP=%MIKTEX%\poppler\cMap
+mkdir %TEST%
+cd %TEST%
+
+REM Japanese (required)
+copy %CMAP%\Adobe-Japan1\Adobe-Japan1-UCS2 .
+copy %CMAP%\Adobe-Japan1\UniJIS2004-UTF32-H .
+copy %CMAP%\Adobe-Japan1\UniJIS2004-UTF32-V .
+echo "\input luatexja.sty \end" | luatex
+
+REM Korean
+copy %CMAP%\Adobe-Korea1\Adobe-Korea1-UCS2 .
+copy %CMAP%\Adobe-Korea1\UniKS-UTF32-H .
+copy %CMAP%\Adobe-Korea1\UniKS-UTF32-V .
+echo "\input luatexja.sty \jfont\test=psft:ltjtest:cid=Adobe-Korea1-2;jfm=jis \end" | luatex
+
+REM Simplified Chinese
+copy %CMAP%\Adobe-GB1\Adobe-GB1-UCS2 .
+copy %CMAP%\Adobe-GB1\UniGB-UTF32-H .
+copy %CMAP%\Adobe-GB1\UniGB-UTF32-V .
+echo "\input luatexja.sty \jfont\test=psft:ltjtest:cid=Adobe-GB1-5;jfm=jis \end" | luatex
+
+REM Traditio
+copy %CMAP%\Adobe-CNS1\Adobe-CNS1-UCS2 .
+copy %CMAP%\Adobe-CNS1\UniCNS-UTF32-H .
+copy %CMAP%\Adobe-CNS1\UniCNS-UTF32-V .
+echo "\input luatexja.sty \jfont\test=psft:ltjtest:cid=Adobe-CNS1-5;jfm=jis \end" | luatex
+
+REM cleanup
+cd %USERPROFILE%
+del /q /f %TEST%
+
+REM --------
+
+
+
+
+
+** script [2015-09-07 Mon 08:31]
+
+|   | step                         | script | test |
+|---+------------------------------+--------+------|
+|   | minimal installation         |        |      |
+|   |                              |        |      |
+|   | tlmgr install latex latexbin |     20 |   25 |
+|   |                              |        |      |
+|   | inside emacs install auctex  |     30 |   35 |
+|   |                              |        |      |
+|   | tlmgr install luatexja       |        |      |
+|   |                              |        |      |
+
+
+*** 20 script
+
+umask 022
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+latex latex-bin
+
+*** 30 script
+
+inside emacs
+
+M-x package-list-packages 
+
+*** 25 test
+
+as a normal user, not root
+
+$
+
+$ tex '\empty Hello world!\bye'       # produce dvi
+$ pdftex '\empty Hello world!\bye'    # produce pdf
+
+
+*** 35 test
+
+
+ \documentclass{article} \begin{document} Hello world! \end{document}
+
+inside emacs, C-c C-c. or
+
+save as a test1.tex and run 
+
+$ pdflatex test1.tex 
+
+
+
+
+
+
+
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+fontspec
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+fontspec
+
+
+In order to load fonts by their name rather than by their file-
+name (e.g., ‘Latin Modern Roman’ instead of ‘ec-lmr10’), you may need to run the script
+luaotfload-tool, which is distributed with the luaotfload package. Note that if you do not
+execute this script beforehand, the first time you attempt to typeset the process will pause
+for (up to) several minutes. (But only the first time.) Please see the luaotfload documentation
+for more information.
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+luaotfload
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+luaotfload
+
+ File 'luatexbase.loader.lua' not found
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+luatexbase
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+luatexbase
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+lualibs
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+lualibs
+
+| not found        | package    |   |
+|------------------+------------+---|
+| eu2enc.def       | euenc      |   |
+| xunicode.sty     | xunicode   |   |
+| graphicx.sty     | graphics   |   |
+| pdftex.def       | pdetex-def |   |
+| xkeyval.sty      | xkeyval    |   |
+| Font IPAExMincho | update db  |   |
+| filehook.sty     |            |   |
+
+  
+
+[2015-07-22 Wed 15:06]
+
+update db 
+
+https://github.com/lualatex/luaotfload/issues/165
+
+
+TTFONTS=/mnt/sdc4/Fonts luaotfload-tool -uf
+https://github.com/lualatex/luaotfload/issues/165
+
+
+
+
+
+
+
+** org export latex
+
+
+M-x customize-variable TeX-engine
+
+https://www.gnu.org/software/auctex/manual/auctex/Processor-Options.html
+
+
+
+
+
+** script [2015-07-22 Wed 09:19] 
+
+I did the minimal installation.
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf /usr/local/texlive/2015/bin/x86_64-linux/tlmgr install latex latex-bin
+
+https://en.wikibooks.org/wiki/LaTeX/Installation#Minimal_installation
+
+|                      |                               | test                                                                 |
+|----------------------+-------------------------------+----------------------------------------------------------------------|
+| minimal installation | minimal scheme (plain only)   |                                                                      |
+|                      |                               |                                                                      |
+|                      |                               | $ pdftex '\empty Hello world!\bye'                                   |
+|                      |                               |                                                                      |
+| add latex latex-bin  | tlmgr install latex latex-bin |                                                                      |
+|                      |                               | \documentclass{article} \begin{document} Hello world! \end{document} |
+|                      |                               | in shell pdflatex                                                    |
+|                      |                               | I can also do it inside emacs with C-c C-c with no modification      |
+|                      |                               |                                                                      |
+| auctex               |                               | just select tex engin as luatex                                      |
+|                      |                               |                                                                      |
+| fontspec             | tlmgr install latex           | for luatex                                                           |
+|                      |                               |                                                                      |
+|                      |                               | File `luaotfload.sty' not found.                                     |
+|                      |                               |                                                                      |
+|                      |                               |                                                                      |
+|                      |                               |                                                                      |
+
+
+
+umask 022
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+latex latex-bin
+
+inside emacs
+
+package-list-packages
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+fontspec
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+fontspec
+
+
+In order to load fonts by their name rather than by their file-
+name (e.g., ‘Latin Modern Roman’ instead of ‘ec-lmr10’), you may need to run the script
+luaotfload-tool, which is distributed with the luaotfload package. Note that if you do not
+execute this script beforehand, the first time you attempt to typeset the process will pause
+for (up to) several minutes. (But only the first time.) Please see the luaotfload documentation
+for more information.
+
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+luaotfload
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+luaotfload
+
+ File 'luatexbase.loader.lua' not found
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+luatexbase
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+luatexbase
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+lualibs
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+lualibs
+
+| not found        | package    |   |
+|------------------+------------+---|
+| eu2enc.def       | euenc      |   |
+| xunicode.sty     | xunicode   |   |
+| graphicx.sty     | graphics   |   |
+| pdftex.def       | pdetex-def |   |
+| xkeyval.sty      | xkeyval    |   |
+| Font IPAExMincho | update db  |   |
+| filehook.sty     |            |   |
+
+  
+
+[2015-07-22 Wed 15:06]
+
+update db 
+
+https://github.com/lualatex/luaotfload/issues/165
+
+
+TTFONTS=/mnt/sdc4/Fonts luaotfload-tool -uf
+https://github.com/lualatex/luaotfload/issues/165
+
+
+
+
+
+
+** packages installation in TeX live, 2 concepts
+
+| collections                  | installation schemes              |
+|------------------------------+-----------------------------------|
+| can be installed at any time | only be used at installation time |
+|                              | only one scheme at a time         |
+|                              |
+|                              | minimal installation              |
+|                              |
+
+
+** tlmgr
+
+https://en.wikibooks.org/wiki/LaTeX/Installation#Custom_installation_with_TeX_Live
+
+tlmgr option
+
+tlmgr info --only-installed
+
+tlmgr install pgf
+
+sudo /usr/local/texlive/2014/bin/x86_64-linux/tlmgr install pgf
+
+sudo /usr/local/texlive/2014/bin/x86_64-linux/tlmgr install ms
+
+
+By default TeX Live will install in /usr/local/texlive
+
+
+    the system cache goes in /var/lib/texmf;
+    the user cache goes in ~/.texliveYYYY.
+
+
+ texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+
+
+Q: What's up with all these dirs /usr/share/{texmf,texmf-dist,texmf-var,texmf-config}?
+
+A: TeX uses several "source trees"; they have the same internal structure, and can "overlap". This is to allow users to modify files provided system-wide without having to access files they're not supposed to access. Here's the portion of the main config file which lists all these dirs with some explanations ($SELFAUTODIR=/usr/share):
+
+
+https://wiki.archlinux.org/index.php/TeX_Live_FAQ
+
+
+|              |
+| texmf-dist   |
+|--------------+------------------------------------+---|
+|              |
+| gentoo tlmgr | /usr/local/texlive/2014/texmf-dist |   |
+|              |
+| arch         | /usr/share
+|              |
+
+texhash
+
+mktexlsr
+
+
+
+Checking package status
+
+The universal way to check if a file is available to TeX compilers is the command-line tool kpsewhich.
+
+$ kpsewhich tikz
+/usr/local/texlive/2012/texmf-dist/tex/plain/pgf/frontendlayer/tikz.tex
+
+http://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages
+
+
+tlmgr info <package>
+
+
+| general | gentoo specific |
+|---------+-----------------|
+| texhash | mktexlsr        |
+|         |                 |
+|         | TEXMF           |
+|         | TEXMFHOME       |
+|         | TEXMFLOCAL      |
+|         |                 |
+
+kpsewhich --var-value TEXMF
+{/home/c5766/.texlive/texmf-config,/home/c5766/.texlive/texmf-var,/home/c5766/texmf,!!//etc/texmf,!!//var/lib/texmf,!!/usr/share/texmf,!!/usr/share/../local/share/texmf,!!/usr/share/texmf-site,!!/usr/share/texmf-dist}
+
+kpsewhich --var-value TEXMFHOME
+
+/home/c5766/texmf
+
+
+kpsewhich --var-value TEXMFLOCAL
+/usr/share/../local/share/texmf
+
+
+
+kpsewhich --var-value TEXMFVAR
+
+kpsewhich --var-value TEXMFDIST
+
+
+
+
+** tlmgr examples
+
+tlmgr show collections
+
+tlmgr show collection-latex
+
+tlmgr info 
+
+tlmgr info collections
+
+tlmgr info collection-latex 
+
+tlmgr info collection-latex --list
+
+| tlmgr show | locally installed packages
+| tlmgr info | all packages at the repository |
+ 
+
+** tlmgr search package
+
+
+
+
+#+HEADERS: :re
+#+BEGIN_SRC sh
+
+tlmgr info biblatex
+
+#+END_SRC
+
+#+RESULTS:
+tlmgr: package repository http://shadow.ind.ntou.edu.tw/ctan/systems/texlive/tlnet
+package:     biblatex
+category:    Package
+shortdesc:   Bibliographies in LaTeX using BibTeX for sorting only.
+longdesc:    Biblatex is a complete reimplementation of the bibliographic facilities provided by LaTeX in conjunction with BibTeX. It redesigns the way in which LaTeX interacts with BibTeX at a fairly fundamental level. With biblatex, BibTeX is only used (if it is used at all) to sort the bibliography and to generate labels. Formatting of the bibliography is entirely controlled by TeX macros (the BibTeX-based mechanism embeds some parts of formatting in the BibTeX style file. Good working knowledge in LaTeX should be sufficient to design new bibliography and citation styles; nothing related to BibTeX's language is needed. In fact, users need not remain bound to BibTeX for use with biblatex: an alternative bibliography processor biblatex- biber is available. Development of biblatex and biblatex-biber is closely coupled; the present release of biblatex is designed to work with biblatex-biber version 0.9.6. The package needs e- TeX, and uses the author's etoolbox and logreq packages. For users of biblatex-biber, version 0.9 is required (at least; refer to the notes for the version of biblatex-biber that you are using). Apart from the features unique to biblatex, the package also incorporates core features of the following packages: babelbib, bibtopic, bibunits, chapterbib, cite, inlinebib, mcite and mciteplus, mlbib, multibib, splitbib. Biblatex supports split bibliographies and multiple bibliographies within one document, and separate lists of bibliographic shorthands. Bibliographies may be subdivided into parts (by chapter, by section, etc.) and/or segmented by topics (by type, by keyword, etc.). Biblatex is fully localized and can interface with the babel.
+installed:   Yes
+revision:    34433
+sizes:       doc: 18425k, run: 2097k
+relocatable: No
+cat-version: 2.9a
+cat-date:    2014-06-24 19:29:18 +0200
+cat-license: lppl
+collection:  collection-bibtexextra
+
+tlmgr: package repository http://shadow.ind.ntou.edu.tw/ctan/systems/texlive/tlnet
+package:     biblatex
+category:    Package
+shortdesc:   Bibliographies in LaTeX using BibTeX for sorting only.
+longdesc:    Biblatex is a complete reimplementation of the bibliographic facilities provided by LaTeX in conjunction with BibTeX. It redesigns the way in which LaTeX interacts with BibTeX at a fairly fundamental level. With biblatex, BibTeX is only used (if it is used at all) to sort the bibliography and to generate labels. Formatting of the bibliography is entirely controlled by TeX macros (the BibTeX-based mechanism embeds some parts of formatting in the BibTeX style file. Good working knowledge in LaTeX should be sufficient to design new bibliography and citation styles; nothing related to BibTeX's language is needed. In fact, users need not remain bound to BibTeX for use with biblatex: an alternative bibliography processor biblatex- biber is available. Development of biblatex and biblatex-biber is closely coupled; the present release of biblatex is designed to work with biblatex-biber version 0.9.6. The package needs e- TeX, and uses the author's etoolbox and logreq packages. For users of biblatex-biber, version 0.9 is required (at least; refer to the notes for the version of biblatex-biber that you are using). Apart from the features unique to biblatex, the package also incorporates core features of the following packages: babelbib, bibtopic, bibunits, chapterbib, cite, inlinebib, mcite and mciteplus, mlbib, multibib, splitbib. Biblatex supports split bibliographies and multiple bibliographies within one document, and separate lists of bibliographic shorthands. Bibliographies may be subdivided into parts (by chapter, by section, etc.) and/or segmented by topics (by type, by keyword, etc.). Biblatex is fully localized and can interface with the babel.
+installed:   No
+sizes:       doc: 18425k, run: 2097k
+relocatable: Yes
+cat-version: 2.9a
+cat-date:    2014-06-24 19:29:18 +0200
+cat-license: lppl
+collection:  collection-bibtexextra
+
+
+
+** the minimal scheme = collection-basic
+
+ tlmgr info --only-installed
+i amsfonts: TeX fonts from the American Mathematical Society.
+i bibtex: Process bibliographies for LaTeX, etc.
+i bibtex.x86_64-linux: x86_64-linux files of
+i cm: Computer Modern fonts.
+i collection-basic: Essential programs and files
+i dvipdfmx: An extended version of dvipdfm.
+i dvipdfmx-def: Configuration file for dvipdfmx graphics.
+i dvipdfmx.x86_64-linux: x86_64-linux files of dvipdfmx
+i dvips: A DVI to PostScript driver.
+i dvips.x86_64-linux: x86_64-linux files of dvips
+i enctex: A TeX extension that translates input on its way into TeX.
+i etex: An extended version of TeX, from the
+i etex-pkg: E-TeX support package.
+i glyphlist: (
+i gsftopk: Convert "ghostscript fonts" to PK
+i gsftopk.x86_64-linux: x86_64-linux files of gsftopk
+i hyph-utf8: Hyphenation patterns expressed in UTF-8.
+i hyphen-base: (shortdesc missing)
+i ifluatex: Provides the \ifluatex switch.
+i ifxetex: Am I running under XeTeX?
+i knuth-lib: A small library of MetaFont sources.
+i knuth-local: Knuth's local information.
+i kpathsea: Path searching library for TeX-related files.
+i kpathsea.x86_64-linux: x86_64-linux files of kpathsea
+i lua-alt-getopt: Process application arguments the same way as getopt_long.
+i luatex: The LuaTeX engine.
+i luatex.x86_64-linux: x86_64-linux files of
+i makeindex: Process index output to produce
+i makeindex.x86_64-linux: x86_64-linux files
+i metafont: A
+i metafont.x86_64-linux: x86_64-linux files of metafont
+i mflogo: LaTeX support for Metafont logo fonts.
+i mfware: Supporting tools for use with Metafont.
+i mfware.x86_64-linux: x86_64-linux files of
+i pdftex: A TeX extension for direct creation of PDF.
+i pdftex.x86_64-linux: x86_64-linux files of
+i plain: The Plain TeX format.
+i scheme-minimal: minimal scheme (plain only)
+i tetex: scripts and files originally written for or included in teTeX
+i tetex.x86_64-linux: x86_64-linux files of tetex
+i tex: A sophi
+i tex.x86_64-linux: x86_64-linux files of tex
+i texconfig: (
+i texconfig.x86_64-linux: x86_64-linux files
+i texlive-common: TeX Live documentation (common elements)
+i texlive-docindex: top-level TeX Live doc.html, etc.
+i texlive-en: TeX Live manual (English)
+i texlive-msg-translations: translations of the TeX Live installer and TeX Live Manager
+i texlive-scripts: TeX Live infrastructure programs
+i texlive-scripts.x86_64-linux: x86_64-linux
+i texlive.infra: basic TeX Live infrastructure
+i texlive.infra.x86_64-linux: x86_64-linux files of texlive.infra
+i xdvi: A DVI previewer for the X Window System.
+i xdvi.x86_64-linux: x86_64-linux files of xdvi
+
+ tlmgr info scheme-minimal --list
+package:     scheme-minimal
+category:    Scheme
+shortdesc:   minimal scheme (plain only)
+longdesc:    This is the minimal TeX Live scheme, with support for only plain TeX. (No LaTeX macros.)  LuaTeX is included because Lua scripts are used in TeX Live infrastructure.  This scheme corresponds exactly to collection-basic.
+installed:   Yes
+revision:    13822
+sizes:       
+relocatable: Yes
+depends:
+        collection-basic
+Included files, by type:
+
+
+** collection-latex
+
+tlmgr info collection-latex --list
+tlmgr: package repository http://ftp.yzu.edu.tw/CTAN/systems/texlive/tlnet
+package:     collection-latex
+category:    Collection
+shortdesc:   LaTeX fundamental packages
+longdesc:    These packages are either mandated by the core LaTeX team, or very widely used and strongly recommended in practice.
+installed:   No
+sizes:       
+relocatable: Yes
+depends:
+        collection-basic
+        ae
+        amscls
+        amsmath
+        babel
+        babel-english
+        babelbib
+        carlisle
+        colortbl
+        fancyhdr
+        fix2col
+        geometry
+        graphics
+        hyperref
+        latex
+        latex-bin
+        latex-fonts
+        latexconfig
+        ltxmisc
+        mfnfss
+        mptopdf
+        natbib
+        oberdiek
+        pdftex-def
+        pslatex
+        psnfss
+        pspicture
+        tools
+        url
+Included files, by type:
+
+
+** tlmgr install pgf
+
+
+pgf ms graphic
+
+are necessary to have a function pgf
+
+
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install pgf
+
+
+#+END_SRC
+
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install ms
+
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install graphics
+
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install pdftex-def
+
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install oberdiek
+
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install xcolor
+
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install standalone
+
+
+#+END_SRC
+
+
+** tlmgr install package
+
+
+| check package status | tlmgr info fontspec
+|                      |
+| install the package  |
+|                      | su
+|                      | umask 022
+|                      | /usr/local/texlive/2014/bin/x86_64-linux/tlmgr install fontspec |
+|                      |
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr
+
+#+HEADERS: :re
+#+BEGIN_SRC sh
+
+tlmgr info luatexja
+
+#+END_SRC
+
+#+RESULTS:
+tlmgr: package repository http://shadow.ind.ntou.edu.tw/ctan/systems/texlive/tlnet
+package:     luatexja
+category:    Package
+shortdesc:   Typeset Japanese with lua(la)tex.
+longdesc:    The package offers support for typesetting Japanese documents with LuaTeX. Either of the Plain and LaTeX2e formats may be used with the package.
+installed:   No
+sizes:       src: 405k, doc: 3181k, run: 1093k
+relocatable: Yes
+cat-version: 20141013.0
+cat-date:    2014-10-13 09:09:46 +0200
+cat-license: other-free
+collection:  collection-langjapanese
+
+tlmgr: package repository http://shadow.ind.ntou.edu.tw/ctan/systems/texlive/tlnet
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install fontspec
+
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install luatexja
+
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install luaotfload
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install luatexbase
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install lualibs
+
+#+END_SRC
+
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install adobemapping
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install euenc
+
+#+END_SRC
+
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install xunicode
+
+#+END_SRC
+
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install lcdftypetools
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install biblatex
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install etoolbox
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install graphics
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install logreq
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install url
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install biber
+
+#+END_SRC
+
+
+** tlmgr search install org
+     :PROPERTIES:
+     :EXPORT_FILE_NAME: ~/tmpfs/examples/tlmgr-search-install.org
+     :END:
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+BEGIN_SRC sh
+
+tlmgr info luatexja
+
+#+END_SRC
+
+#+HEADERS: :re
+#+HEADERS: :re
+#+HEADERS: :dir /sudo::/home/c5766/tmpfs
+#+BEGIN_SRC sh
+
+umask 022
+
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install lualibs
+
+#+END_SRC
+
+
+
+** auctex
+
+I install auctex via Emacs package manager integrated in Emacs 24 and greater (ELPA). Simply do M-x package-list-packages RET, mark the auctex package for installation with i, and hit x to execute the installation procedure. That’s all. 
+
+http://www.g
+
+then I modify the  TeX-engine (c-h v TeX-engine).
+
+It automatically change toogle on TeX-PDF-mode (c-h v TeX-PDF-mode).
+
+** emacs ess
+
+
+
+M-x customize-variable [RET] package-archives
+
+  Archive name: gnu
+  URL or directory name: http://elpa.gnu.org/packages/
+  Archive name: marmalade
+  URL or directory name: https://marmalade-repo.org/packages/
+
+
+https://marmalade-repo.org/packages/#httpsinstructions
+
+
+
+
+** To install the LuaTEX-ja package, you will need [2015-09-07 Mon 08:51]
+
+
+http://www.tug.org/texlive//Contents/live/texmf-dist/doc/luatex/luatexja/luatexja-en.pdf
+
+2.1
+Installation
+To install the LuaTEX-ja package, you will need:
+• LuaTEX beta-0.74.0 (or later)
+• luaotfload v2.2 (or later)
+• luatexbase v0.6
+• xunicode v0.981 (2011/09/09)
+• adobemappi
+
+
+[2015-07-22 Wed 14:09]
+
+The following packages are needed for the LuaTEX-ja package.
+• LuaTEX beta-0.80.0 (or later)
+• luaotfload v2.5 (or later)
+• adobemapping (Adobe cmap and pdfmapping files)
+• everysel (if you want to use LuaTEX-ja with L A TEX 2 ε )
+• fontspec v2.4
+• IPAex fonts ( http://ipafont.ipa.go.jp/ )
+
+
+[2015-09-07 Mon 08:27]
+
+2.1  Installation
+The following packages are needed for the LuaTEX-ja package.
+•LuaTEX beta-0.80.0 (or later)
+•luaotfload v2.5 (or later)
+•adobemapping (Adobe cmap and pdfmapping files)
+•everysel(if you want to use LuaTEX-ja with LATEX2)
+•fontspec v2.4
+•IPAex fonts (http://ipafont.ipa.go.jp/)
+
+
+
+umask 022
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+luatex luaotfload adobemapping everysel fontspec ipaex 
+
+
+Packages containing files matching `everysel':
+ms:
+        texmf-dist/doc/latex/ms/everysel.pdf
+        texmf-dist/tex/latex/ms/everysel.sty
+        texmf-dist/source/latex/ms/everysel.drv
+        texmf-dist/source/latex/ms/everysel.dtx
+        texmf-dist/source/latex/ms/everysel.ins
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+luatex luaotfload adobemapping ms fontspec ipaex 
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+luaotfload adobemapping ms fontspec ipaex 
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info \
+luatexja
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install \
+luatexja
+
+tlmgr: cannot find package luatex-ja, searching for other matches:
+
+Packages containing `luatex-ja' in their title/description:
+
+Packages containing files matching `luatex-ja':
+
+
