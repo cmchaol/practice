@@ -69,3 +69,19 @@ http://www.emacswiki.org/FlySpell
 
 
 
+
+* emacs click url
+
+| C-h v                       | default | change to          |
+|-----------------------------+---------+--------------------|
+| Browse Url Browser Function |         |                    |
+|                             |         | browse-url-firefox |
+|                             |         |                    |
+|-----------------------------+---------+--------------------|
+| Browse Url Firefox Program  |         |                    |
+|                             |         | firefox-bin        |
+|                             |         |                    |
+|-----------------------------+---------+--------------------|
+| Org File Apps               |         |                    |
+|                             |         | firefox-bin %s     |
+|                             |         |                    |

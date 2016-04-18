@@ -1710,6 +1710,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | imagemagick   |                         |                        |
 |               |                         |                        |
+| imagej        |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | audio         |                         |                        |
 |               |                         |                        |
@@ -2861,6 +2863,42 @@ Specifies right margin for text (default 72). -m 0 is equivalent to -w
 
 
 
+*** imagej
+
+sci-misc/imagej
+
+https://gpo.zugaina.org/sci-misc/imagej
+
+emerge imagej  --autounmask-write
+
+dispatch-conf
+
+ The following fontconfig configuration files have been installed:
+ * 
+ *   20-unhint-small-dejavu-sans-mono.conf
+ *   20-unhint-small-dejavu-sans.conf
+ *   20-unhint-small-dejavu-serif.conf
+ *   57-dejavu-sans-mono.conf
+ *   57-dejavu-sans.conf
+ *   57-dejavu-serif.conf
+ * 
+ * Use `eselect fontconfig` to enable/disable them.
+
+eselect fontconfig enable 60-liberation.conf
+
+eselect fontconfig list
+
+eselect fontconfig enable 20-unhint-small-dejavu-sans-mono.conf
+eselect fontconfig enable 20-unhint-small-dejavu-sans.conf
+eselect fontconfig enable 20-unhint-small-dejavu-serif.conf
+eselect fontconfig enable 57-dejavu-sans-mono.conf
+eselect fontconfig enable 57-dejavu-sans.conf
+eselect fontconfig enable 57-dejavu-serif.conf
+
+
+
+
+
 ** app-text/tesseract
 
 echo "app-text/tesseract jpeg png tiff" > /etc/portage/package.use/tesseract 
@@ -3349,17 +3387,4 @@ https://wiki.gentoo.org/wiki/Layman
 
 Layman is Gentoo's primary overlay management tool,
 
-** imagej
 
-sci-misc/imagej
-
-https://gpo.zugaina.org/sci-misc/imagej
-
-
-
-echo "=dev-perl/Term-Screen-1.30.0 ~amd64" >> /etc/portage/package.accept_keywords
-
-https://wiki.gentoo.org/wiki/Knowledge_Base:Accepting_a_keyword_for_a_single_package
-
-
-echo "sci-misc/imagej ~amd64" >> /etc/portage/package.accept_keywords
