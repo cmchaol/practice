@@ -1671,6 +1671,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | megatools     |                         |                        |
 |               |                         |                        |
+| layman        |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -2097,6 +2099,12 @@ emerge -pv megatools
 emerge net-misc/megatools --autounmask-write 
 
 dispatch-conf
+
+
+*** layman
+
+emerge --ask app-portage/layman
+
 
 
 **** megarc
@@ -3326,3 +3334,32 @@ level 1    Device Drivers  --->
 
 
  
+
+* overlay
+
+https://wiki.gentoo.org/wiki/Overlay
+
+ /etc/portage/repos.conf
+
+Ebuilds from overlays with higher priority numbers (for example 60) take precedence over ebuilds from overlays with lower priorities (such as 50).
+
+** Layman
+
+https://wiki.gentoo.org/wiki/Layman
+
+Layman is Gentoo's primary overlay management tool,
+
+** imagej
+
+sci-misc/imagej
+
+https://gpo.zugaina.org/sci-misc/imagej
+
+
+
+echo "=dev-perl/Term-Screen-1.30.0 ~amd64" >> /etc/portage/package.accept_keywords
+
+https://wiki.gentoo.org/wiki/Knowledge_Base:Accepting_a_keyword_for_a_single_package
+
+
+echo "sci-misc/imagej ~amd64" >> /etc/portage/package.accept_keywords
