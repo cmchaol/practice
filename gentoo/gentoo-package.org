@@ -1673,6 +1673,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | layman        |                         |                        |
 |               |                         |                        |
+| ftp           |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -2119,6 +2121,12 @@ Username = email@albertolarripa.com
 Password = yourpassword
 
 
+
+
+
+*** ftp
+
+emerge net-ftp/ftp
 
 
 ** xorg group
