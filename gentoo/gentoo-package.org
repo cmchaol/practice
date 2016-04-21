@@ -1123,46 +1123,61 @@ make menuconfig
 make && make modules_install
 
 
-|       | 1 | 2 | 3 | 4 | 5 | 6 |                                       | defconfig |   |           |
-|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
-| net   |   |   |   |   |   |   |                                       |           |   |           |
-|       | v |   |   |   |   |   | Device Drivers                        |           |   |           |
-|       |   | v |   |   |   |   | Network device suppor                 |           |   |           |
-|       |   |   | v |   |   |   | Ethernet driver support               |           |   |           |
-|       |   |   |   |   |   |   |                                       |           |   |           |
-|       |   |   |   | v |   |   | Atheros devices                       |           |   |           |
-|       |   |   |   |   | v |   | Atheros L1C Gigabit Ethernet support  |           |   | h77md3h   |
-|       |   |   |   |   |   |   |                                       |           |   |           |
-|       |   |   |   | v |   |   | Marvell devices                       |           |   |           |
-|       |   |   |   |   | v |   | Marvell Yukon 2                       |           |   | b1 lenovo |
-|       |   |   |   |   |   |   |                                       |           |   |           |
-|       |   |   |   | v |   |   | Realtek devices                       |           |   |           |
-|       |   |   |   |   | v |   | Realtek 8169 gigabit                  |           |   | b1 asus   |
-|       |   |   |   |   |   |   |                                       |           |   |           |
-|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
-| btrfs |   |   |   |   |   |   |                                       |           |   |           |
-|       | v |   |   |   |   |   | File systems                          |           |   |           |
-|       |   | v |   |   |   |   | <*> Btrfs filesystem support          |           |   |           |
-|       |   |   |   |   |   |   |                                       |           |   |           |
-|       |   | v |   |   |   |   | DOS/FAT/NT Filesystems  --->          |           |   |           |
-|       |   |   | v |   |   |   | <M> NTFS file system support          |           |   |           |
-|       |   |   |   |   |   |   |                                       |           |   |           |
-|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
-| zram  |   |   |   |   |   |   |                                       |           |   |           |
-|       | v |   |   |   |   |   | Processor type and features           |           |   |           |
-|       |   | v |   |   |   |   | Memory allocator for compressed pages | blank     |   |           |
-|       |   |   |   |   |   |   |                                       |           |   |           |
-|       | v |   |   |   |   |   | Device Drivers                        |           |   |           |
-|       |   | v |   |   |   |   | Block devices                         |           |   |           |
-|       |   |   | v |   |   |   | Compressed RAM block device support   | blank     |   |           |
-|       |   |   |   | v |   |   | Enable LZ4 algorithm support          | blank     |   |           |
-|       |   |   |   |   |   |   |                                       |           |   |           |
-|-------+---+---+---+---+---+---+---------------------------------------+-----------+---+-----------|
-| temp  | v |   |   |   |   |   | Device Drivers                        |           |   |           |
-|       |   | v |   |   |   |   | Hardware Monitoring support           |           |   |           |
-|       |   |   | v |   |   |   | AMD Family 10h+ temperature sensor    | blank     | * | b1 asus   |
-|       |   |   | v |   |   |   | ASUS ATK0110                          | blank     | * | b1 asus   |
-|       |   |   |   |   |   |   |                                       |           |   |           |
+|       | 1 | 2 | 3 | 4 | 5 | 6 |                                                 | defconfig |   |           |
+|-------+---+---+---+---+---+---+-------------------------------------------------+-----------+---+-----------|
+| net   |   |   |   |   |   |   |                                                 |           |   |           |
+|       | v |   |   |   |   |   | Device Drivers                                  |           |   |           |
+|       |   | v |   |   |   |   | Network device suppor                           |           |   |           |
+|       |   |   | v |   |   |   | Ethernet driver support                         |           |   |           |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+|       |   |   |   | v |   |   | Atheros devices                                 |           |   |           |
+|       |   |   |   |   | v |   | Atheros L1C Gigabit Ethernet support            |           |   | h77md3h   |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+|       |   |   |   | v |   |   | Marvell devices                                 |           |   |           |
+|       |   |   |   |   | v |   | Marvell Yukon 2                                 |           |   | b1 lenovo |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+|       |   |   |   | v |   |   | Realtek devices                                 |           |   |           |
+|       |   |   |   |   | v |   | Realtek 8169 gigabit                            |           |   | b1 asus   |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+| wifi  |   |   |   |   |   |   |                                                 |           |   |           |
+|       |   |   | v |   |   |   | Wireless LAN                                    |           | * | wli2      |
+|       |   |   |   | v |   |   | Softmac Prism54 support                         |           | M |           |
+|       |   |   |   | v |   |   | Prism54 USB support                             |           | M |           |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+|       | v |   |   |   |   |   | Networking support                              |           |   |           |
+|       |   | v |   |   |   |   | Wireless                                        |           |   |           |
+|       |   |   | v |   |   |   | cfg80211 - wireless configuration API           | *         | M |           |
+|       |   |   | v |   |   |   | Generic IEEE 802.11 Networking Stack (mac80211) | *         | M |           |
+|       |   |   | v |   |   |   | Enable LED triggers                             | *         |   | optional  |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+|       | v |   |   |   |   |   | Device Drivers                                  |           |   |           |
+|       |   | v |   |   |   |   | LED Support                                     | *         |   |           |
+|       |   |   | v |   |   |   | LED Class Support                               | *         |   |           |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+|-------+---+---+---+---+---+---+-------------------------------------------------+-----------+---+-----------|
+| btrfs |   |   |   |   |   |   |                                                 |           |   |           |
+|       | v |   |   |   |   |   | File systems                                    |           |   |           |
+|       |   | v |   |   |   |   | <*> Btrfs filesystem support                    |           |   |           |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+|       |   | v |   |   |   |   | DOS/FAT/NT Filesystems  --->                    |           |   |           |
+|       |   |   | v |   |   |   | <M> NTFS file system support                    |           |   |           |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+|-------+---+---+---+---+---+---+-------------------------------------------------+-----------+---+-----------|
+| zram  |   |   |   |   |   |   |                                                 |           |   |           |
+|       | v |   |   |   |   |   | Processor type and features                     |           |   |           |
+|       |   | v |   |   |   |   | Memory allocator for compressed pages           | blank     |   |           |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+|       | v |   |   |   |   |   | Device Drivers                                  |           |   |           |
+|       |   | v |   |   |   |   | Block devices                                   |           |   |           |
+|       |   |   | v |   |   |   | Compressed RAM block device support             | blank     |   |           |
+|       |   |   |   | v |   |   | Enable LZ4 algorithm support                    | blank     |   |           |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
+|-------+---+---+---+---+---+---+-------------------------------------------------+-----------+---+-----------|
+| temp  | v |   |   |   |   |   | Device Drivers                                  |           |   |           |
+|       |   | v |   |   |   |   | Hardware Monitoring support                     |           |   |           |
+|       |   |   | v |   |   |   | AMD Family 10h+ temperature sensor              | blank     | * | b1 asus   |
+|       |   |   | v |   |   |   | ASUS ATK0110                                    | blank     | * | b1 asus   |
+|       |   |   |   |   |   |   |                                                 |           |   |           |
 
 btrfs
 
@@ -1204,6 +1219,7 @@ EXTENSION=20160411-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap
 
 EXTENSION=20160415-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core
 
+EXTENSION=20160421-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wifi
 
 KERNELVER=4.4.2 
 
@@ -1677,6 +1693,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | curlftpfs     |                         |                        |
 |               |                         |                        |
+| wifi          |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -2145,6 +2163,49 @@ curlftpfs ftp://server/catalog/ ./ftp/ -o user=username:password,utf8
 http://pcmanx.blogspot.tw/2008/01/curlftpfs-sshfs_6562.html
 
 curlftpfs ftp://server/catalog/ ./ftp/ -o user=username:password,codepage=big5
+
+*** wifi
+
+https://wiki.gentoo.org/wiki/Wifi
+
+**** steps installation
+
+|   | steps              |
+|---+--------------------|
+|   | Hardware detection |
+|   |                    |
+|   | kernel             |
+|   |                    |
+|   | firmware           |
+|   |                    |
+|   | testing            |
+|   |                    |
+|   | wpa_supplicant     |
+|   |                    |
+
+**** kernel
+
+**** firmware
+
+cp 2.13.1.0.lm86.arm /lib/firmware/isl3886usb
+
+
+**** wpa_supplicant
+
+https://wiki.gentoo.org/wiki/Wpa_supplicant
+
+
+emerge wpa_supplicant
+
+
+
+/etc/wpa_supplicant/wpa_supplicant.conf
+
+# Allow users in the 'wheel' group to control wpa_supplicant
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=wheel
+ 
+# Make this file writable for wpa_gui
+update_config=1
 
 
 
