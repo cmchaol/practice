@@ -2182,12 +2182,20 @@ https://wiki.gentoo.org/wiki/Wifi
 |   |                    |
 |   | wpa_supplicant     |
 |   |                    |
+|   | connect            |
 
 **** kernel
 
 **** firmware
 
 cp 2.13.1.0.lm86.arm /lib/firmware/isl3886usb
+
+**** testing
+
+tree /sys/class/net
+
+ip addr
+
 
 
 **** wpa_supplicant
@@ -2206,6 +2214,31 @@ ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=wheel
  
 # Make this file writable for wpa_gui
 update_config=1
+
+prepare the .conf
+
+
+
+**** connect
+
+#
+
+wpa_supplicant -i wlp0s18f2u4*  -c .conf &  # [2016-04-21 Thu 16:28]
+
+dhcpcd wlp0s18f2u4*
+
+
+route -n
+
+route add -net 10.0.0.0 netmask 255.0.0.0 gw 10.200.31.254 dev enp1s0*
+
+route del -net 0.0.0.0 netmask 0.0.0.0 gw 10.200.31.254 dev enp1s0*
+
+
+route -n
+
+ping -c 3 www.google.edu.tw 
+
 
 
 
