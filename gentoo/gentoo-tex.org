@@ -1,16 +1,23 @@
 * Custom installation with TeX Live					:tex:
 
 
-|    | installation |   |
-|----+--------------+---|
-| 10 | tex          |   |
-|    |              |   |
-| 20 | latex        |   |
-|    |              |   |
-|    | lualatex     |   |
-|    |              |   |
-|    | chinese font |   |
-|    |              |   |
+|    | installation | minimal |
+|    |              |    test |
+|----+--------------+---------|
+| 10 | tex          |         |
+|    |              |      12 |
+|    |              |         |
+|----+--------------+---------|
+| 20 | latex        |         |
+|    |              |      22 |
+|    |              |         |
+| 24 | auctex       |         |
+|    |              |      26 |
+|    |              |         |
+| 30 | lualatex     |         |
+|    |              |         |
+|    | chinese font |         |
+|    |              |         |
 
 
 
@@ -169,6 +176,14 @@ Enter command:
 
 
 
+
+** 12 tex minimal test
+
+$ 
+
+pdftex '\empty Hello world!\bye'
+
+
 ** 20 tlmgr install latex
     
 which tlmgr
@@ -221,6 +236,38 @@ I installed latex-bin again and it work.
 I can edit i
 
 Both latex a
+
+
+
+** 22 latex minimal test
+
+$
+
+pdflatex '\documentclass{article} \begin{document} Hello world! \end{document}'
+
+
+** 24 auctex
+
+M-x package-list-packages 
+
+
+https://www.gnu.org/software/auctex/manual/auctex/index.html
+
+If you want to make AUCTeX aware of style files and multi-file documents right away, insert the following in your ‘.emacs’ file.
+
+ 	
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+
+** 26 auctex minimal test
+
+create a file with name hello.tex and content
+
+\documentclass{article} \begin{document} Hello world! \end{document}
+
+TeX-view-command-raw: Cannot find "Evince" viewer.  Select another one in `TeX-view-program-selection'
+
 
 
 ** latex export
