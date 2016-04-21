@@ -1675,6 +1675,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | ftp           |                         |                        |
 |               |                         |                        |
+| curlftpfs     |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -2127,6 +2129,23 @@ Password = yourpassword
 *** ftp
 
 emerge net-ftp/ftp
+
+*** curlftpfs
+
+
+emerge net-fs/curlftpfs
+
+https://wiki.gentoo.org/wiki/CurlFtpFS
+
+example:
+
+curlftpfs ftp://server/catalog/ ./ftp/ -o user=username:password,utf8
+
+
+http://pcmanx.blogspot.tw/2008/01/curlftpfs-sshfs_6562.html
+
+curlftpfs ftp://server/catalog/ ./ftp/ -o user=username:password,codepage=big5
+
 
 
 ** xorg group
