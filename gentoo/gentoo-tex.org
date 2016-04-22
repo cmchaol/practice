@@ -1,28 +1,340 @@
-* Custom installation with TeX Live					:tex:
+* Custom installatio`n with TeX Live 					:tex:
 
 
-|    | installation | minimal |
-|    |              |    test |
-|----+--------------+---------|
-| 10 | tex          |         |
-|    |              |      12 |
-|    |              |         |
-|----+--------------+---------|
-| 20 | latex        |         |
-|    |              |      22 |
-|    |              |         |
-| 24 | auctex       |         |
-|    |              |      26 |
-|    |              |         |
-| 30 | lualatex     |         |
-|    |              |         |
-|    | chinese font |         |
-|    |              |         |
+|    | installation | minimal test            |                        |
+|----+--------------+-------------------------+------------------------|
+| 04 |              |                         | tlmgr                  |
+|    |              |                         |                        |
+|----+--------------+-------------------------+------------------------|
+| 10 | tex          |                         |                        |
+|    |              |                         |                        |
+| 12 |              | in a terminal, pdftex   |                        |
+|    |              |                         |                        |
+|----+--------------+-------------------------+------------------------|
+| 20 | latex        |                         |                        |
+|    |              |                         |                        |
+| 22 |              | in a terminal, pdflatex |                        |
+|    |              |                         |                        |
+| 24 |              | in emacs, pdflatex      |                        |
+|    |              |                         |                        |
+|    | bkai         | in emacs, chinese       | pending                |
+|    |              |                         |                        |
+|    |              |                         |                        |
+|    | auctex       |                         |                        |
+|    |              |                         |                        |
+|----+--------------+-------------------------+------------------------|
+| 30 | lualatex     |                         |                        |
+|    |              |                         |                        |
+| 32 |              | in a terminal, lualatex |                        |
+|    |              |                         |                        |
+| 34 |              | in emacs, lualatex      | [2016-04-22 Fri 11:12] |
+|    |              |                         |                        |
+| 36 | luatexja     |                         |                        |
+|    |              |                         |                        |
+|    |              |                         |                        |
+|    | chinese font |                         | /mnt/fs1/fonts/noto    |
+|    |              |                         | NotoSansTC-Regular.otf |
+|    |              |                         |                        |
+|----+--------------+-------------------------+------------------------|
+|    |              |                         |                        |
 
 
 
 
-** 10 minimal installation 68 Mb
+** 04 tlmgr
+
+https://en.wikibooks.org/wiki/LaTeX/Installation#Custom_installation_with_TeX_Live
+
+
+| tlmgr show | locally installed packages     |
+| tlmgr info | all packages at the repository |
+ 
+
+| tlmgr | packages          |
+|-------+-------------------|
+| show  | locally installed |
+| info  | at the repository |
+ 
+
+*** examples
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr option
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info 
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info --only-installed
+
+
+*** example, chinse
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info | grep hinese
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info --only-installed | grep hinese
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr show collections
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr show collections | grep hinese
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr show collection-langchinese
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr show collection-langcjk
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr show collection-langchinese  --list
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr show collection-langcjk
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info collection-langchinese 
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info collection-langchinese  --list
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info collection-langcjk
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info collection-langcjk  --list
+
+
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info | grep hinese
+
+  arphic: Arphic (Chinese) font packages.
+  asymptote-faq-zh-cn: Asymptote FAQ (Chinese translation).
+  asymptote-manual-zh-cn: A Chinese translation of the asymptote manual.
+  biblatex-caspervector: A simple citation style for Chinese users
+  collection-langchinese: Chinese
+  collection-langcjk: Chinese/Japanese/Korean (base)
+  ctex: LaTeX classes and packages for Chinese typesetting
+  ctex-faq: LaTeX FAQ by the Chinese TeX Society (ctex.org).
+  fandol: Four basic fonts for Chinese typesetting.
+  hyphen-chinese: Chinese pinyin hyphenation patterns.
+  latex-notes-zh-cn: Chinese Introduction to TeX and LaTeX.
+  lshort-chinese: Introduction to LaTeX, in Chinese.
+  resumecls: Typeset a resume both in English and Chinese
+  suanpan: MetaPost macros for drawing Chinese and Japanese abaci.
+  texlive-zh-cn: TeX Live manual (Chinese)
+  xpinyin: Automatically add pinyin to Chinese characters
+  zhmetrics: TFM subfont files for using Chinese fonts in 8-bit TeX.
+  zhnumber: Typeset Chinese representations of numbers
+
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr show collections | grep hinese
+
+  collection-langchinese: Chinese
+  collection-langcjk: Chinese/Japanese/Korean (base)
+
+| collection             | difference          |
+|------------------------+---------------------|
+| collection-langcjk     | base                |
+|                        |                     |
+| collection-langchinese | additional packages |
+
+tlmgr: package repository ftp://ftp.ccu.edu.tw/pub/tex/systems/texlive/tlnet
+package:     collection-langcjk
+category:    Collection
+shortdesc:   Chinese/Japanese/Korean (base)
+longdesc:    Packages supporting a combination of Chinese, Japanese, Korean, including macros, fonts, documentation.  Also Thai in the c90 encoding, since there is some overlap in those fonts; standard Thai support is in collection-langother.  Additional packages for CJK are in their individual language collections.
+installed:   No
+sizes:       
+relocatable: Yes
+depends:
+        collection-basic
+        adobemapping
+        c90
+        cjk-gs-integrate
+        cjk
+        cjkpunct
+        cjkutils
+        dnp
+        garuda-c90
+        norasi-c90
+        xcjk2uni
+        zxjafont
+Included files, by type:
+
+tlmgr: package repository ftp://ftp.ccu.edu.tw/pub/tex/systems/texlive/tlnet
+package:     collection-langchinese
+category:    Collection
+shortdesc:   Chinese
+longdesc:    Support for Chinese; additional packages in collection-langcjk.
+installed:   No
+sizes:       
+relocatable: Yes
+depends:
+        collection-langcjk
+        arphic
+        asymptote-by-example-zh-cn
+        asymptote-faq-zh-cn
+        asymptote-manual-zh-cn
+        cns
+        ctex
+        ctex-faq
+        fandol
+        hyphen-chinese
+        impatient-cn
+        latex-notes-zh-cn
+        lshort-chinese
+        texlive-zh-cn
+        xpinyin
+        zhmetrics
+        zhnumber
+        zhspacing
+Included files, by type:
+
+
+
+*** example, install
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info fontspec.sty
+
+
+
+
+sudo /usr/local/texlive/2014/bin/x86_64-linux/tlmgr install pgf
+
+sudo /usr/local/texlive/2014/bin/x86_64-linux/tlmgr install ms
+
+
+By default TeX Live will install in /usr/local/texlive
+
+
+    the system cache goes in /var/lib/texmf;
+    the user cache goes in ~/.texliveYYYY.
+
+
+ texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+
+
+Q: What's up with all these dirs /usr/share/{texmf,texmf-dist,texmf-var,texmf-config}?
+
+A: TeX uses several "source trees"; they have the same internal structure, and can "overlap". This is to allow users to modify files provided system-wide without having to access files they're not supposed to access. Here's the portion of the main config file which lists all these dirs with some explanations ($SELFAUTODIR=/usr/share):
+
+
+https://wiki.archlinux.org/index.php/TeX_Live_FAQ
+
+
+|              |
+| texmf-dist   |
+|--------------+------------------------------------+---|
+|              |
+| gentoo tlmgr | /usr/local/texlive/2014/texmf-dist |   |
+|              |
+| arch         | /usr/share
+|              |
+
+texhash
+
+mktexlsr
+
+
+
+Checking package status
+
+The universal way to check if a file is available to TeX compilers is the command-line tool kpsewhich.
+
+$ kpsewhich tikz
+/usr/local/texlive/2012/texmf-dist/tex/plain/pgf/frontendlayer/tikz.tex
+
+http://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages
+
+
+tlmgr info <package>
+
+
+| general | gentoo specific |
+|---------+-----------------|
+| texhash | mktexlsr        |
+|         |                 |
+|         | TEXMF           |
+|         | TEXMFHOME       |
+|         | TEXMFLOCAL      |
+|         |                 |
+
+kpsewhich --var-value TEXMF
+{/home/c5766/.texlive/texmf-config,/home/c5766/.texlive/texmf-var,/home/c5766/texmf,!!//etc/texmf,!!//var/lib/texmf,!!/usr/share/texmf,!!/usr/share/../local/share/texmf,!!/usr/share/texmf-site,!!/usr/share/texmf-dist}
+
+kpsewhich --var-value TEXMFHOME
+
+/home/c5766/texmf
+
+
+kpsewhich --var-value TEXMFLOCAL
+/usr/share/../local/share/texmf
+
+
+
+kpsewhich --var-value TEXMFVAR
+
+kpsewhich --var-value TEXMFDIST
+
+
+
+
+tlmgr examples
+
+tlmgr show collections
+
+tlmgr show collection-latex
+
+tlmgr info 
+
+tlmgr info collections
+
+tlmgr info collection-latex 
+
+tlmgr info collection-latex --list
+
+
+tlmgr search package
+
+
+
+
+#+HEADERS: :re
+#+BEGIN_SRC sh
+
+tlmgr info biblatex
+
+#+END_SRC
+
+#+RESULTS:
+tlmgr: package repository http://shadow.ind.ntou.edu.tw/ctan/systems/texlive/tlnet
+package:     biblatex
+category:    Package
+shortdesc:   Bibliographies in LaTeX using BibTeX for sorting only.
+longdesc:    Biblatex is a complete reimplementation of the bibliographic facilities provided by LaTeX in conjunction with BibTeX. It redesigns the way in which LaTeX interacts with BibTeX at a fairly fundamental level. With biblatex, BibTeX is only used (if it is used at all) to sort the bibliography and to generate labels. Formatting of the bibliography is entirely controlled by TeX macros (the BibTeX-based mechanism embeds some parts of formatting in the BibTeX style file. Good working knowledge in LaTeX should be sufficient to design new bibliography and citation styles; nothing related to BibTeX's language is needed. In fact, users need not remain bound to BibTeX for use with biblatex: an alternative bibliography processor biblatex- biber is available. Development of biblatex and biblatex-biber is closely coupled; the present release of biblatex is designed to work with biblatex-biber version 0.9.6. The package needs e- TeX, and uses the author's etoolbox and logreq packages. For users of biblatex-biber, version 0.9 is required (at least; refer to the notes for the version of biblatex-biber that you are using). Apart from the features unique to biblatex, the package also incorporates core features of the following packages: babelbib, bibtopic, bibunits, chapterbib, cite, inlinebib, mcite and mciteplus, mlbib, multibib, splitbib. Biblatex supports split bibliographies and multiple bibliographies within one document, and separate lists of bibliographic shorthands. Bibliographies may be subdivided into parts (by chapter, by section, etc.) and/or segmented by topics (by type, by keyword, etc.). Biblatex is fully localized and can interface with the babel.
+installed:   Yes
+revision:    34433
+sizes:       doc: 18425k, run: 2097k
+relocatable: No
+cat-version: 2.9a
+cat-date:    2014-06-24 19:29:18 +0200
+cat-license: lppl
+collection:  collection-bibtexextra
+
+tlmgr: package repository http://shadow.ind.ntou.edu.tw/ctan/systems/texlive/tlnet
+package:     biblatex
+category:    Package
+shortdesc:   Bibliographies in LaTeX using BibTeX for sorting only.
+longdesc:    Biblatex is a complete reimplementation of the bibliographic facilities provided by LaTeX in conjunction with BibTeX. It redesigns the way in which LaTeX interacts with BibTeX at a fairly fundamental level. With biblatex, BibTeX is only used (if it is used at all) to sort the bibliography and to generate labels. Formatting of the bibliography is entirely controlled by TeX macros (the BibTeX-based mechanism embeds some parts of formatting in the BibTeX style file. Good working knowledge in LaTeX should be sufficient to design new bibliography and citation styles; nothing related to BibTeX's language is needed. In fact, users need not remain bound to BibTeX for use with biblatex: an alternative bibliography processor biblatex- biber is available. Development of biblatex and biblatex-biber is closely coupled; the present release of biblatex is designed to work with biblatex-biber version 0.9.6. The package needs e- TeX, and uses the author's etoolbox and logreq packages. For users of biblatex-biber, version 0.9 is required (at least; refer to the notes for the version of biblatex-biber that you are using). Apart from the features unique to biblatex, the package also incorporates core features of the following packages: babelbib, bibtopic, bibunits, chapterbib, cite, inlinebib, mcite and mciteplus, mlbib, multibib, splitbib. Biblatex supports split bibliographies and multiple bibliographies within one document, and separate lists of bibliographic shorthands. Bibliographies may be subdivided into parts (by chapter, by section, etc.) and/or segmented by topics (by type, by keyword, etc.). Biblatex is fully localized and can interface with the babel.
+installed:   No
+sizes:       doc: 18425k, run: 2097k
+relocatable: Yes
+cat-version: 2.9a
+cat-date:    2014-06-24 19:29:18 +0200
+cat-license: lppl
+collection:  collection-bibtexextra
+
+
+** 10 tex minimal installation 68 Mb
 
 | step |                |
 |------+----------------|
@@ -51,7 +363,6 @@ tar zxvpf
 
 umask 022
 
-proxychains -f /home/c5766/.proxychains/proxychains.conf \
 perl install-tl-20150904/install-tl
 
 see installation schemes
@@ -177,7 +488,7 @@ Enter command:
 
 
 
-** 12 tex minimal test
+** 12 in a terminal, pdftex 
 
 $ 
 
@@ -193,7 +504,7 @@ su
 
 umask 022
 
-/usr/local/texlive/2014/bin/x86_64-linux/tlmgr install latex
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install latex
 
 
 results in minibuffer
@@ -239,14 +550,475 @@ Both latex a
 
 
 
-** 22 latex minimal test
+** 22 in a terminal, latex
+
+latex minimal test
 
 $
 
-pdflatex '\documentclass{article} \begin{document} Hello world! \end{document}'
+pdflatex '\documentclass{article} \begin{document} Hello world! by latex. \end{document}'
 
 
-** 24 auctex
+** 32 in a terminal, lualatex
+
+lualatex minimal test
+
+$
+
+lualatex '\documentclass{article} \begin{document} Hello world! by lualatex. \end{document}'
+
+
+** 24 in emacs, pdflatex
+
+open a file test-in-emacs.tex
+
+\documentclass{article} 
+
+\begin{document} 
+
+Hello world! 
+
+\end{document}
+
+run C-c multiple times
+
+
+
+** 34 in emacs, lualatex
+
+|                  | default | change to |
+|------------------+---------+-----------|
+| C-h v TeX-engine | Default | LuaTeX    |
+
+
+open a file test-in-emacs-LuaTeX.tex
+
+\documentclass{article} 
+
+\begin{document} 
+
+Hello world! 
+
+\end{document}
+
+run C-c multiple times
+
+
+** 36 in emacs, lualatex, chinses
+
+How to use Chinese with lualatex?
+
+http://tex.stackexchange.com/questions/222980/how-to-use-chinese-with-lualatex
+
+
+
+
+open a file test-in-emacs-LuaTeX-chinese.tex
+
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{MS PGothic}
+\begin{document}
+我希望這是，翻譯是由谷歌提供的中國文字。
+\end{document}
+
+! LaTeX Error: File `fontspec.sty' not found.
+
+! LaTeX Error: File `luaotfload.sty' not found.
+
+*** not found
+
+| fontspec.sty   |
+|                |
+| luaotfload.sty |
+|                |
+| lualibs        |
+|                |
+| eu2enc.def     |
+|                |
+| xunicode.sty   |
+|                |
+| graphicx.sty   |
+|                |
+| pdftex.def     |
+|                |
+| infwarerr.sty  |
+|                |
+|                |
+
+*** steps to install fontspec.sty
+
+| steps                                      |       |
+|--------------------------------------------+-------|
+| File `fontspec.sty' not found.             |       |
+|                                            |       |
+| search the package contains 'fontspec.sty' | got 2 |
+|                                            |       |
+| list the package                           |       |
+|                                            |       |
+| install the package                        |       |
+
+
+
+
+
+
+
+
+
+
+***  not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install
+
+
+*** search the package
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info fontspec.sty
+
+
+Packages containing files matching `fontspec.sty':
+fontspec:
+        texmf-dist/tex/latex/fontspec/fontspec.sty
+luatexja:
+        texmf-dist/tex/luatex/luatexja/addons/luatexja-fontspec.sty
+        texmf-dist/tex/luatex/luatexja/patches/lltjp-fontspec.sty
+
+
+*** list the package
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info fontspec
+
+tlmgr: package repository ftp://ftp.ccu.edu.tw/pub/tex/systems/texlive/tlnet
+package:     fontspec
+category:    Package
+shortdesc:   Advanced font selection in XeLaTeX and LuaLaTeX
+longdesc:    Fontspec is a package for XeLaTeX and LuaLaTeX. It provides an automatic and unified interface to feature-rich AAT and OpenType fonts through the NFSS in LaTeX running on XeTeX or LuaTeX engines. The package requires the l3kernel and xparse bundles from the LaTeX 3 development team.
+installed:   No
+sizes:       src: 305k, doc: 813k, run: 253k
+relocatable: Yes
+cat-version: 2.5a
+cat-date:    2016-02-01 14:28:29 +0100
+cat-license: lppl1.3
+cat-topics:  font-sel luatex xetex
+collection:  collection-latexrecommended
+
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info fontspec --list
+
+Included files, by type:
+run files:
+  RELOC/tex/latex/fontspec/fontspec-luatex.sty
+  RELOC/tex/latex/fontspec/fontspec-xetex.sty
+  RELOC/tex/latex/fontspec/fontspec.cfg
+  RELOC/tex/latex/fontspec/fontspec.lua
+  RELOC/tex/latex/fontspec/fontspec.sty
+  RELOC/tex/latex/fontspec/tuenc.def
+  RELOC/tex/latex/fontspec/tufontrange-T1.def
+  RELOC/tex/latex/fontspec/tufontrange-TS1.def
+  RELOC/tex/latex/fontspec/tulmr.fd
+  RELOC/tex/latex/fontspec/tulmss.fd
+  RELOC/tex/latex/fontspec/tulmtt.fd
+source files:
+  RELOC/source/latex/fontspec/fontspec-api.dtx
+  RELOC/source/latex/fontspec/fontspec-closing.dtx
+  RELOC/source/latex/fontspec/fontspec-doc.tex
+  RELOC/source/latex/fontspec/fontspec-fontload.dtx
+  RELOC/source/latex/fontspec/fontspec-internal.dtx
+  RELOC/source/latex/fontspec/fontspec-keyval.dtx
+  RELOC/source/latex/fontspec/fontspec-lua.dtx
+  RELOC/source/latex/fontspec/fontspec-math.dtx
+  RELOC/source/latex/fontspec/fontspec-msg.dtx
+  RELOC/source/latex/fontspec/fontspec-opening.dtx
+  RELOC/source/latex/fontspec/fontspec-patches.dtx
+  RELOC/source/latex/fontspec/fontspec-user.dtx
+  RELOC/source/latex/fontspec/fontspec-vars.dtx
+  RELOC/source/latex/fontspec/fontspec.dtx
+doc files:
+  RELOC/doc/latex/fontspec/README.md details="Package README"
+  RELOC/doc/latex/fontspec/fontspec-example.tex
+  RELOC/doc/latex/fontspec/fontspec.pdf details="Package documentation"
+
+
+*** install the package
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install fontspec 
+
+
+*** verify the package installed
+
+tlmgr: package repository ftp://ftp.ccu.edu.tw/pub/tex/systems/texlive/tlnet
+package:     fontspec
+category:    Package
+shortdesc:   Advanced font selection in XeLaTeX and LuaLaTeX
+longdesc:    Fontspec is a package for XeLaTeX and LuaLaTeX. It provides an automatic and unified interface to feature-rich AAT and OpenType fonts through the NFSS in LaTeX running on XeTeX or LuaTeX engines. The package requires the l3kernel and xparse bundles from the LaTeX 3 development team.
+installed:   Yes
+revision:    39541
+sizes:       run: 253k
+relocatable: No
+cat-version: 2.5a
+cat-date:    2016-02-01 14:28:29 +0100
+cat-license: lppl1.3
+cat-topics:  font-sel luatex xetex
+collection:  collection-latexrecommended
+
+
+
+*** luaotfload.sty not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info luaotfload.sty
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info luaotfload
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install luaotfload
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info luaotfload
+
+
+*** lualibs not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info lualibs 
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install lualibs 
+
+
+
+
+*** eu2enc.def not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info eu2enc.def 
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info euenc
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install euenc
+
+
+
+
+
+
+*** xunicode.sty not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info xunicode.sty 
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info xunicode
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install xunicode
+
+
+
+
+
+
+
+
+
+
+
+
+*** graphicx.sty not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info graphicx.sty
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info graphics
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install graphics
+
+
+
+
+
+
+
+
+
+
+
+*** pdftex.def not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info pdftex.def
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info pdftex-def
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install pdftex-def
+
+
+
+*** infwarerr.sty not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info infwarerr.sty
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info oberdiek
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install oberdiek
+
+
+
+
+
+
+
+
+*** MS PGothic not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info 'MS PGothic'
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install
+
+
+
+
+** 38 luatexja
+
+#
+
+umask 022
+
+
+https://www.tug.org/texlive//Contents/live/texmf-dist/doc/luatex/luatexja/luatexja-en.pdf
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr show  luatexja
+
+tlmgr: package repository ftp://ftp.ccu.edu.tw/pub/tex/systems/texlive/tlnet
+package:     luatexja
+category:    Package
+shortdesc:   Typeset Japanese with Lua(La)TeX
+longdesc:    The package offers support for typesetting Japanese documents with LuaTeX. Either of the Plain and LaTeX2e formats may be used with the package.
+installed:   No
+sizes:       src: 429k, doc: 4425k, run: 1393k
+relocatable: Yes
+cat-version: 20160404.0
+cat-date:    2016-04-04 18:37:44 +0200
+cat-license: bsd
+cat-topics:  japanese luatex class
+collection:  collection-langjapanese
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install luatexja
+
+*** a guide to lualatex
+
+http://dante.ctan.org/tex-archive/info/luatex/lualatex-doc/lualatex-doc.pdf
+
+
+fc-list
+
+fc-list | grep fs
+
+/mnt/fs1/fonts/noto/NotoSansTC-Black.otf: Noto Sans TC,Noto Sans TC Black:style=Black,Regular
+/mnt/fs1/fonts/noto/NotoSansTC-Light.otf: Noto Sans TC,Noto Sans TC Light:style=Light,Regular
+/mnt/fs1/fonts/noto/NotoSansTC-Medium.otf: Noto Sans TC,Noto Sans TC Medium:style=Medium,Regular
+/mnt/fs1/fonts/noto/NotoSansTC-Regular.otf: Noto Sans TC,Noto Sans TC Regular:style=Regular
+/mnt/fs1/fonts/noto/NotoSansTC-DemiLight.otf: Noto Sans TC,Noto Sans TC DemiLight:style=DemiLight,Regular
+/mnt/fs1/fonts/noto/NotoSansTC-Bold.otf: Noto Sans TC,Noto Sans TC Bold:style=Bold,Regular
+/mnt/fs1/fonts/noto/NotoSansTC-Thin.otf: Noto Sans TC,Noto Sans TC Thin:style=Thin,Regular
+
+\setmainfont
+
+|          | serif        | sans-serif   |
+|----------+--------------+--------------|
+| 襯線     | 有           | 沒有         |
+|          |              |              |
+| 粗細     | 不相同       | 相同         |
+|          |              |              |
+|----------+--------------+--------------|
+| lualatex | \setmainfont | \setsansfont |
+|          |              |              |
+
+  http://tdesign.tw/serif/
+
+
+
+
+
+
+
+
+** 26 in emacs, chinese
+
+open a file test-in-emacs.tex
+
+\documentclass{article} 
+
+\begin{document} 
+
+Hello world! 
+
+現在不管在 Windows 的 MikTeX, 或 Unix、Mac 的 TeXLive 中都有 bsmi (明體), bkai (楷書) 字型已安裝好, 可以直接使用。
+
+http://ccckmit.wikidot.com/tex:chinese
+
+\end{document}
+
+run C-c multiple times
+
+chinese are removed in the output pdf.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info bkai
+
+
+
+
+** auctex
 
 M-x package-list-packages 
 
@@ -260,7 +1032,7 @@ If you want to make AUCTeX aware of style files and multi-file documents right a
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
 
-** 26 auctex minimal test
+** auctex minimal test
 
 create a file with name hello.tex and content
 
@@ -1036,6 +1808,11 @@ http://ctan.org/tex-archive/macros/luatex/generic/luatexja/doc
 | luatexja |         |
 |          |         |
 
+tlmgr help
+
+TeX Live is organized into a few top-level schemes, each of which is specified as a different set of collections and packages, where a collection is a set of packages, and a package is what contains actual files. Schemes typically contain a mix of collections and packages, but package is included in exactly one collection, no more and no less. A Live installation can be customized and managed at any level.
+
+
 *** the luaotfload add fonts steps
 
 | step |                                        |   |
@@ -1694,155 +2471,6 @@ https://github.com/lualatex/luaotfload/issues/165
 |                              |
 |                              | minimal installation              |
 |                              |
-
-
-** tlmgr
-
-https://en.wikibooks.org/wiki/LaTeX/Installation#Custom_installation_with_TeX_Live
-
-tlmgr option
-
-tlmgr info --only-installed
-
-tlmgr install pgf
-
-sudo /usr/local/texlive/2014/bin/x86_64-linux/tlmgr install pgf
-
-sudo /usr/local/texlive/2014/bin/x86_64-linux/tlmgr install ms
-
-
-By default TeX Live will install in /usr/local/texlive
-
-
-    the system cache goes in /var/lib/texmf;
-    the user cache goes in ~/.texliveYYYY.
-
-
- texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
-
-
-Q: What's up with all these dirs /usr/share/{texmf,texmf-dist,texmf-var,texmf-config}?
-
-A: TeX uses several "source trees"; they have the same internal structure, and can "overlap". This is to allow users to modify files provided system-wide without having to access files they're not supposed to access. Here's the portion of the main config file which lists all these dirs with some explanations ($SELFAUTODIR=/usr/share):
-
-
-https://wiki.archlinux.org/index.php/TeX_Live_FAQ
-
-
-|              |
-| texmf-dist   |
-|--------------+------------------------------------+---|
-|              |
-| gentoo tlmgr | /usr/local/texlive/2014/texmf-dist |   |
-|              |
-| arch         | /usr/share
-|              |
-
-texhash
-
-mktexlsr
-
-
-
-Checking package status
-
-The universal way to check if a file is available to TeX compilers is the command-line tool kpsewhich.
-
-$ kpsewhich tikz
-/usr/local/texlive/2012/texmf-dist/tex/plain/pgf/frontendlayer/tikz.tex
-
-http://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages
-
-
-tlmgr info <package>
-
-
-| general | gentoo specific |
-|---------+-----------------|
-| texhash | mktexlsr        |
-|         |                 |
-|         | TEXMF           |
-|         | TEXMFHOME       |
-|         | TEXMFLOCAL      |
-|         |                 |
-
-kpsewhich --var-value TEXMF
-{/home/c5766/.texlive/texmf-config,/home/c5766/.texlive/texmf-var,/home/c5766/texmf,!!//etc/texmf,!!//var/lib/texmf,!!/usr/share/texmf,!!/usr/share/../local/share/texmf,!!/usr/share/texmf-site,!!/usr/share/texmf-dist}
-
-kpsewhich --var-value TEXMFHOME
-
-/home/c5766/texmf
-
-
-kpsewhich --var-value TEXMFLOCAL
-/usr/share/../local/share/texmf
-
-
-
-kpsewhich --var-value TEXMFVAR
-
-kpsewhich --var-value TEXMFDIST
-
-
-
-
-** tlmgr examples
-
-tlmgr show collections
-
-tlmgr show collection-latex
-
-tlmgr info 
-
-tlmgr info collections
-
-tlmgr info collection-latex 
-
-tlmgr info collection-latex --list
-
-| tlmgr show | locally installed packages
-| tlmgr info | all packages at the repository |
- 
-
-** tlmgr search package
-
-
-
-
-#+HEADERS: :re
-#+BEGIN_SRC sh
-
-tlmgr info biblatex
-
-#+END_SRC
-
-#+RESULTS:
-tlmgr: package repository http://shadow.ind.ntou.edu.tw/ctan/systems/texlive/tlnet
-package:     biblatex
-category:    Package
-shortdesc:   Bibliographies in LaTeX using BibTeX for sorting only.
-longdesc:    Biblatex is a complete reimplementation of the bibliographic facilities provided by LaTeX in conjunction with BibTeX. It redesigns the way in which LaTeX interacts with BibTeX at a fairly fundamental level. With biblatex, BibTeX is only used (if it is used at all) to sort the bibliography and to generate labels. Formatting of the bibliography is entirely controlled by TeX macros (the BibTeX-based mechanism embeds some parts of formatting in the BibTeX style file. Good working knowledge in LaTeX should be sufficient to design new bibliography and citation styles; nothing related to BibTeX's language is needed. In fact, users need not remain bound to BibTeX for use with biblatex: an alternative bibliography processor biblatex- biber is available. Development of biblatex and biblatex-biber is closely coupled; the present release of biblatex is designed to work with biblatex-biber version 0.9.6. The package needs e- TeX, and uses the author's etoolbox and logreq packages. For users of biblatex-biber, version 0.9 is required (at least; refer to the notes for the version of biblatex-biber that you are using). Apart from the features unique to biblatex, the package also incorporates core features of the following packages: babelbib, bibtopic, bibunits, chapterbib, cite, inlinebib, mcite and mciteplus, mlbib, multibib, splitbib. Biblatex supports split bibliographies and multiple bibliographies within one document, and separate lists of bibliographic shorthands. Bibliographies may be subdivided into parts (by chapter, by section, etc.) and/or segmented by topics (by type, by keyword, etc.). Biblatex is fully localized and can interface with the babel.
-installed:   Yes
-revision:    34433
-sizes:       doc: 18425k, run: 2097k
-relocatable: No
-cat-version: 2.9a
-cat-date:    2014-06-24 19:29:18 +0200
-cat-license: lppl
-collection:  collection-bibtexextra
-
-tlmgr: package repository http://shadow.ind.ntou.edu.tw/ctan/systems/texlive/tlnet
-package:     biblatex
-category:    Package
-shortdesc:   Bibliographies in LaTeX using BibTeX for sorting only.
-longdesc:    Biblatex is a complete reimplementation of the bibliographic facilities provided by LaTeX in conjunction with BibTeX. It redesigns the way in which LaTeX interacts with BibTeX at a fairly fundamental level. With biblatex, BibTeX is only used (if it is used at all) to sort the bibliography and to generate labels. Formatting of the bibliography is entirely controlled by TeX macros (the BibTeX-based mechanism embeds some parts of formatting in the BibTeX style file. Good working knowledge in LaTeX should be sufficient to design new bibliography and citation styles; nothing related to BibTeX's language is needed. In fact, users need not remain bound to BibTeX for use with biblatex: an alternative bibliography processor biblatex- biber is available. Development of biblatex and biblatex-biber is closely coupled; the present release of biblatex is designed to work with biblatex-biber version 0.9.6. The package needs e- TeX, and uses the author's etoolbox and logreq packages. For users of biblatex-biber, version 0.9 is required (at least; refer to the notes for the version of biblatex-biber that you are using). Apart from the features unique to biblatex, the package also incorporates core features of the following packages: babelbib, bibtopic, bibunits, chapterbib, cite, inlinebib, mcite and mciteplus, mlbib, multibib, splitbib. Biblatex supports split bibliographies and multiple bibliographies within one document, and separate lists of bibliographic shorthands. Bibliographies may be subdivided into parts (by chapter, by section, etc.) and/or segmented by topics (by type, by keyword, etc.). Biblatex is fully localized and can interface with the babel.
-installed:   No
-sizes:       doc: 18425k, run: 2097k
-relocatable: Yes
-cat-version: 2.9a
-cat-date:    2014-06-24 19:29:18 +0200
-cat-license: lppl
-collection:  collection-bibtexextra
 
 
 
