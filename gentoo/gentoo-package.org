@@ -2798,6 +2798,32 @@ http://superuser.com/questions/781924/unexpected-result-from-face-font-rescale-a
 
 
 
+**** menu, tool bar
+|                        | default | change to |
+|------------------------+---------+-----------|
+| M-x customize-variable |         |           |
+|                        |         |           |
+| menu-bar-mode          |         |           |
+| tool-bar-mode          |         |           |
+|                        |         |           |
+| toggle                 | on      | off       |
+|                        |         |           |
+**** background color
+
+|                    | default       | change to       |
+|--------------------+---------------+-----------------|
+| M-x customize-face |               |                 |
+| default            |               |                 |
+|                    |               |                 |
+| Font Family        | Nimbus Mono L | Liberation Mono |
+|                    |               |                 |
+| Font Foundry       | urw           | un-check        |
+|                    |               |                 |
+| Foreground         | black         | white           |
+|                    |               |                 |
+| Background         | white         | black           |
+|                    |               |                 |
+
 *** firefox
 
 emerge -pv firefox
