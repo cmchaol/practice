@@ -83,6 +83,41 @@ modprobe -r zram
 
 * zswap
 
+** grub
+
+http://askubuntu.com/questions/361320/how-can-i-enable-zswap
+
+https://help.ubuntu.com/community/Grub2/Setup#A.2BAC8-etc.2BAC8-default.2BAC8-grub
+
+nano /etc/default/grub
+
+GRUB_CMDLINE_LINUX_DEFAULT="rootwait"
+
+GRUB_CMDLINE_LINUX_DEFAULT="rootwait zswap.enabled=1 zswap.compressor=lz4"
+
+GRUB_CMDLINE_LINUX_DEFAULT="zswap.enabled=1 zswap.compressor=lz4"
+
+
+
+
+
+** [2016-04-23 Sat 19:34]
+
+| 1 | 2 | 3 | 4 | 5 | 4.4.2-hardened                           | default | change to |
+|---+---+---+---+---+------------------------------------------+---------+-----------|
+| v |   |   |   |   | Processor type and features              |         |           |
+|   |   |   |   |   |                                          |         |           |
+|   | v |   |   |   | Enable frontswap to cache swap pages     | none    | *         |
+|   |   |   |   |   |                                          |         |           |
+|   | v |   |   |   | Compressed cache for swap pages          | none    | *         |
+|   |   |   |   |   |                                          |         |           |
+|   | v |   |   |   | Low density storage for compressed pages | none    | *         |
+|   |   |   |   |   |                                          |         |           |
+|---+---+---+---+---+------------------------------------------+---------+-----------|
+| v |   |   |   |   | Cryptographic API                        |         |           |
+|   |   |   |   |   |                                          |         |           |
+|   | v |   |   |   | LZ4 compression algorithm                | none    | *         |
+
 
 ** 4.1.7-hardened-r1
      CLOCK: [2016-04-11 Mon 15:04]

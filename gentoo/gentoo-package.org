@@ -572,6 +572,8 @@ https://bbs.archlinux.org/viewtopic.php?id=104723
 
 EXTENSION=20160410-hardened-net-zram
 
+EXTENSION=20160423-hardened-net-zram-zswap
+
 KERNELVER=4.4.2 
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}
