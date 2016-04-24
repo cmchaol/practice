@@ -116,6 +116,10 @@ whoami
 
 #+END_SRC
 
+#+RESULTS:
+| /tmp |
+| root |
+
 
 ** 82 sh sudo
 

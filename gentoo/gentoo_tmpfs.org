@@ -39,6 +39,30 @@ https://www.kernel.org/doc/Documentation/filesystems/tmpfs.txt
 
 * zram
 
+** kernel
+
+
+cd /usr/src/linux
+
+make menuconfig
+
+make && make modules_install
+
+
+| 1 | 2 | 3 | 4 | 5 | 4.4.2-hardened                      | default | change to |
+|---+---+---+---+---+-------------------------------------+---------+-----------|
+| v |   |   |   |   | Device Drivers                      |         |           |
+|   | v |   |   |   | Block devices                       |         |           |
+|   |   | v |   |   | Compressed RAM block device support |         |           |
+|   |   | v |   |   | Enable LZ4 algorithm support        |         |           |
+|   |   |   |   |   |                                     |         |           |
+
+
+
+
+** local.d
+
+
 /etc/local.d zram1 for swap
 
 https://wiki.gentoo.org/wiki/Zram#Gentoo.2FOpenRC_init_script
@@ -48,9 +72,11 @@ https://wiki.gentoo.org/wiki/Zram#Gentoo.2FOpenRC_init_script
 
 generate 2 files with +x inside /etc/local.d
 
-|       | G |      |
-|-------+---+------|
-| zram0 | 2 | swap |
+|       |      | G |         |
+|-------+------+---+---------|
+| zram0 | swap | 2 |         |
+|       |      | 4 | h77md3h |
+|       |      |   |         |
 
 ** zram.start
 
@@ -60,11 +86,40 @@ modprobe zram num_devices=1
 
 echo lz4 > /sys/block/zram0/comp_algorithm
 
-echo 2G > /sys/block/zram0/disksize 
+# echo 2G > /sys/block/zram0/disksize 
+echo 4G > /sys/block/zram0/disksize   # h77md3h
 
 
 mkswap /dev/zram0
 swapon /dev/zram0 -p 10
+
+#+HEADERS: :results raw
+#+HEADERS: :dir /su::/tmp
+#+BEGIN_SRC sh
+
+cat > /etc/local.d/zram.start << EOF
+
+#!/bin/bash
+
+modprobe zram num_devices=1
+
+echo lz4 > /sys/block/zram0/comp_algorithm
+
+# echo 2G > /sys/block/zram0/disksize 
+echo 4G > /sys/block/zram0/disksize   # h77md3h
+
+mkswap /dev/zram0
+swapon /dev/zram0 -p 10
+
+EOF
+
+chmod +x /etc/local.d/zram.start
+
+ls -lha /etc/local.d/zram.start
+
+cat  /etc/local.d/zram.start
+
+#+END_SRC
 
 
 ** zram.stop
@@ -77,6 +132,30 @@ echo 1 > /sys/block/zram0/reset
 
 modprobe -r zram
 
+
+#+HEADERS: :results raw
+#+HEADERS: :dir /su::/tmp
+#+BEGIN_SRC sh
+
+cat > /etc/local.d/zram.stop << EOF
+
+#!/bin/bash
+
+swapoff /dev/zram0
+
+echo 1 > /sys/block/zram0/reset
+
+modprobe -r zram
+
+EOF
+
+chmod +x /etc/local.d/zram.stop
+
+ls -lha /etc/local.d/zram.stop
+
+cat  /etc/local.d/zram.stop
+
+#+END_SRC
 
 
 
@@ -101,7 +180,7 @@ GRUB_CMDLINE_LINUX_DEFAULT="zswap.enabled=1 zswap.compressor=lz4"
 
 
 
-** [2016-04-23 Sat 19:34]
+** kernel [2016-04-23 Sat 19:34]
 
 | 1 | 2 | 3 | 4 | 5 | 4.4.2-hardened                           | default | change to |
 |---+---+---+---+---+------------------------------------------+---------+-----------|
@@ -180,6 +259,18 @@ cp arch/x86_64/boot/bzImage /boot/kernel-${KERNELVER}-gentoo-gnu${EXTENSION}
 grub2-mkconfig -o /boot/grub/grub.cfg
 cp -a .config ../${KERNELVER}-${EXTENSION}.config.bk
 
+
+
+
+** How to verify zswap running?
+
+http://askubuntu.com/questions/510516/how-to-verify-zswap-running
+
+grep . /sys/kernel/debug/zswap/*
+
+cat /sys/module/zswap/parameters/max_pool_percent
+
+dmesg | grep zswap
 
 
 
