@@ -574,6 +574,8 @@ EXTENSION=20160410-hardened-net-zram
 
 EXTENSION=20160423-hardened-net-zram-zswap
 
+EXTENSION=20160424-hardened-net-zram-zswap-audio
+
 KERNELVER=4.4.2 
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}
@@ -1697,6 +1699,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | wifi          |                         |                        |
 |               |                         |                        |
+| gentoolkit    |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -1741,12 +1745,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 |               |                         |                        |
 
-** audio
 
-*** alsa-lib
 
-proxychains -f /home/c5766/.proxychains/proxychains.conf \
-emerge media-libs/alsa-lib
 
 ** shell group
 
@@ -2244,6 +2244,11 @@ ping -c 3 www.google.edu.tw
 
 
 
+*** gentoolkit
+
+emerge app-portage/gentoolkit
+
+
 ** xorg group
    
 *** x11-base/xorg-server
@@ -2664,6 +2669,7 @@ vncviewer 10.161.0.97
 proxychains -f /home/c5766/.proxychains/proxychains.conf \
 emerge -pv gtk+:2
 
+
 ** editors
 
 *** google-chrome
@@ -3065,6 +3071,78 @@ emerge app-text/tesseract
 TESSERACT OCR 中文識別嘗試
 
 http://miphol.com/muse/2013/05/tesseract-ocr.html
+
+
+** audio
+
+
+https://wiki.gentoo.org/wiki/ALSA
+
+
+
+*** steps
+
+| steps | installation |   |
+|-------+--------------+---|
+|       | kernel       |   |
+|       |              |   |
+|       |              |   |
+
+*** kernel [2016-04-24 Sun 17:37]
+
+
+cd /usr/src/linux
+
+make menuconfig
+
+make && make modules_install
+
+
+| 1 | 2 | 3 | 4 | 5 | 4.4.2-hardened                    | default | change to |
+|---+---+---+---+---+-----------------------------------+---------+-----------|
+| v |   |   |   |   | Device Drivers                    |         |           |
+|   | v |   |   |   | Sound card support                |         |           |
+|   |   | v |   |   | Advanced Linux Sound Architecture |         |           |
+|   |   |   | v |   | HD-Audio                          |         |           |
+|   |   |   |   | * |                                   |         |           |
+
+
+
+
+h77md3h
+
+lspci | grep -i audio
+00:1b.0 Audio device: Intel Corporation 7 Series/C210 Series Chipset Family High Definition Audio Controller (rev 04)
+
+
+*** alsa-utils
+
+
+euse -E alsa
+
+emerge --ask --changed-use --deep @world
+
+emerge --ask alsa-utils
+
+gpasswd -a larry audio
+
+gpasswd -a user1 audio
+
+/etc/init.d/alsasound start
+
+rc-update add alsasound boot
+
+alsamixer
+
+speaker-test -t wav -c 2
+
+
+
+
+*** alsa-lib
+
+proxychains -f /home/c5766/.proxychains/proxychains.conf \
+emerge media-libs/alsa-lib
 
  
 * M4A87TD/USB3, BIOS 1102    12/09/2010 inventory
