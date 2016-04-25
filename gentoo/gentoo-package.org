@@ -1225,6 +1225,8 @@ EXTENSION=20160415-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core
 
 EXTENSION=20160421-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wifi
 
+EXTENSION=20160425-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wifi-bluetooth
+
 KERNELVER=4.4.2 
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}
@@ -1717,6 +1719,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 | xterm         |                         | [2016-04-07 Thu 16:12] |
 |               |                         |                        |
 | spectrwm      |                         | [2016-04-07 Thu 16:12] |
+|               |                         |                        |
+| scrot         |                         |                        |
 |               |                         |                        |
 | vnc           |                         |                        |
 |               |                         |                        |
@@ -2633,6 +2637,82 @@ ls -lha
 
 
 
+
+**** screenshot
+
+|   | steps         |
+|---+---------------|
+|   | install scrot |
+|   |               |
+|   | extract       |
+|   |               |
+|   |               |
+|   | ln -s         |
+|   |               |
+|   | practice      |
+|   |               |
+
+
+
+#
+
+ls /usr/share/doc/spectrwm-2.7.2/screenshot.sh.bz2
+
+bzip2 -d /usr/share/doc/spectrwm-2.7.2/screenshot.sh.bz2 /home/user1/screenshot.sh
+
+chown user1:user1 /home/user1/screenshot.sh
+
+chmod +x /home/user1/screenshot.sh
+
+cd /usr/bin
+
+ln -s /home/user1/screenshot.sh
+
+
+
+bindings
+
+| bindings                                    | functions       |
+|---------------------------------------------+-----------------|
+| M-s                                         | screenshot_all  |
+|                                             |                 |
+| M-S-s                                       | screenshot_wind |
+| move the mouse pointer to the target window |                 |
+| click inside the target                     |                 |
+
+the default output directory is /home/user1
+
+
+practice
+
+|    | bindings                                                | functions       |
+|----+---------------------------------------------------------+-----------------|
+|    | M-s                                                     | screenshot_all  |
+|    |                                                         |                 |
+| 10 | M-S-s                                                   | screenshot_wind |
+| 11 | move the mouse pointer to the target window             |                 |
+| 12 | click inside the target                                 |                 |
+|    |                                                         |                 |
+| 20 | open an image viewer, like browser chrome               |                 |
+| 21 | click the filename                                      |                 |
+|    | file:///home/user1/2016-04-25-092730_972x1064_scrot.png |                 |
+
+
+*** scrot
+
+echo "media-libs/imlib2 gif jpeg png tiff" >> /etc/portage/package.use/imlib2
+
+cat  /etc/portage/package.use/imlib2
+
+emerge -pv scrot
+
+emerge scrot   --autounmask-write
+
+dispatch-conf
+
+emerge scrot 
+
+
 *** TightVNC
 
 http://wiki.gentoo.org/wiki/TightVNC
@@ -3145,6 +3225,35 @@ proxychains -f /home/c5766/.proxychains/proxychains.conf \
 emerge media-libs/alsa-lib
 
  
+** bluetooth
+
+*** kernel
+
+
+cd /usr/src/linux
+
+make menuconfig
+
+make && make modules_install
+
+
+
+| 1 | 2 | 3 | 4 | 5 | 4.4.2-hardened                      | default | change to |
+|---+---+---+---+---+-------------------------------------+---------+-----------|
+| v |   |   |   |   | Networking support                  |         |           |
+|   | v |   |   |   | Bluetooth subsystem support         | none    | M         |
+|   |   |   |   |   |                                     |         |           |
+|   |   | v |   |   | Bluetooth Classic (BR/EDR) features | *       |           |
+|   |   | v |   |   | RFCOMM protocol support             | none    | M         |
+|   |   | v |   |   | HIDP protocol support               | none    | M         |
+|   |   |   |   |   |                                     |         |           |
+|   |   |   | v |   | Bluetooth device drivers            |         |           |
+|   |   |   | v |   | HCI USB driver                      |         | M         |
+|   |   |   | v |   | Broadcom protocol support           | *       |           |
+|   |   |   | v |   | HCI UART (PC Card) device driver    | none    | M         |
+|   |   |   |   |   |                                     |         |           |
+
+
 * M4A87TD/USB3, BIOS 1102    12/09/2010 inventory
 
 [2015-05-14 Thu 15:57]
