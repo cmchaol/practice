@@ -3257,9 +3257,28 @@ make && make modules_install
 |   |   |   |   |   |                                     |         |           |
 
 
+*** bluez 4
+
+https://wiki.gentoo.org/wiki/Bluetooth#BlueZ_4
+
+/etc/portage/package.mask
+>=net-wireless/bluez-5
+
+cat 
 
 
-*** bluez
+
+echo ">=net-wireless/bluez-5" > /etc/portage/package.mask/bluez
+
+cat /etc/portage/package.mask/bluez
+
+emerge -pv bluez
+
+emerge bluez
+
+
+*** bluez5 failed
+
 
 https://wiki.gentoo.org/wiki/Bluetooth
 
@@ -3274,37 +3293,9 @@ rc-update add bluetooth default
 rc-service bluetooth restart
 
 
-*** USE flag
-
-echo "media-sound/pulseaudio bluetooth dbus" > /etc/portage/package.use/pulseaudio
-
-cat /etc/portage/package.use/pulseaudio
-
-emerge -pv pulseaudio
-
-emerge pulseaudio
-
-emerge blueman
 
 
-echo "net-wireless/bluez test-programs" >> /etc/portage/package.use/bluez 
-
-cat /etc/portage/package.use/bluez 
-
-emerge -pv bluez 
-
-
-emerge bluez 
-
-dispatch-conf
-
-
-emerge app-editors/emacs  --autounmask-write
-
-
-
-
-*** controller bluez5
+**** controller bluez5
 
 Failed to pair: org.bluez.Error.AuthenticationRejected
 
@@ -3418,6 +3409,34 @@ info 00:24:1C:A5:08:18
 
 remove 00:24:1C:A5:08:18
 info 00:24:1C:A5:08:18 
+
+
+*** USE flag
+
+echo "media-sound/pulseaudio bluetooth dbus" > /etc/portage/package.use/pulseaudio
+
+cat /etc/portage/package.use/pulseaudio
+
+emerge -pv pulseaudio
+
+emerge pulseaudio
+
+emerge blueman
+
+
+echo "net-wireless/bluez test-programs" >> /etc/portage/package.use/bluez 
+
+cat /etc/portage/package.use/bluez 
+
+emerge -pv bluez 
+
+
+emerge bluez 
+
+dispatch-conf
+
+
+emerge app-editors/emacs  --autounmask-write
 
 
 * M4A87TD/USB3, BIOS 1102    12/09/2010 inventory
