@@ -3227,7 +3227,10 @@ emerge media-libs/alsa-lib
  
 ** bluetooth
 
-*** kernel
+
+
+*** kernel [2016-04-25 Mon 10:22]
+
 
 
 cd /usr/src/linux
@@ -3252,6 +3255,159 @@ make && make modules_install
 |   |   |   | v |   | Broadcom protocol support           | *       |           |
 |   |   |   | v |   | HCI UART (PC Card) device driver    | none    | M         |
 |   |   |   |   |   |                                     |         |           |
+
+
+
+
+*** bluez
+
+https://wiki.gentoo.org/wiki/Bluetooth
+
+emerge --ask --noreplace net-wireless/bluez
+
+gpasswd -a <user> plugdev
+
+rc-service bluetooth start
+
+rc-update add bluetooth default
+
+rc-service bluetooth restart
+
+
+*** USE flag
+
+
+echo "net-wireless/bluez test-programs" >> /etc/portage/package.use/bluez 
+
+cat /etc/portage/package.use/bluez 
+
+emerge -pv bluez 
+
+
+emerge bluez 
+
+dispatch-conf
+
+
+emerge app-editors/emacs  --autounmask-write
+
+
+
+
+*** controller bluez5
+
+Failed to pair: org.bluez.Error.AuthenticationRejected
+
+
+#
+
+hciconfig -a
+hci0:   Type: BR/EDR  Bus: USB
+        BD Address: 00:0B:0D:4E:2D:EF  ACL MTU: 1017:8  SCO MTU: 64:0
+        UP RUNNING 
+        RX bytes:994 acl:0 sco:0 events:43 errors:0
+        TX bytes:425 acl:0 sco:0 commands:43 errors:0
+        Features: 0xff 0xff 0x8d 0xfe 0x9b 0xf9 0x00 0x80
+        Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3 
+        Link policy: RSWITCH HOLD SNIFF PARK 
+        Link mode: SLAVE ACCEPT 
+        Name: 'BlueZ 5.37'
+        Class: 0x000104
+        Service Classes: Unspecified
+        Device Class: Computer, Desktop workstation
+        HCI Version: 2.0 (0x3)  Revision: 0x40ec
+        LMP Version: 2.0 (0x3)  Subversion: 0x430e
+        Manufacturer: Broadcom Corporation (15)
+
+hciconfig hci0 up
+
+$
+
+bluetoothctl
+
+
+
+list
+
+info 00:24:1C:A5:08:18
+Device 00:24:1C:A5:08:18
+        Name: Motorola HK200
+        Alias: Motorola HK200
+        Class: 0x200404
+        Icon: audio-card
+        Paired: yes
+        Trusted: no
+        Blocked: no
+        Connected: no
+        LegacyPairing: yes
+        UUID: Headset                   (00001108-0000-1000-8000-00805f9b34fb)
+        UUID: Handsfree                 (0000111e-0000-1000-8000-00805f9b34fb)
+        RSSI: -66
+
+
+|   | controller        | device                       |   |   |
+|   | 00:0B:0D:4E:2D:EF | 00:24:1C:A5:08:18            |   |   |
+|---+-------------------+------------------------------+---+---|
+|   | list              | devices                      |   |   |
+|   |                   |                              |   |   |
+|   | show              | info 00:24:1C:A5:08:18       |   |   |
+|   |                   |                              |   |   |
+|   | select            |                              |   |   |
+|   | power on          |                              |   |   |
+|   | agent on          |                              |   |   |
+|   | default-agent     |                              |   |   |
+|   | discoverable on   |                              |   |   |
+|   | pairable on       |                              |   |   |
+|   | scan on           |                              |   |   |
+|---+-------------------+------------------------------+---+---|
+|   |                   | devices                      |   |   |
+|   |                   |                              |   |   |
+|   |                   | pair 00:24:1C:A5:08:18       |   |   |
+|   |                   |                              |   |   |
+|   |                   | trust 00:24:1C:A5:08:18      |   |   |
+|   |                   | untrust 00:24:1C:A5:08:18    |   |   |
+|   |                   |                              |   |   |
+|   |                   | connect 00:24:1C:A5:08:18    |   |   |
+|   |                   | disconnect 00:24:1C:A5:08:18 |   |   |
+|   |                   |                              |   |   |
+|   |                   | info 00:24:1C:A5:08:18       |   |   |
+
+power on 
+
+agent on 
+
+default-agent 
+
+discoverable on
+
+pairable on 
+
+scan on
+
+
+
+
+pair 00:24:1C:A5:08:18  
+
+
+info 00:24:1C:A5:08:18 
+
+
+
+trust 00:24:1C:A5:08:18 
+info 00:24:1C:A5:08:18 
+
+untrust 00:24:1C:A5:08:18 
+info 00:24:1C:A5:08:18 
+
+connect 00:24:1C:A5:08:18
+info 00:24:1C:A5:08:18 
+
+disconnect 00:24:1C:A5:08:18
+info 00:24:1C:A5:08:18 
+
+remove 00:24:1C:A5:08:18
+info 00:24:1C:A5:08:18 
 
 
 * M4A87TD/USB3, BIOS 1102    12/09/2010 inventory
