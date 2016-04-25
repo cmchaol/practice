@@ -3276,6 +3276,16 @@ rc-service bluetooth restart
 
 *** USE flag
 
+echo "media-sound/pulseaudio bluetooth dbus" > /etc/portage/package.use/pulseaudio
+
+cat /etc/portage/package.use/pulseaudio
+
+emerge -pv pulseaudio
+
+emerge pulseaudio
+
+emerge blueman
+
 
 echo "net-wireless/bluez test-programs" >> /etc/portage/package.use/bluez 
 
