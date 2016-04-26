@@ -1,45 +1,18 @@
-* Custom installatio`n with TeX Live 					:tex:
-
-
-|    | installation | minimal test            |                        |
-|----+--------------+-------------------------+------------------------|
-| 04 |              |                         | tlmgr                  |
-|    |              |                         |                        |
-|----+--------------+-------------------------+------------------------|
-| 10 | tex          |                         |                        |
-|    |              |                         |                        |
-| 12 |              | in a terminal, pdftex   |                        |
-|    |              |                         |                        |
-|----+--------------+-------------------------+------------------------|
-| 20 | latex        |                         |                        |
-|    |              |                         |                        |
-| 22 |              | in a terminal, pdflatex |                        |
-|    |              |                         |                        |
-| 24 |              | in emacs, pdflatex      |                        |
-|    |              |                         |                        |
-|    | bkai         | in emacs, chinese       | pending                |
-|    |              |                         |                        |
-|    |              |                         |                        |
-|    | auctex       |                         |                        |
-|    |              |                         |                        |
-|----+--------------+-------------------------+------------------------|
-| 30 | lualatex     |                         |                        |
-|    |              |                         |                        |
-| 32 |              | in a terminal, lualatex |                        |
-|    |              |                         |                        |
-| 34 |              | in emacs, lualatex      | [2016-04-22 Fri 11:12] |
-|    |              |                         |                        |
-| 36 | luatexja     |                         |                        |
-|    |              |                         |                        |
-|    |              |                         |                        |
-|    | chinese font |                         | /mnt/fs1/fonts/noto    |
-|    |              |                         | NotoSansTC-Regular.otf |
-|    |              |                         |                        |
-|----+--------------+-------------------------+------------------------|
-|    |              |                         |                        |
+* Custom installation with TeX Live 					:tex:
 
 
 
+|          |              |                    |               |                            |
+|          | installation | test in a terminal | test in emacs | test with chinese in emacs |
+|----------+--------------+--------------------+---------------+----------------------------|
+| tex      |           10 |                 12 |          omit | omit                       |
+|          |              |                    |               |                            |
+| latex    |           20 |                 22 |            24 | omit                       |
+|          |              |                    |               |                            |
+| lualatex |           30 |                 32 |            34 | 36 [2016-04-26 Tue 16:49]  |
+|          |              |                    |               |                            |
+| luatexja |           40 |               omit |          omit | 46                         |
+|          |              |                    |               |                            |
 
 ** 04 tlmgr
 
@@ -549,6 +522,32 @@ I can edit i
 Both latex a
 
 
+** 40 luatexja
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info luatexja
+
+tlmgr: package repository ftp://ftp.ccu.edu.tw/pub/tex/systems/texlive/tlnet
+package:     luatexja
+category:    Package
+shortdesc:   Typeset Japanese with Lua(La)TeX
+longdesc:    The package offers support for typesetting Japanese documents with LuaTeX. Either of the Plain and LaTeX2e formats may be used with the package.
+installed:   Yes
+revision:    40239
+sizes:       run: 1393k
+relocatable: No
+cat-version: 20160404.0
+cat-date:    2016-04-04 18:37:44 +0200
+cat-license: bsd
+cat-topics:  japanese luatex class
+collection:  collection-langjapanese
+
+
+
+
 
 ** 22 in a terminal, latex
 
@@ -557,15 +556,6 @@ latex minimal test
 $
 
 pdflatex '\documentclass{article} \begin{document} Hello world! by latex. \end{document}'
-
-
-** 32 in a terminal, lualatex
-
-lualatex minimal test
-
-$
-
-lualatex '\documentclass{article} \begin{document} Hello world! by lualatex. \end{document}'
 
 
 ** 24 in emacs, pdflatex
@@ -581,6 +571,15 @@ Hello world!
 \end{document}
 
 run C-c multiple times
+
+
+** 32 in a terminal, lualatex
+
+lualatex minimal test
+
+$
+
+lualatex '\documentclass{article} \begin{document} Hello world! by lualatex. \end{document}'
 
 
 
@@ -606,25 +605,50 @@ run C-c multiple times
 
 ** 36 in emacs, lualatex, chinses
 
+|    |                                |   |
+|----+--------------------------------+---|
+| 20 | prepare chinese fonts          |   |
+|    |                                |   |
+| 30 | identify the font directory    |   |
+|    |                                |   |
+|    | /mnt/fs1/fonts/noto            |   |
+|    |                                |   |
+| 40 | load by loadotfload-tool       |   |
+|    |                                |   |
+| 50 | confirm fonts loaded properly  |   |
+|    |                                |   |
+| 60 | edit .tex and transform to pdf |   |
+|    |                                |   |
+
+
+40
+
+TTFONTS=/mnt/fs1/fonts/noto luaotfload-tool -uf
+
+
+50
+
+luaotfload-tool --list=* | grep oto
+
+60
+
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Noto Sans TC Regular}
+\begin{document}
+我希望這是，翻譯是由谷歌提供的中國文字。
+\end{document}
+
+  
+
 How to use Chinese with lualatex?
 
 http://tex.stackexchange.com/questions/222980/how-to-use-chinese-with-lualatex
 
 
-
-
 open a file test-in-emacs-LuaTeX-chinese.tex
 
-\documentclass{article}
-\usepackage{fontspec}
-\setmainfont{MS PGothic}
-\begin{document}
-我希望這是，翻譯是由谷歌提供的中國文字。
-\end{document}
 
-! LaTeX Error: File `fontspec.sty' not found.
-
-! LaTeX Error: File `luaotfload.sty' not found.
 
 *** not found
 
@@ -697,7 +721,7 @@ luatexja:
         texmf-dist/tex/luatex/luatexja/addons/luatexja-fontspec.sty
         texmf-dist/tex/luatex/luatexja/patches/lltjp-fontspec.sty
 
-
+	
 *** list the package
 
 /usr/local/texlive/2015/bin/x86_64-linux/tlmgr info fontspec
@@ -919,6 +943,48 @@ umask 022
 /usr/local/texlive/2015/bin/x86_64-linux/tlmgr info
 
 /usr/local/texlive/2015/bin/x86_64-linux/tlmgr install
+
+
+
+
+** 46
+
+|   | 36                                 | 46                                  |
+|   | lualatex                           | lualatex-ja                         |
+|---+------------------------------------+-------------------------------------|
+|   | \usepackage{fontspec}              | \usepackage{luatexja-fontspec}      |
+|   |                                    |                                     |
+|   |                                    |                                     |
+|   |                                    |                                     |
+|   | \setmainfont{Noto Sans TC Regular} | \setmainjfont{Noto Sans TC Regular} |
+
+
+
+*** error
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info 
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install
+
+
+
+File `luatexbase.sty' not found.
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install luatexbase
+
+
+
+File `ctablestack.sty' not found.
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install ctablestack
+
+
+File `xkeyval.sty' not found.
+
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info xkeyval.sty
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install xkeyval
 
 
 
@@ -1798,7 +1864,31 @@ http://ctan.org/pkg/luatexja
 http://ctan.org/tex-archive/macros/luatex/generic/luatexja/doc
 
 
+** luaotfload
+
+
+TTFONTS=/mnt/sdc4/Fonts luaotfload-tool -uf
+https://github.com/lualatex/luaotfload/issues/165
+
+TTFONTS=/mnt/fs1/fonts/noto luaotfload-tool -uf
+
+luaotfload-tool --list=* | grep oto
+
+Noto Sans TC Black      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Bold       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC DemiLight  1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Light      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Medium     1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Regular    1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Thin       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+
+
+
+
+
 ** luatex chinese
+
+
 
 *** scheme
 
@@ -1883,6 +1973,10 @@ luaotfload | diagnose : Everything appears to be in order, you may sleep well.
 
 
 TTFONTS=/mnt/sdc4/Fonts luaotfload-tool -uf
+
+TTFONTS=/mnt/fs1/fonts luaotfload-tool -uf
+
+
 https://github.com/lualatex/luaotfload/issues/165
 
 **** manual
@@ -2334,6 +2428,9 @@ https://github.com/lualatex/luaotfload/issues/165
 TTFONTS=/mnt/sdc4/Fonts luaotfload-tool -uf
 https://github.com/lualatex/luaotfload/issues/165
 
+TTFONTS=/mnt/fs1/fonts/noto luaotfload-tool -uf
+
+luaotfload-tool --list=*
 
 
 

@@ -3261,10 +3261,13 @@ make && make modules_install
 
 https://wiki.gentoo.org/wiki/Bluetooth#BlueZ_4
 
-/etc/portage/package.mask
->=net-wireless/bluez-5
 
-cat 
+equery list -p bluez
+
+[IP-] [  ] net-wireless/bluez-4.101-r9:0
+[-P-] [M ] net-wireless/bluez-5.35:0/3
+[-P-] [M ] net-wireless/bluez-5.37:0/3
+[-P-] [M~] net-wireless/bluez-5.38:0/3
 
 
 
@@ -3277,6 +3280,91 @@ emerge -pv bluez
 emerge bluez
 
 *** bluez 4 steps
+
+
+|    | steps                                           |
+|----+-------------------------------------------------|
+| 30 | service                                         |
+|    |                                                 |
+|    | #                                               |
+|    |                                                 |
+|    | rc-service bluetooth start                      |
+|    |                                                 |
+|    | rc-service bluetooth restart                    |
+|    |                                                 |
+|    | rc-update add bluetooth default                 |
+|    |                                                 |
+|----+-------------------------------------------------|
+| 40 | controller                                      |
+|    |                                                 |
+|    | #                                               |
+|    |                                                 |
+|    | hciconfig -a                                    |
+|    |                                                 |
+|    | hciconfig hci0 up                               |
+|----+-------------------------------------------------|
+| 50 | device                                          |
+|    |                                                 |
+|    | hcitool scan                                    |
+|    |                                                 |
+|----+-------------------------------------------------|
+| 60 | pair                                            |
+|    |                                                 |
+|    | simple-agent hci0 00:24:1C:A5:08:18             |
+|    |                                                 |
+|    | simple-agent hci0 00:24:1C:A5:08:18 remove      |
+|    |                                                 |
+|----+-------------------------------------------------|
+| 70 | trust                                           |
+|    |                                                 |
+|    | bluez-test-device trusted 00:24:1C:A5:08:18 yes |
+|    |                                                 |
+|    | bluez-test-device trusted 00:24:1C:A5:08:18     |
+|----+-------------------------------------------------|
+| 80 | connect                                         |
+|    |                                                 |
+|    | bluez-test-audio    connect 00:24:1C:A5:08:18   |
+|    |                                                 |
+|    | bluez-test-audio disconnect 00:24:1C:A5:08:18   |
+|----+-------------------------------------------------|
+| 90 | chrome app VoiceNote II                         |
+|    |                                                 |
+
+
+60
+
+http://manpages.ubuntu.com/manpages/precise/man1/bluez-simple-agent.1.html
+
+NAME
+       bluez-simple-agent - A PIN management and agent program for pairing to
+       Bluetooth device.
+
+SYNOPSIS
+       bluez-simple-agent [<hciX>] [<bdaddr>] [remove]
+
+DESCRIPTION
+       bluez-simple-agent is pass agent program for bluetooth.
+
+OPTIONS
+       <hciX>
+           The command is applied to device hciX , which must be the name of
+           an installed Blue‐ tooth device. If not specified, the command will
+           be sent to the first available Blue‐ tooth device.
+
+       <bdaddr>
+           bdaddr of device doing pairing.
+
+       remove
+           Remove intended bdaddr from database.
+
+AUTHOR
+       Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+           Wrote this manpage for the Debian system.
+
+
+
+
+
 
 **** simple-agent
 
@@ -3452,6 +3540,69 @@ dispatch-conf
 
 
 emerge app-editors/emacs  --autounmask-write
+
+
+
+*** 重訂標點符號
+
+
+http://language.moe.gov.tw/001/Upload/FILES/SITE_CONTENT/M0001/HAU/haushou.htm#suo
+
+encoding big5
+
+
+
+手冊 
+
+http://language.moe.gov.tw/001/Upload/FILES/SITE_CONTENT/M0001/HAU/shiou.pdf
+
+
+| 標點符號逗號 | ，       |
+| 標點符號句號 | 。       |
+| 標點符號引號 | 「」『』 |
+| 標點符號問號 | ？       |
+| 標點符號冒號 | ：       |
+|              |          |
+
+**** 標點符號逗號，
+
+http://language.moe.gov.tw/001/Upload/FILES/SITE_CONTENT/M0001/HAU/h2.htm
+
+
+逗號，他洗了臉，穿好
+
+臺灣有美味的水果，還有秀麗的風景和多元的文化。
+
+
+**** 標點符號句號。
+
+http://language.moe.gov.tw/001/Upload/FILES/SITE_CONTENT/M0001/HAU/h1.htm
+
+
+句號 。
+
+
+**** 標點符號引號 「」『』
+
+
+
+冒號 ：
+
+出席會議人員有：專家、學者、各級代表、機關首長等。
+
+
+
+
+**** 標點符號問號 ？
+
+http://language.moe.gov.tw/001/Upload/FILES/SITE_CONTENT/M0001/HAU/h8.htm
+
+
+**** 標點符號冒號 ：
+
+
+http://language.moe.gov.tw/001/Upload/FILES/SITE_CONTENT/M0001/HAU/h5.htm
+
 
 
 * M4A87TD/USB3, BIOS 1102    12/09/2010 inventory
