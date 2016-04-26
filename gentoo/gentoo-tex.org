@@ -630,6 +630,16 @@ TTFONTS=/mnt/fs1/fonts/noto luaotfload-tool -uf
 
 luaotfload-tool --list=* | grep oto
 
+Noto Sans TC Black      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Bold       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC DemiLight  1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Light      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Medium     1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Regular    1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Thin       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+
+
+
 60
 
 \documentclass{article}
@@ -979,12 +989,81 @@ File `ctablestack.sty' not found.
 /usr/local/texlive/2015/bin/x86_64-linux/tlmgr install ctablestack
 
 
-File `xkeyval.sty' not found.
 
+
+File `xkeyval.sty' not found.
 
 /usr/local/texlive/2015/bin/x86_64-linux/tlmgr info xkeyval.sty
 
 /usr/local/texlive/2015/bin/x86_64-linux/tlmgr install xkeyval
+
+
+
+
+
+ERROR: LuaTeX error ...xlive/2015/texmf-dist/tex/luatex/luatexja/ltj-rmlgbm.lua:91: bad argument #1 to 'open' (string expected, got nil)
+
+--- TeX said ---
+stack traceback:
+	[C]: in function 'open'
+	...xlive/2015/texmf-dist/tex/luatex/luatexja/ltj-rmlgbm.lua:91: in function 'open_cmap_file'
+	...xlive/2015/texmf-dist/tex/luatex/luatexja/ltj-rmlgbm.lua:128: in function 'make_cid_font'
+	...xlive/2015/texmf-dist/tex/luatex/luatexja/ltj-rmlgbm.lua:225: in function 'read_cid_font'
+	...xlive/2015/texmf-dist/tex/luatex/luatexja/ltj-rmlgbm.lua:242: in function 'prepare_cid_font'
+	...xlive/2015/texmf-dist/tex/luatex/luatexja/ltj-rmlgbm.lua:381: in main chunk	[C]: in function 'require'
+	...texlive/2015/texmf-dist/tex/luatex/luatexja/luatexja.lua:11: in function 'load_module'
+	...texlive/2015/texmf-dist/tex/luatex/luatexja/luatexja.lua:88: in main chunk
+	[C]: in function 'dofile'
+	[\directlua]:1: in main chunk.
+l.183 }
+     
+--- HELP ---
+No help available
+
+
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info adobemapping
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install adobemapping
+
+
+
+File `everysel.sty' not found.
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info everysel.sty
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install ms
+
+
+ERROR: Font \JT3/mc/m/n/10=IPAExMincho:jfm=ujisv at 9.62219pt not loadable: metric data not found or bad.
+
+--- TeX said ---
+<to be read again> 
+relax 
+l.44 \kanjiencoding{JY3}\selectfont
+                                 \adjustbaseline
+--- HELP ---
+You requested a family/series/shape/size combination that is totally
+unknown.  There are two cases in which this error can occur:
+  1) You used the \size macro to select a size that is not available.
+  2) If you did not do that, go to your local `wizard' and
+     complain fiercely that the font selection tables are corrupted!
+
+
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info ipaex
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install ipaex
+
+
+File `filehook.sty' not found.
+
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info  filehook.sty
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install filehook
+
+
 
 
 
