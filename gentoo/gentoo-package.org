@@ -3276,6 +3276,21 @@ emerge -pv bluez
 
 emerge bluez
 
+*** bluez 4 steps
+
+**** simple-agent
+
+
+
+http://manpages.ubuntu.com/manpages/precise/man1/bluez-simple-agent.1.html
+
+|   |   |
+|   |   |
+
+
+simple-agent hci0 00:24:1C:A5:08:18
+
+simple-agent hci0 00:24:1C:A5:08:18 remove
 
 *** bluez5 failed
 
