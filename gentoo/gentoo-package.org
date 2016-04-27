@@ -1703,6 +1703,12 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | gentoolkit    |                         |                        |
 |               |                         |                        |
+| unrar         |                         |                        |
+|               |                         |                        |
+| convmv        |                         |                        |
+|               |                         |                        |
+| p7zip         |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -2251,6 +2257,22 @@ ping -c 3 www.google.edu.tw
 *** gentoolkit
 
 emerge app-portage/gentoolkit
+
+
+
+*** unrar
+
+emerge app-arch/unrar
+
+
+*** convmv
+
+emerge app-text/convmv
+
+*** app-arch/p7zip
+
+emerge app-arch/p7zip
+
 
 
 ** xorg group

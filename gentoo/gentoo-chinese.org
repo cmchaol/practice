@@ -36,6 +36,7 @@ mount   -t   vfat   -o   iocharset=cp936   /dev/hdaxxx   /mnt/xxxx
 -o   iocharset=cp936 中文長檔案名稱 
 http://earthcat99.pixnet.net/blog/post/36811189-linux-%E6%8E%9B%E8%BC%89-fat32%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1%E7%9A%84%E6%96%B9%E5%BC%8F
 
+
 * ftp mount
 
 
@@ -47,5 +48,35 @@ curlftpfs ftp://server/catalog/ ./ftp/ -o user=username:password,utf8
 http://pcmanx.blogspot.tw/2008/01/curlftpfs-sshfs_6562.html
 
 curlftpfs ftp://server/catalog/ ./ftp/ -o user=username:password,codepage=big5
+
+
+
+
+* zip chinese file name
+
+** steps
+
+app-arch/p7zip
+
+app-text/convmv
+
+
+http://www.ubuntu-tw.net/modules/newbb/viewtopic.php?topic_id=91908&forum=7
+
+
+[分享] 解壓縮zip檔，產生亂碼，如何解決的心得
+
+下載範例檔案
+
+LC_ALL=C 7z x Open_Data.zip 
+
+convmv -f BIG5 -t UTF-8 -r Open_Data
+
+convmv -f BIG5 -t UTF-8 -r Open_Data --notest
+
+convmv -f BIG5 -t UTF-8 -r test
+
+convmv -f BIG5 -t UTF-8 -r test --notest
+
 
 

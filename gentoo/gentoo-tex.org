@@ -957,7 +957,8 @@ umask 022
 
 
 
-** 46
+** 46 emacs, chinese, lualatex
+
 
 |   | 36                                 | 46                                  |
 |   | lualatex                           | lualatex-ja                         |
@@ -3197,3 +3198,238 @@ Packages containing `luatex-ja' in their title/description:
 Packages containing files matching `luatex-ja':
 
 
+
+** 標楷體
+
+
+| 楷書   | 標楷體   | 華文楷體 | 全字庫正楷體   | 教育部標準楷書 | 文鼎中楷   | 國字標準字體 |
+|        |          | 中易楷體 | 中文標準交換碼 |                |            | 字形寫法     |
+|--------+----------+----------+----------------+----------------+------------+--------------|
+| 字體名 | DFKai-SB |          |                |                |            |              |
+|        | KaiU     | KAIU.TTF | CNS 11643      |                | AR PL UKai |              |
+|--------+----------+----------+----------------+----------------+------------+--------------|
+|        | 微軟     | office   | 國家發展委員會 | 教育部         | linux      |              |
+|        |          |          |                |                |            |              |
+| 字數   |          |          | 38676          | 13067          |            |              |
+|        |          |          |                |                |            |              |
+
+*** 標楷體
+
+https://zh.wikipedia.org/zh-tw/%E6%A8%99%E6%A5%B7%E9%AB%94
+
+
+
+*** 全字庫正楷
+
+
+**** introduction
+
+全字庫正楷體就像是微軟的標楷體，適合用在較為正式的中文書面報告或是公文。
+
+https://magiclen.org/zh-tw-font/
+
+
+全字庫字型提供
+
+明體、
+正宋體及
+正楷體
+
+3種
+
+http://www.cns11643.gov.tw/AIDB/intro.do
+
+中文標準交換碼
+
+https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%96%87%E6%A8%99%E6%BA%96%E4%BA%A4%E6%8F%9B%E7%A2%BC
+
+
+
+
+**** download
+
+
+http://data.gov.tw/node/5961
+
+資料集描述	
+內容包含全字庫字型、屬性資料及中文碼對照表三部分，其中全字庫字型提供明體、正宋體及正楷體3種；屬性資料則涵蓋注音、倉頡、筆畫、部首、拼音、部件及筆順等7種；中文碼對照表則提供BIG5、Unicode、電信碼、地政自造字、財稅內碼、稅務碼及工商自造字等7種中文內碼對照。
+主要欄位說明	
+全字庫字型、屬性資料、中文碼對照表
+資料資源	
+TXT	檢視資料	105年3月7日更新
+資料集類型	
+原始資料
+資料集提供機關名稱	
+國家發展委員會
+資料量	
+約106021筆
+更新頻率	
+不定期
+授權方式	
+政府資料開放授權條款-第1版
+授權說明網址	
+http://data.gov.tw/license
+計費方式	
+免費
+資料集提供機關聯絡人	
+黃先生
+資料集提供機關聯絡人電話	
+02-23165300#6822
+發布時間	
+102年03月26日
+
+
+**** chinese filename preparation
+
+LC_ALL=C 7z x Open_Data.zip 
+
+convmv -f BIG5 -t UTF-8 -r Open_Data
+
+convmv -f BIG5 -t UTF-8 -r Open_Data --notest
+
+
+
+
+http://www.ubuntu-tw.net/modules/newbb/viewtopic.php?topic_id=91908&forum=7
+
+
+[分享] 解壓縮zip檔，產生亂碼，如何解決的心得
+
+下載範例檔案
+
+LC_ALL=C 7z x Open_Data.zip 
+
+convmv -f BIG5 -t UTF-8 -r test
+
+convmv -f BIG5 -t UTF-8 -r test --notest
+
+
+
+**** filename
+
+png_24x24.zip	為全字庫明體點矩陣(24x24)字型檔之zip檔，可用一般解壓縮軟體解開
+
+
+TW-Kai-98_1.ttf		為全字庫正楷體向量字型檔(對應至Unicode的BMP字面)  51M  38,676字
+TW-Kai-Ext-B-98_1.ttf	為全字庫正楷體向量字型檔(對應至Unicode的第2字面)  62M  字7,650個
+TW-Kai-Plus-98_1.ttf	為全字庫正楷體向量字型檔(對應至Unicode的第15字面) 33M  字6,831個
+
+
+TW-Sung-98_1.ttf	為全字庫正宋體向量字型檔(對應至Unicode的BMP字面)  35M  38,850字
+TW-Sung-Ext-B-98_1.ttf	為全字庫正宋體向量字型檔(對應至Unicode的第2字面)  62M
+TW-Sung-Plus-98_1.ttf	為全字庫正宋體向量字型檔(對應至Unicode的第15字面) 30M
+
+
+
+
+第二字面：字碼區間由2121h至7244h，故編入中文字7,650個；字集來源除教育部「次常用國字標準字體表」所列6,330字外，並篩選編入教育部「罕用國字標準字體表」表中使用頻率較高之1,320字。
+
+
+第十五字面：字碼區間2121h至6D39h，共編入中文字6,831個戶政、役政用字。另含未收錄到原CNS 11643版本中的CJK, CJK Extension C漢字。
+
+
+http://lms.ltu.edu.tw/course_open.php?courseID=17709&f=open_doc&cid=1065680
+
+
+
+*** 教育部標準楷書
+
+http://depart.moe.edu.tw/ED2400/News_Content.aspx?n=8940E5C0456177C3&sms=893AAA1CBFE149DE&s=DFBE7BE3EE0DB6AE
+
+教育部標準楷書字形檔
+
+
+*** 文鼎中楷
+
+https://zh.wikipedia.org/zh-tw/%E6%96%87%E9%BC%8E%E7%A7%91%E6%8A%80
+
+
+
+文鼎最為人所知的是於1999年捐贈了四套字型予開源軟體社群：
+文鼎PL細上海宋（繁體Big5碼）、
+文鼎PL中楷（繁體Big5碼）、
+文鼎PL簡報宋（簡體GB碼）、
+文鼎PL簡中楷（簡體GB碼，即是繁簡宋楷齊備）。
+
+後經螢火飛加入點陣字而成文鼎PL新宋及經高盛華改進成uming及ukai，已包括在各大Linux發行版。這些字體所用的《文鼎公眾授權書》獲自由軟體基金會承認為自由軟體許可。[5]
+
+2010年又再提供兩套新的公眾授權字型：文鼎PL明體U20-L及文鼎PL報宋2GBK（新的中文公眾授權字型，採用Unicode及GBK編碼，漢字字數分別為20902字及21003字，較舊版本的公眾授權字型多出7000多字及14000多字）[6]。不過這兩套字體所用的是新修改的《文鼎公眾授權書》，禁止商業使用，因而不屬於自由軟體許可。[7]
+
+
+
+arphic-ukai
+
+
+*** 楷書 維基百科
+
+https://zh.wikipedia.org/zh-tw/%E6%A5%B7%E4%B9%A6
+
+
+電腦字體[編輯]
+標楷體 (DFKai-SB (Windows)/BiauKai (Mac OS))
+華文楷體（KAIU.TTF）（隨微軟Office軟體發布）
+AR PL 中楷（AR PL UKai）（自由字體，多個Linux發行版默認附帶）
+Kai（Mac OS 簡體中文字體）
+
+
+*** 國字標準字體
+
+https://zh.wikipedia.org/wiki/%E5%9C%8B%E5%AD%97%E6%A8%99%E6%BA%96%E5%AD%97%E9%AB%94
+
+國字標準字體是中華民國教育部頒布之常用國字標準字體表與次常用國字標準字體表裡規定之國字標準字形寫法。日後又經過多次修改，用於中華民國出版之國中小課本、公文上。是正體中文的規範依據。
+
+| 國字標準字體表 |   字 |
+|----------------+------|
+| 常用           | 4808 |
+|                |      |
+| 次常用         | 6341 |
+|                |      |
+| 罕用           |      |
+|                |      |
+
+
+為配合電腦化的需要，教育部並頒佈了宋體（即明體）、楷書、隸書、方體（即黑體）等字體之標準母稿，供字型廠商參考使用。
+
+常見的電腦黑體
+
+文鼎黑體，黑體（AR Heiti，TrueType）
+
+華文ST黑體，（Heiti，TrueType，蘋果OS X）
+黑體-繁（Heiti TC, STHeitiTC），常州華文
+黑體-簡（Heiti SC, STHeitiSC），常州華文
+
+蘋方，黑體（PingFang，OpenType，蘋果OS X）
+蘋方-繁（PingFang TC），威鋒數位
+蘋方-簡（PingFang SC），威鋒數位
+蘋方-港（PingFang HK），威鋒數位
+
+中易黑體，黑體（SimHei，TrueType）
+微軟雅黑，黑體（Microsoft YaHei，msyh.ttf，TrueType）
+微軟正黑體，黑體（Microsoft JhengHei，msjh.ttf，TrueType），Monotype Imaging
+蒙納黑體，黑體（MHei），Monotype Imaging
+華康中黑體，黑體（DF-Hei），威鋒數位
+Hei Regular（SIL-Hei-Med-Jian，TrueType，蘋果OS X）
+華文黑體，黑體（stHeiti，TrueType），常州華文
+華文細黑，黑體（stxihei，TrueType），常州華文
+幼圓，圓體
+華文琥珀，疊圓體
+綜藝體，綜藝體
+清黑體（맑은 고딕，Malgun Gothic，韓文，微軟Windows，TrueType）
+儷黑 Pro（LiHeiPro，TruePro，蘋果OS X），威鋒數位
+蘋果儷中黑（LiGothicMed，TrueType，蘋果OS X），柯熾堅
+微軟Gothic，黑體（ＭＳ ゴシック，MS Gothic，TrueType）
+明瞭體，黑體（Meiryo，TrueType，微軟）
+小塚黑體（小塚Gothic，Kozuka Gothic Pro，OpenType，Adobe公司）
+
+冬青黑體（ヒラギノ角ゴ）系列
+Hiragino Kaku Gothic - OpenType，蘋果OS X
+HiraginoKaku - TrueType，Windows
+
+新ゴ
+方黑體（돋움，Dotum，韓文，微軟Windows，TrueType）
+圓黑體（굴림，Gulim，韓文，微軟Windows，TrueType）
+文泉驛正黑體，黑體（WenQuanYi ZenHei，文泉驛）
+文泉驛微米黑，黑體
+Droid Sans Fallback，黑體（Google Android）
+方正蘭亭黑，黑體
+思源黑體，正體中文/簡體中文/日文/韓文（Google Noto Sans CJK / Source Han Sans）
