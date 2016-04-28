@@ -80,3 +80,32 @@ convmv -f BIG5 -t UTF-8 -r test --notest
 
 
 
+
+
+* fontconfig 
+
+| verify the 51-local.conf is enabled     | eselect fontconfig list   | gentoo                 |
+|                                         | eclectic fontconfig list  | exherbo                |
+|                                         |                           |                        |
+|                                         |                           |                        |
+| verify contents of etc/fonts/local.conf |                           |                        |
+|                                         |                           |                        |
+| cp etc/fonts/local.conf                 |                           |                        |
+|                                         |                           |                        |
+| Then update the fontconfig font cache   | fc-cache -vf              |                        |
+|                                         |                           |                        |
+| list the font                           | fc-list                   |                        |
+|                                         |                           |                        |
+| exit and login again                    |                           |                        |
+|
+
+
+# eselect fontconfig enable 10-autohint.conf
+
+eselect fontconfig enable 10-sub-pixel-rgb.conf
+eselect fontconfig enable 11-lcdfilter-default.conf
+eselect fontconfig enable 60-liberation.conf
+
+eselect fontconfig enable 70-no-bitmaps.conf
+
+eselect fontconfig list

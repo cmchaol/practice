@@ -3202,20 +3202,16 @@ Packages containing files matching `luatex-ja':
 ** 標楷體
 
 
-| 楷書   | 標楷體   | 華文楷體 | 全字庫正楷體   | 教育部標準楷書 | 文鼎中楷   | 國字標準字體 |
-|        |          | 中易楷體 | 中文標準交換碼 |                |            | 字形寫法     |
-|--------+----------+----------+----------------+----------------+------------+--------------|
-| 字體名 | DFKai-SB |          |                |                |            |              |
-|        | KaiU     | KAIU.TTF | CNS 11643      |                | AR PL UKai |              |
-|--------+----------+----------+----------------+----------------+------------+--------------|
-|        | 微軟     | office   | 國家發展委員會 | 教育部         | linux      |              |
-|        |          |          |                |                |            |              |
-| 字數   |          |          | 38676          | 13067          |            |              |
-|        |          |          |                |                |            |              |
-
-*** 標楷體
-
-https://zh.wikipedia.org/zh-tw/%E6%A8%99%E6%A5%B7%E9%AB%94
+| 楷書   | 全字庫正楷體   | 標楷體   | 華文楷體 | 教育部標準楷書 | 文鼎中楷   | 國字標準字體 |
+|        | 中文標準交換碼 |          | 中易楷體 |                |            | 字形寫法     |
+|--------+----------------+----------+----------+----------------+------------+--------------|
+| 字體名 |                | DFKai-SB |          |                |            |              |
+|        | CNS 11643      | KaiU     | KAIU.TTF |                | AR PL UKai |              |
+|--------+----------------+----------+----------+----------------+------------+--------------|
+|        | 國家發展委員會 | 微軟     | office   | 教育部         | linux      |              |
+|        |                |          |          |                |            |              |
+| 字數   | 38676          |          |          | 13067          |            |              |
+|        |                |          |          |                |            |              |
 
 
 
@@ -3288,6 +3284,41 @@ convmv -f BIG5 -t UTF-8 -r Open_Data
 convmv -f BIG5 -t UTF-8 -r Open_Data --notest
 
 
+convmv -f BIG5 -t UTF-8 -r Open_Data
+Starting a dry run without changes...
+mv "Open_Data/Properties/���r�w��ʸ�������.txt"  "Open_Data/Properties/全字庫屬性資料說明文件.txt"
+mv "Open_Data/MapingTables/���r�w�����Ӫ�����.txt"       "Open_Data/MapingTables/全字庫中文對照表說明文件.txt"
+mv "Open_Data/MapingTables/�a�F/������.txt"     "Open_Data/MapingTables/�a�F/高雄縣.txt"
+mv "Open_Data/MapingTables/�a�F/������.txt"     "Open_Data/MapingTables/�a�F/高雄市.txt"
+mv "Open_Data/MapingTables/�a�F/���L��.txt"     "Open_Data/MapingTables/�a�F/雲林縣.txt"
+mv "Open_Data/MapingTables/�a�F/����.txt"       "Open_Data/MapingTables/�a�F/金門縣.txt"
+mv "Open_Data/MapingTables/�a�F/�s����.txt"     "Open_Data/MapingTables/�a�F/連江縣.txt"
+mv "Open_Data/MapingTables/�a�F/�]�߿�.txt"      "Open_Data/MapingTables/�a�F/苗栗縣.txt"
+mv "Open_Data/MapingTables/�a�F/�Ὤ��.txt"       "Open_Data/MapingTables/�a�F/花蓮縣.txt"
+mv "Open_Data/MapingTables/�a�F/����.txt"       "Open_Data/MapingTables/�a�F/澎湖縣.txt"
+mv "Open_Data/MapingTables/�a�F/����.txt"       "Open_Data/MapingTables/�a�F/桃園縣.txt"
+mv "Open_Data/MapingTables/�a�F/�s�˿�.txt"      "Open_Data/MapingTables/�a�F/新竹縣.txt"
+mv "Open_Data/MapingTables/�a�F/�s�˥�.txt"      "Open_Data/MapingTables/�a�F/新竹市.txt"
+mv "Open_Data/MapingTables/�a�F/����.txt"       "Open_Data/MapingTables/�a�F/彰化縣.txt"
+mv "Open_Data/MapingTables/�a�F/�̪F��.txt"       "Open_Data/MapingTables/�a�F/屏東縣.txt"
+mv "Open_Data/MapingTables/�a�F/�y���.txt"      "Open_Data/MapingTables/�a�F/宜蘭縣.txt"
+mv "Open_Data/MapingTables/�a�F/�򶩥�.txt"        "Open_Data/MapingTables/�a�F/基隆市.txt"
+mv "Open_Data/MapingTables/�a�F/�Ÿq��.txt"      "Open_Data/MapingTables/�a�F/嘉義縣.txt"
+mv "Open_Data/MapingTables/�a�F/�Ÿq��.txt"      "Open_Data/MapingTables/�a�F/嘉義市.txt"
+mv "Open_Data/MapingTables/�a�F/�x�F��.txt"     "Open_Data/MapingTables/�a�F/台東縣.txt"
+mv "Open_Data/MapingTables/�a�F/�x�n��.txt"     "Open_Data/MapingTables/�a�F/台南縣.txt"
+mv "Open_Data/MapingTables/�a�F/�x�n��.txt"     "Open_Data/MapingTables/�a�F/台南市.txt"
+mv "Open_Data/MapingTables/�a�F/�x�_��.txt"     "Open_Data/MapingTables/�a�F/台北縣.txt"
+mv "Open_Data/MapingTables/�a�F/�x�_��.txt"     "Open_Data/MapingTables/�a�F/台北市.txt"
+mv "Open_Data/MapingTables/�a�F/�x����.txt"     "Open_Data/MapingTables/�a�F/台中縣.txt"
+mv "Open_Data/MapingTables/�a�F/�x����.txt"     "Open_Data/MapingTables/�a�F/台中市.txt"
+mv "Open_Data/MapingTables/�a�F/�n�뿤.txt"      "Open_Data/MapingTables/�a�F/南投縣.txt"
+mv "Open_Data/MapingTables/�a�F"        "Open_Data/MapingTables/地政"
+mv "Open_Data/MapingTables/Big5/CNS2BIG5_�Ÿ�.txt"       "Open_Data/MapingTables/Big5/CNS2BIG5_符號.txt"
+mv "Open_Data/MapingTables/Big5/CNS2BIG5_�C�ӭʤѥ~�r.txt" "Open_Data/MapingTables/Big5/CNS2BIG5_七個倚天外字.txt"
+mv "Open_Data/Fonts/���r�w�r��������.txt"       "Open_Data/Fonts/全字庫字型說明文件.txt"
+No changes to your files done. Use --notest to finally rename the files.
+
 
 
 http://www.ubuntu-tw.net/modules/newbb/viewtopic.php?topic_id=91908&forum=7
@@ -3306,6 +3337,19 @@ convmv -f BIG5 -t UTF-8 -r test --notest
 
 
 **** filename
+
+|                        |                               |                        |                       |
+| 全字庫正楷體向量字型檔 |              TW-Sung-98_1.ttf | TW-Sung-Ext-B-98_1.ttf | TW-Sung-Plus-98_1.ttf |
+|------------------------+-------------------------------+------------------------+-----------------------|
+| 對應至Unicode的第 字面 |                             0 |                      2 |                    15 |
+|                        | BMP Basic Multi-lingual Plane |                        |                       |
+|                        |                               |                        |                       |
+| size Mb                |                            51 |                     62 |                    33 |
+|                        |                               |                        |                       |
+| 字                     |                         38676 |                   7650 |                  6831 |
+|                        |                               |                        |                       |
+| 國字標準字體表         |                          常用 |            次常用 罕用 |            戶政、役政 |
+|                        |                               |                        |                       |
 
 png_24x24.zip	為全字庫明體點矩陣(24x24)字型檔之zip檔，可用一般解壓縮軟體解開
 
@@ -3329,6 +3373,11 @@ TW-Sung-Plus-98_1.ttf	為全字庫正宋體向量字型檔(對應至Unicode的�
 
 
 http://lms.ltu.edu.tw/course_open.php?courseID=17709&f=open_doc&cid=1065680
+
+
+*** 標楷體
+
+https://zh.wikipedia.org/zh-tw/%E6%A8%99%E6%A5%B7%E9%AB%94
 
 
 
