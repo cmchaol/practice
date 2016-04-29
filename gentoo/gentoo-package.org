@@ -576,6 +576,8 @@ EXTENSION=20160423-hardened-net-zram-zswap
 
 EXTENSION=20160424-hardened-net-zram-zswap-audio
 
+EXTENSION=20160429-hardened-net-zram-zswap-audio-module
+
 KERNELVER=4.4.2 
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}
@@ -1711,6 +1713,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | p7zip         |                         |                        |
 |               |                         |                        |
+| pciutils      |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -2275,6 +2279,12 @@ emerge app-text/convmv
 
 emerge app-arch/p7zip
 
+
+
+
+*** pciutils
+
+emerge	sys-apps/pciutils
 
 
 ** xorg group
@@ -3205,7 +3215,7 @@ make && make modules_install
 | 1 | 2 | 3 | 4 | 5 | 4.4.2-hardened                    | default | change to |
 |---+---+---+---+---+-----------------------------------+---------+-----------|
 | v |   |   |   |   | Device Drivers                    |         |           |
-|   | v |   |   |   | Sound card support                |         |           |
+|   | v |   |   |   | Sound card support                |         | M         |
 |   |   | v |   |   | Advanced Linux Sound Architecture |         |           |
 |   |   |   | v |   | HD-Audio                          |         |           |
 |   |   |   |   | * |                                   |         |           |
