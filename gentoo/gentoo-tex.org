@@ -2008,6 +2008,8 @@ http://ctan.org/tex-archive/macros/luatex/generic/luatexja/doc
 ** luaotfload
 
 
+*** noto
+
 TTFONTS=/mnt/sdc4/Fonts luaotfload-tool -uf
 https://github.com/lualatex/luaotfload/issues/165
 
@@ -2022,6 +2024,9 @@ Noto Sans TC Light      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
 Noto Sans TC Medium     1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
 Noto Sans TC Regular    1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
 Noto Sans TC Thin       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+
+
+*** noto cns11643 
 
 TTFONTS=/mnt/fs1/fonts/noto luaotfload-tool -uf
 TTFONTS={/mnt/fs1/fonts/noto,/mnt/fs1/fonts/cns11643} luaotfload-tool -uf
@@ -2043,6 +2048,28 @@ Noto Sans TC Thin       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
 TW-Kai  103.1
 TW-Kai-Ext-B    103.1
 TW-Kai-Plus     130.1
+
+*** noto cns11643 edukai
+
+
+TTFONTS=/mnt/fs1/fonts/noto luaotfload-tool -uf
+
+TTFONTS={/mnt/fs1/fonts/noto,/mnt/fs1/fonts/cns11643,/mnt/fs1/fonts/edukai} luaotfload-tool -uf
+
+luaotfload-tool --list=* | grep -E 'Noto|TW'
+
+Noto Sans TC Black      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Bold       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC DemiLight  1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Light      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Medium     1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Regular    1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Thin       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+TW-Kai  103.1
+TW-Kai-Ext-B    103.1
+TW-Kai-Plus     130.1
+TW-MOE-Std-Kai  3.00
+
 
 ** luatex chinese
 
@@ -3280,16 +3307,16 @@ Packages containing files matching `luatex-ja':
 ** 標楷體
 
 
-| 楷書   | 全字庫正楷體   | 標楷體   | 華文楷體 | 教育部標準楷書 | 文鼎中楷   | 國字標準字體 |
-|        | 中文標準交換碼 |          | 中易楷體 |                |            | 字形寫法     |
-|--------+----------------+----------+----------+----------------+------------+--------------|
-| 字體名 |                | DFKai-SB |          |                |            |              |
-|        | CNS 11643      | KaiU     | KAIU.TTF |                | AR PL UKai |              |
-|--------+----------------+----------+----------+----------------+------------+--------------|
-|        | 國家發展委員會 | 微軟     | office   | 教育部         | linux      |              |
-|        |                |          |          |                |            |              |
-| 字數   | 38676          |          |          | 13067          |            |              |
-|        |                |          |          |                |            |              |
+| 楷書   | 全字庫正楷體   | 教育部標準楷書 | 標楷體   | 華文楷體 | 文鼎中楷   | 國字標準字體 |
+|        | 中文標準交換碼 |                |          | 中易楷體 |            | 字形寫法     |
+|--------+----------------+----------------+----------+----------+------------+--------------|
+| 字體名 |                |                | DFKai-SB |          |            |              |
+|        | CNS 11643      |                | KaiU     | KAIU.TTF | AR PL UKai |              |
+|--------+----------------+----------------+----------+----------+------------+--------------|
+|        | 國家發展委員會 | 教育部         | 微軟     | office   | linux      |              |
+|        |                |                |          |          |            |              |
+| 字數   | 38676          | 13067          |          |          |            |              |
+|        |                |                |          |          |            |              |
 
 體 內内 次 觀 寬 護 丸 市巿 眾 線
 
@@ -3416,18 +3443,18 @@ convmv -f BIG5 -t UTF-8 -r test --notest
 
 **** filename
 
-|                        |                               |                        |                       |
-| 全字庫正楷體向量字型檔 |              TW-Sung-98_1.ttf | TW-Sung-Ext-B-98_1.ttf | TW-Sung-Plus-98_1.ttf |
-|------------------------+-------------------------------+------------------------+-----------------------|
-| 對應至Unicode的第 字面 |                             0 |                      2 |                    15 |
-|                        | BMP Basic Multi-lingual Plane |                        |                       |
-|                        |                               |                        |                       |
-| size Mb                |                            51 |                     62 |                    33 |
-|                        |                               |                        |                       |
-| 字                     |                         38676 |                   7650 |                  6831 |
-|                        |                               |                        |                       |
-| 國字標準字體表         |                          常用 |            次常用 罕用 |            戶政、役政 |
-|                        |                               |                        |                       |
+|                        |                               |                       |                      |
+| 全字庫正楷體向量字型檔 |               TW-Kai-98_1.ttf | TW-Kai-Ext-B-98_1.ttf | TW-Kai-Plus-98_1.ttf |
+|------------------------+-------------------------------+-----------------------+----------------------|
+| 對應至Unicode的第 字面 |                             0 |                     2 |                   15 |
+|                        | BMP Basic Multi-lingual Plane |                       |                      |
+|                        |                               |                       |                      |
+| size Mb                |                            51 |                    62 |                   33 |
+|                        |                               |                       |                      |
+| 字                     |                         38676 |                  7650 |                 6831 |
+|                        |                               |                       |                      |
+| 國字標準字體表         |                          常用 |           次常用 罕用 |           戶政、役政 |
+|                        |                               |                       |                      |
 
 png_24x24.zip	為全字庫明體點矩陣(24x24)字型檔之zip檔，可用一般解壓縮軟體解開
 
@@ -3453,17 +3480,22 @@ TW-Sung-Plus-98_1.ttf	為全字庫正宋體向量字型檔(對應至Unicode的�
 http://lms.ltu.edu.tw/course_open.php?courseID=17709&f=open_doc&cid=1065680
 
 
-*** 標楷體
-
-https://zh.wikipedia.org/zh-tw/%E6%A8%99%E6%A5%B7%E9%AB%94
-
-
 
 *** 教育部標準楷書
 
 http://depart.moe.edu.tw/ED2400/News_Content.aspx?n=8940E5C0456177C3&sms=893AAA1CBFE149DE&s=DFBE7BE3EE0DB6AE
 
 教育部標準楷書字形檔
+
+unrar t edukai-3.rar
+unrar x edukai-3.rar
+mv to /mnt/fs1/fonts/edukai/
+
+
+
+*** 標楷體
+
+https://zh.wikipedia.org/zh-tw/%E6%A8%99%E6%A5%B7%E9%AB%94
 
 
 *** 文鼎中楷
@@ -3562,8 +3594,143 @@ Droid Sans Fallback，黑體（Google Android）
 思源黑體，正體中文/簡體中文/日文/韓文（Google Noto Sans CJK / Source Han Sans）
 
 
-*** 
+*** 字形寫法
 
+**** 全字庫正楷體 教育部標準楷書 Noto Sans TC 
+
+
+\documentclass{article}
+
+%\usepackage{fontspec}
+\usepackage{luatexja-fontspec}
+
+\begin{document}
+
+
+
+\jfontspec{TW-Kai}
+
+中文測試。Hello world!! TW-Kai 全字庫正楷體
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\jfontspec{TW-Kai-Plus}
+
+
+\jfontspec{TW-MOE-Std-Kai}
+
+中文測試。Hello world!! TW-MOE-Std-Kai 教育部標準楷書
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\jfontspec{Noto Sans TC Black}
+中文測試。 Noto Sans TC Black
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\jfontspec{Noto Sans TC Bold}
+中文測試。 Noto Sans TC Bold
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+
+\jfontspec{Noto Sans TC Medium}
+中文測試。 Noto Sans TC Medium
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\jfontspec{Noto Sans TC Regular}
+中文測試。 Noto Sans TC Regular
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+
+
+\jfontspec{Noto Sans TC DemiLight}
+中文測試。 Noto Sans TC DemiLight
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\jfontspec{Noto Sans TC Light}
+中文測試。 Noto Sans TC Light
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\jfontspec{Noto Sans TC Thin}
+中文測試。 Noto Sans TC Thin
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+
+
+
+
+
+
+
+
+\jfontspec{IPAexMincho}
+
+中文測試。 IPAexMincho
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\jfontspec{IPAexGothic}
+
+中文測試。 IPAexGothic
+
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+
+
+
+\end{document}
+
+**** 全字庫正楷體*3  教育部標準楷書
+\documentclass{article}
+
+%\usepackage{fontspec}
+\usepackage{luatexja-fontspec}
+
+\begin{document}
+
+
+
+\jfontspec{TW-Kai}
+
+中文測試。Hello world!! TW-Kai 全字庫正楷體
+
+\jfontspec{TW-Kai-Plus}
+
+中文測試。Hello world!! TW-Kai-Plus  全字庫正楷體
+
+\jfontspec{TW-Kai-Ext-B}
+
+中文測試。Hello world!! TW-Kai-Ext-B 全字庫正楷體
+
+
+\jfontspec{TW-MOE-Std-Kai}
+
+中文測試。Hello world!! TW-MOE-Std-Kai 教育部標準楷書
+
+
+
+\jfontspec{IPAexMincho}
+
+中文測試。Hello world!! IPAexMincho
+
+\jfontspec{IPAexGothic}
+
+中文測試。Hello world!! IPAexGothic
+
+
+
+
+
+\end{document}
+
+
+**** Noto Sans TC 
 
 \documentclass{article}
 \usepackage{fontspec}
