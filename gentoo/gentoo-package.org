@@ -1227,6 +1227,8 @@ EXTENSION=20160421-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wif
 
 EXTENSION=20160425-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wifi-bluetooth
 
+EXTENSION=20160429-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wifi-bluetooth-batterylevel
+
 KERNELVER=4.4.2 
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}

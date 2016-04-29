@@ -84,6 +84,130 @@ convmv -f BIG5 -t UTF-8 -r test --notest
 
 * fontconfig 
 
+** manual
+
+https://www.freedesktop.org/software/fontconfig/fontconfig-user.html
+
+
+
+** configuration file
+
+*** XML format
+
+Fontconfig configuration files use XML format and need these headers:
+
+
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+
+  <!-- settings go here -->
+
+</fontconfig>
+
+
+
+*** /etc/fonts/fonts.conf
+
+Fontconfig gathers all its configurations in a central file (/etc/fonts/fonts.conf). 
+
+This file is replaced during fontconfig updates and should not be edited. Fontconfig-aware applications source this file to know available fonts and how they get rendered. 
+
+This file is a conglomeration of rules from 
+the global configuration (/etc/fonts/local.conf), 
+the configured presets in /etc/fonts/conf.d/, and 
+the user configuration file ($XDG_CONFIG_HOME/fontconfig/fonts.conf). 
+
+fc-cache can be used to rebuild fontconfig's configuration, although changes will only be visible in newly launched applications.
+
+
+
+** fc-list 
+
+*** fc-list : file
+
+The font paths initially known to Fontconfig are: /usr/share/fonts/, ~/.local/share/fonts (and ~/.fonts/, now deprecated). Fontconfig will scan these directories recursively. For ease of organization and installation, it is recommended to use these font paths when adding fonts.
+To see a list of known Fontconfig fonts:
+$ fc-list : file
+
+*** fc-list :lang=zh
+
+/mnt/fs1/fonts/noto/NotoSansTC-Black.otf: Noto Sans TC,Noto Sans TC Black:style=Black,Regular
+/mnt/fs1/fonts/noto/NotoSansTC-Light.otf: Noto Sans TC,Noto Sans TC Light:style=Light,Regular
+/usr/share/fonts/misc/18x18ko.pcf.gz: Fixed:style=ko
+/mnt/fs1/fonts/noto/NotoSansTC-Medium.otf: Noto Sans TC,Noto Sans TC Medium:style=Medium,Regular
+/mnt/fs1/fonts/noto/NotoSansTC-Regular.otf: Noto Sans TC,Noto Sans TC Regular:style=Regular
+/mnt/fs1/fonts/noto/NotoSansTC-DemiLight.otf: Noto Sans TC,Noto Sans TC DemiLight:style=DemiLight,Regular
+/usr/share/fonts/misc/18x18ja.pcf.gz: Fixed:style=ja
+/mnt/fs1/fonts/noto/NotoSansTC-Bold.otf: Noto Sans TC,Noto Sans TC Bold:style=Bold,Regular
+/mnt/fs1/fonts/cns11643/TW-Kai-98_1.ttf: TW\-Kai,全字庫正楷體:style=Regular
+/mnt/fs1/fonts/noto/NotoSansTC-Thin.otf: Noto Sans TC,Noto Sans TC Thin:style=Thin,Regular
+
+
+** Replace or set default fonts
+
+https://wiki.archlinux.org/index.php/font_configuration#Fontconfig_configuration
+
+
+*** bind
+...
+ <match target="pattern">
+   <test qual="any" name="family"><string>georgia</string></test>
+   <edit name="family" mode="assign" binding="same"><string>Ubuntu</string></edit>
+ </match>
+...
+
+
+*** replace default font to Noto Sans TC
+
+<!-- Default font (no fc-match pattern) -->
+ <match>
+  <edit mode="prepend" name="family">
+   <string>Noto Sans TC</string>
+  </edit>
+ </match>
+
+
+
+*** default font for the tw, /etc/fonts/local.conf
+
+
+
+<!-- Default font for the tw locale (no fc-match pattern) -->
+ <match>
+  <test compare="contains" name="lang">
+   <string>tw</string>
+  </test>
+  <edit mode="prepend" name="family">
+   <string>Noto Sans TC</string>
+  </edit>
+ </match>
+
+|             | tw   | zh   | zh-tw |
+|-------------+------+------+-------|
+| google news | kai  | kai  | kai   |
+| yahoo news  | noto | noto | kai   |
+|             |      |      |       |
+
+
+*** jp
+
+Example fonts.conf which also specifies a default font for the Japanese locale (ja_JP) and keeps western style fonts for Latin letters.
+
+<!-- Default font for the ja_JP locale (no fc-match pattern) -->
+ <match>
+  <test compare="contains" name="lang">
+   <string>ja</string>
+  </test>
+  <edit mode="prepend" name="family">
+   <string>Noto Sans CJK JP</string>
+  </edit>
+ </match>
+
+
+** setup gentoo
+
+
 | verify the 51-local.conf is enabled     | eselect fontconfig list   | gentoo                 |
 |                                         | eclectic fontconfig list  | exherbo                |
 |                                         |                           |                        |
