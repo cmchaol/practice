@@ -970,6 +970,67 @@ umask 022
 |   | \setmainfont{Noto Sans TC Regular} | \setmainjfont{Noto Sans TC Regular} |
 
 
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Noto Sans TC Regular}
+\begin{document}
+
+自去年開始 Google 打一破一年一手機的做法，一次過推出兩款新智能手機，更是由兩家生產商製造。然而今年的 Nexus 手機又會如何安排呢？
+早前有消息傳出今年 Google 的 Nexus 手機將會由 HTC 生產，而且今次是一次過包攬兩款 Nexus 產品的供應，跟之前兩家供應商的策略明顯不同。而且進一步得到證實。
+今日經常爆料的知名人士 @evleaks 於 Twitter 上發放消息指，HTC 將負責生產兩款運行 Android N 的設備，而產品初期代號分別為 M1 及 S1。
+
+https://tw.news.yahoo.com/htc-%E4%BB%8A%E5%B9%B4%E5%B0%87-%E6%AC%A1%E9%81%8E%E5%8C%85%E8%BE%A6%E5%85%A9%E6%AC%BE-nexus-%E6%96%B0%E7%94%A2%E5%93%81-162703751.html
+
+\end{document}
+
+
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Noto Sans TC}
+\begin{document}
+
+自去年開始 Google 打一破一年一手機的做法，一次過推出兩款新智能手機，更是由兩家生產商製造。然而今年的 Nexus 手機又會如何安排呢？
+早前有消息傳出今年 Google 的 Nexus 手機將會由 HTC 生產，而且今次是一次過包攬兩款 Nexus 產品的供應，跟之前兩家供應商的策略明顯不同。而且進一步得到證實。
+今日經常爆料的知名人士 @evleaks 於 Twitter 上發放消息指，HTC 將負責生產兩款運行 Android N 的設備，而產品初期代號分別為 M1 及 S1。
+
+https://tw.news.yahoo.com/htc-%E4%BB%8A%E5%B9%B4%E5%B0%87-%E6%AC%A1%E9%81%8E%E5%8C%85%E8%BE%A6%E5%85%A9%E6%AC%BE-nexus-%E6%96%B0%E7%94%A2%E5%93%81-162703751.html
+
+\end{document}
+
+
+
+\documentclass{article}
+\usepackage{luatexja-fontspec}
+\setmainfont{Noto Sans TC}
+\begin{document}
+
+自去年開始 Google 打一破一年一手機的做法，一次過推出兩款新智能手機，更是由兩家生產商製造。然而今年的 Nexus 手機又會如何安排呢？
+早前有消息傳出今年 Google 的 Nexus 手機將會由 HTC 生產，而且今次是一次過包攬兩款 Nexus 產品的供應，跟之前兩家供應商的策略明顯不同。而且進一步得到證實。
+今日經常爆料的知名人士 @evleaks 於 Twitter 上發放消息指，HTC 將負責生產兩款運行 Android N 的設備，而產品初期代號分別為 M1 及 S1。
+
+https://tw.news.yahoo.com/htc-%E4%BB%8A%E5%B9%B4%E5%B0%87-%E6%AC%A1%E9%81%8E%E5%8C%85%E8%BE%A6%E5%85%A9%E6%AC%BE-nexus-%E6%96%B0%E7%94%A2%E5%93%81-162703751.html
+
+\end{document}
+
+
+
+\documentclass{article}
+\usepackage{luatexja-fontspec}
+\setmainfont{TW-Kai}
+\begin{document}
+luatexja-fontspec TW-Kai
+自去年開始 Google 打一破一年一手機的做法，一次過推出兩款新智能手機，更是由兩家生產商製造。然而今年的 Nexus 手機又會如何安排呢？
+早前有消息傳出今年 Google 的 Nexus 手機將會由 HTC 生產，而且今次是一次過包攬兩款 Nexus 產品的供應，跟之前兩家供應商的策略明顯不同。而且進一步得到證實。
+今日經常爆料的知名人士 @evleaks 於 Twitter 上發放消息指，HTC 將負責生產兩款運行 Android N 的設備，而產品初期代號分別為 M1 及 S1。
+
+https://tw.news.yahoo.com/htc-%E4%BB%8A%E5%B9%B4%E5%B0%87-%E6%AC%A1%E9%81%8E%E5%8C%85%E8%BE%A6%E5%85%A9%E6%AC%BE-nexus-%E6%96%B0%E7%94%A2%E5%93%81-162703751.html
+
+\end{document}
+
+
+
+
+
 
 *** error
 
@@ -1962,9 +2023,26 @@ Noto Sans TC Medium     1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
 Noto Sans TC Regular    1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
 Noto Sans TC Thin       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
 
+TTFONTS=/mnt/fs1/fonts/noto luaotfload-tool -uf
+TTFONTS={/mnt/fs1/fonts/noto,/mnt/fs1/fonts/cns11643} luaotfload-tool -uf
 
+luaotfload-tool --list=* | grep -E 'Noto|TW'
 
+luaotfload-tool --diagnose=environment
 
+$OPENTYPEFONTS: ".:{/home/c5766/.texlive2015/texmf-config,/home/c5766/.texlive2015/texmf-var,/home/c5766/texmf,!!/usr/local/texlive/2015/texmf-config,!!/usr/local/texlive/2015/texmf-var,!!/usr/local/texlive/texmf-local,!!/usr/local/texlive/2015/texmf-dist}/fonts/{opentype,truetype}//:/please/set/osfontdir/in/the/environment//"
+
+luaotfload-tool --list=* | grep -E 'Noto|TW'
+Noto Sans TC Black      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Bold       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC DemiLight  1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Light      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Medium     1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Regular    1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Thin       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+TW-Kai  103.1
+TW-Kai-Ext-B    103.1
+TW-Kai-Plus     130.1
 
 ** luatex chinese
 
@@ -3213,7 +3291,7 @@ Packages containing files matching `luatex-ja':
 | 字數   | 38676          |          |          | 13067          |            |              |
 |        |                |          |          |                |            |              |
 
-
+體 內内 次 觀 寬 護 丸 市巿 眾 線
 
 *** 全字庫正楷
 
@@ -3482,3 +3560,62 @@ HiraginoKaku - TrueType，Windows
 Droid Sans Fallback，黑體（Google Android）
 方正蘭亭黑，黑體
 思源黑體，正體中文/簡體中文/日文/韓文（Google Noto Sans CJK / Source Han Sans）
+
+
+*** 
+
+
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Noto Sans TC Regular}
+\begin{document}
+
+fontspec  Noto Sans TC Regular
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\end{document}
+
+
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Noto Sans TC}
+\begin{document}
+
+fontspec  Noto Sans TC
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\end{document}
+
+
+\documentclass{article}
+\usepackage{luatexja-fontspec}
+\setmainfont{Noto Sans TC}
+\begin{document}
+
+luatexja-fontspec  Noto Sans TC
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\end{document}
+
+
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{TW-Kai}
+\begin{document}
+
+fontspec  TW-Kai
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\end{document}
+
+
+
+\documentclass{article}
+\usepackage{luatexja-fontspec}
+\setmainfont{TW-Kai}
+\begin{document}
+
+luatexja-fontspec  TW-Kai
+體 內内 次 觀 寬 護 丸 市巿 眾 線
+
+\end{document}
