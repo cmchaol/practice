@@ -1,3 +1,526 @@
+* 00 steps
+
+
+|          | installation | test in a terminal | test in emacs | test with chinese in emacs |
+|----------+--------------+--------------------+---------------+----------------------------|
+| tex      |           10 |                 12 |          omit | omit                       |
+|          |              |                    |               |                            |
+| latex    |           20 |                 22 |            24 | omit                       |
+|          |              |                    |               |                            |
+| lualatex |           30 |                 32 |            34 | 36 [2016-04-26 Tue 16:49]  |
+|          |              |                    |               |                            |
+| luatexja |           40 |               omit |          omit | 46                         |
+
+
+
+* 10 tex minimal installation 68 Mb
+
+
+http://en.wikibooks.org/wiki/LaTeX/Installation#Minimal_installation
+
+http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz 
+
+
+|   |                                                      |
+|---+------------------------------------------------------|
+|   | download                                             |
+|   |                                                      |
+|   | extract                                              |
+|   |                                                      |
+|   | su                                                   |
+|   |                                                      |
+|   | umask 022                                            |
+|   |                                                      |
+|   | perl install-tl                                      |
+|   |                                                      |
+|   | <S> set installation scheme (scheme-minimal)         |
+|   |                                                      |
+|   | <O> options:  [X] allow execution of restricted list |
+|   |                                                      |
+|   | <V> set up for portable installation                 |
+|   |                                                      |
+
+ <D> directories:
+   TEXDIR (the main TeX directory):
+     /usr/local/texlive/2015
+   TEXMFLOCAL (directory for site-wide local files):
+     /usr/local/texlive/texmf-local
+   TEXMFSYSVAR (directory for variable and automatically generated data):
+     /usr/local/texlive/2015/texmf-var
+   TEXMFSYSCONFIG (directory for local config):
+     /usr/local/texlive/2015/texmf-config
+   TEXMFVAR (personal directory for variable and automatically generated data):
+     ~/.texlive2015/texmf-var
+   TEXMFCONFIG (personal directory for local config):
+     ~/.texlive2015/texmf-config
+   TEXMFHOME (directory for user-specific files):
+     ~/texmf
+
+ Add /usr/local/texlive/2015/texmf-dist/doc/info to INFOPATH.
+ Add /usr/local/texlive/2015/texmf-dist/doc/man to MANPATH
+   (if not dynamically found).
+
+ Most importantly, add /usr/local/texlive/2015/bin/x86_64-linux
+ to your PATH for current and future sessions.
+
+
+I added the following to ~/.bashrc
+
+PATH=/usr/local/texlive/2015/bin/x86_64-linux:$PATH; export PATH
+INFOPATH=/usr/local/texlive/2015/texmf-dist/doc/info:$INFOPATH; export INFOPATH
+MANPATH=/usr/local/texlive/2015/texmf-dist/doc/man:$MANPATH; export MANPATH
+
+
+
+
+* 12 tex in a terminal, pdftex 
+
+$ 
+
+pdftex '\empty Hello world!\bye'
+
+
+
+
+
+* 20 tlmgr install latex
+    
+which tlmgr
+/usr/local/texlive/2014/bin/x86_64-linux/tlmgr
+
+su
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install latex  latex-bin
+
+
+* 22 in a terminal, latex
+
+latex minimal test
+
+$
+
+pdflatex '\documentclass{article} \begin{document} Hello world! by latex. \end{document}'
+
+
+* 24 in emacs, pdflatex
+
+open a file test-in-emacs.tex
+
+\documentclass{article} 
+
+\begin{document} 
+
+Hello world! 
+
+\end{document}
+
+run C-c multiple times
+
+
+
+
+* 30 lualatex installation
+
+nothing needs to install. Just test it.
+
+
+* 32 in a terminal, lualatex
+
+lualatex minimal test, the output pdf is 'article.pdf'
+
+$
+
+lualatex '\documentclass{article} \begin{document} Hello world! by lualatex. \end{document}'
+
+
+
+
+
+* 34 in emacs, lualatex
+
+4.1.3 Options for TeX Processors
+
+https://www.gnu.org/software/auctex/manual/auctex/Processor-Options.html
+
+install auctex then modify tex-engine.
+
+|                  | default | change to |
+|------------------+---------+-----------|
+| C-h v TeX-engine | Default | LuaTeX    |
+
+
+open a file test-in-emacs-LuaTeX.tex
+
+\documentclass{article} 
+
+\begin{document} 
+
+Hello world! 
+
+34 in emacs, lualatex
+
+\end{document}
+
+run C-c multiple times
+
+
+
+
+
+
+* 36 in emacs, lualatex, chinses
+
+|    |                                |   |
+|----+--------------------------------+---|
+| 20 | prepare chinese fonts          |   |
+|    |                                |   |
+| 30 | identify the font directory    |   |
+|    |                                |   |
+|    | /mnt/fs1/fonts/noto            |   |
+|    |                                |   |
+| 40 | load by loadotfload-tool       |   |
+|    |                                |   |
+| 50 | confirm fonts loaded properly  |   |
+|    |                                |   |
+| 60 | edit .tex and transform to pdf |   |
+|    |                                |   |
+
+luaotfload.sty not found.
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info luaotfload.sty
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info luaotfload
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install luaotfload
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info luaotfload
+
+
+
+40
+
+TTFONTS=/mnt/fs1/fonts/noto luaotfload-tool -uf
+
+
+50
+
+luaotfload-tool --list=* | grep oto
+
+Noto Sans TC Black      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Bold       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC DemiLight  1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Light      1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Medium     1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Regular    1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+Noto Sans TC Thin       1.004;PS 1.004;hotconv 1.0.82;makeotf.lib2.5.63406
+
+
+
+60
+
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Noto Sans TC Regular}
+\begin{document}
+我希望這是，翻譯是由谷歌提供的中國文字。
+\end{document}
+
+  
+
+How to use Chinese with lualatex?
+
+http://tex.stackexchange.com/questions/222980/how-to-use-chinese-with-lualatex
+
+
+open a file test-in-emacs-LuaTeX-chinese.tex
+
+
+
+** not found
+
+| fontspec.sty   |
+|                |
+| luaotfload.sty |
+|                |
+| lualibs        |
+|                |
+| eu2enc.def     |
+|                |
+| xunicode.sty   |
+|                |
+| graphicx.sty   |
+|                |
+| pdftex.def     |
+|                |
+| infwarerr.sty  |
+|                |
+|                |
+
+** steps to install fontspec.sty
+
+| steps                                      |       |
+|--------------------------------------------+-------|
+| File `fontspec.sty' not found.             |       |
+|                                            |       |
+| search the package contains 'fontspec.sty' | got 2 |
+|                                            |       |
+| list the package                           |       |
+|                                            |       |
+| install the package                        |       |
+
+
+
+
+
+
+
+
+
+
+** not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install
+
+
+** search the package
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info fontspec.sty
+
+
+Packages containing files matching `fontspec.sty':
+fontspec:
+        texmf-dist/tex/latex/fontspec/fontspec.sty
+luatexja:
+        texmf-dist/tex/luatex/luatexja/addons/luatexja-fontspec.sty
+        texmf-dist/tex/luatex/luatexja/patches/lltjp-fontspec.sty
+
+	
+** list the package
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info fontspec
+
+tlmgr: package repository ftp://ftp.ccu.edu.tw/pub/tex/systems/texlive/tlnet
+package:     fontspec
+category:    Package
+shortdesc:   Advanced font selection in XeLaTeX and LuaLaTeX
+longdesc:    Fontspec is a package for XeLaTeX and LuaLaTeX. It provides an automatic and unified interface to feature-rich AAT and OpenType fonts through the NFSS in LaTeX running on XeTeX or LuaTeX engines. The package requires the l3kernel and xparse bundles from the LaTeX 3 development team.
+installed:   No
+sizes:       src: 305k, doc: 813k, run: 253k
+relocatable: Yes
+cat-version: 2.5a
+cat-date:    2016-02-01 14:28:29 +0100
+cat-license: lppl1.3
+cat-topics:  font-sel luatex xetex
+collection:  collection-latexrecommended
+
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info fontspec --list
+
+Included files, by type:
+run files:
+  RELOC/tex/latex/fontspec/fontspec-luatex.sty
+  RELOC/tex/latex/fontspec/fontspec-xetex.sty
+  RELOC/tex/latex/fontspec/fontspec.cfg
+  RELOC/tex/latex/fontspec/fontspec.lua
+  RELOC/tex/latex/fontspec/fontspec.sty
+  RELOC/tex/latex/fontspec/tuenc.def
+  RELOC/tex/latex/fontspec/tufontrange-T1.def
+  RELOC/tex/latex/fontspec/tufontrange-TS1.def
+  RELOC/tex/latex/fontspec/tulmr.fd
+  RELOC/tex/latex/fontspec/tulmss.fd
+  RELOC/tex/latex/fontspec/tulmtt.fd
+source files:
+  RELOC/source/latex/fontspec/fontspec-api.dtx
+  RELOC/source/latex/fontspec/fontspec-closing.dtx
+  RELOC/source/latex/fontspec/fontspec-doc.tex
+  RELOC/source/latex/fontspec/fontspec-fontload.dtx
+  RELOC/source/latex/fontspec/fontspec-internal.dtx
+  RELOC/source/latex/fontspec/fontspec-keyval.dtx
+  RELOC/source/latex/fontspec/fontspec-lua.dtx
+  RELOC/source/latex/fontspec/fontspec-math.dtx
+  RELOC/source/latex/fontspec/fontspec-msg.dtx
+  RELOC/source/latex/fontspec/fontspec-opening.dtx
+  RELOC/source/latex/fontspec/fontspec-patches.dtx
+  RELOC/source/latex/fontspec/fontspec-user.dtx
+  RELOC/source/latex/fontspec/fontspec-vars.dtx
+  RELOC/source/latex/fontspec/fontspec.dtx
+doc files:
+  RELOC/doc/latex/fontspec/README.md details="Package README"
+  RELOC/doc/latex/fontspec/fontspec-example.tex
+  RELOC/doc/latex/fontspec/fontspec.pdf details="Package documentation"
+
+
+** install the package
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install fontspec 
+
+
+** verify the package installed
+
+tlmgr: package repository ftp://ftp.ccu.edu.tw/pub/tex/systems/texlive/tlnet
+package:     fontspec
+category:    Package
+shortdesc:   Advanced font selection in XeLaTeX and LuaLaTeX
+longdesc:    Fontspec is a package for XeLaTeX and LuaLaTeX. It provides an automatic and unified interface to feature-rich AAT and OpenType fonts through the NFSS in LaTeX running on XeTeX or LuaTeX engines. The package requires the l3kernel and xparse bundles from the LaTeX 3 development team.
+installed:   Yes
+revision:    39541
+sizes:       run: 253k
+relocatable: No
+cat-version: 2.5a
+cat-date:    2016-02-01 14:28:29 +0100
+cat-license: lppl1.3
+cat-topics:  font-sel luatex xetex
+collection:  collection-latexrecommended
+
+
+
+** luaotfload.sty not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info luaotfload.sty
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info luaotfload
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install luaotfload
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info luaotfload
+
+
+** lualibs not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info lualibs 
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install lualibs 
+
+
+
+
+** eu2enc.def not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info eu2enc.def 
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info euenc
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install euenc
+
+
+
+
+
+
+** xunicode.sty not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info xunicode.sty 
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info xunicode
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install xunicode
+
+
+** graphicx.sty not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info graphicx.sty
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info graphics
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install graphics
+
+** pdftex.def not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info pdftex.def
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info pdftex-def
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install pdftex-def
+
+
+
+** infwarerr.sty not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info infwarerr.sty
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info oberdiek
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install oberdiek
+
+
+
+
+
+
+
+
+** MS PGothic not found.
+
+
+#
+
+umask 022
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info 'MS PGothic'
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr info
+
+/usr/local/texlive/2015/bin/x86_64-linux/tlmgr install
+
+
+
+
+
+
 * Custom installation with TeX Live 					:tex:
 
 
@@ -307,7 +830,7 @@ cat-license: lppl
 collection:  collection-bibtexextra
 
 
-** 10 tex minimal installation 68 Mb
+** 10 tex minimal installation 67 Mb
 
 | step |                |
 |------+----------------|
@@ -338,7 +861,17 @@ umask 022
 
 perl install-tl-20150904/install-tl
 
-see installation schemes
+<S> set installation scheme (scheme-minimal)
+
+<O> options:
+<E> execution of restricted list of programs: [X]
+others all unset
+
+<V> set up for regular installation to hard disk
+
+
+
+
 
 3.4 Post-install actions
 
@@ -350,6 +883,12 @@ env
 
 I added the following to ~/.bashrc
 
+# [2016-05-01 Sun 21:53]
+PATH=/usr/local/texlive/bin/x86_64-linux:$PATH; export PATH
+MANPATH=/usr/local/texlive/texmf-dist/doc/man:$MANPATH; export MANPATH
+INFOPATH=/usr/local/texlive/texmf-dist/doc/info:$INFOPATH; export INFOPATH
+
+# before [2016-05-01 Sun 21:54]
 PATH=/usr/local/texlive/2015/bin/x86_64-linux:$PATH; export PATH
 MANPATH=/usr/local/texlive/2015/texmf-dist/doc/man:$MANPATH; export MANPATH
 INFOPATH=/usr/local/texlive/2015/texmf-dist/doc/info:$INFOPATH; export INFOPATH
@@ -3320,7 +3859,7 @@ Packages containing files matching `luatex-ja':
 
 體 內内 次 觀 寬 護 丸 市巿 眾 線
 
-*** 全字庫正楷
+*** 全字庫正楷 cns11643
 
 
 **** introduction
@@ -3381,6 +3920,8 @@ http://data.gov.tw/license
 
 
 **** chinese filename preparation
+
+LC_ALL=C 7z t Open_Data.zip 
 
 LC_ALL=C 7z x Open_Data.zip 
 
@@ -3479,9 +4020,11 @@ TW-Sung-Plus-98_1.ttf	為全字庫正宋體向量字型檔(對應至Unicode的�
 
 http://lms.ltu.edu.tw/course_open.php?courseID=17709&f=open_doc&cid=1065680
 
+/mnt/fs1/fonts/cns11643/TW-Kai-98_1.ttf: TW\-Kai,全字庫正楷體:style=Regular
+/mnt/fs1/fonts/cns11643/TW-Sung-98_1.ttf: TW\-Sung,全字庫正宋體:style=Regular
 
 
-*** 教育部標準楷書
+*** 教育部標準楷書 edukai
 
 http://depart.moe.edu.tw/ED2400/News_Content.aspx?n=8940E5C0456177C3&sms=893AAA1CBFE149DE&s=DFBE7BE3EE0DB6AE
 
@@ -3498,7 +4041,10 @@ mv to /mnt/fs1/fonts/edukai/
 https://zh.wikipedia.org/zh-tw/%E6%A8%99%E6%A5%B7%E9%AB%94
 
 
-*** 文鼎中楷
+*** 文鼎中楷 ukai  arphic
+
+**** wiki
+
 
 https://zh.wikipedia.org/zh-tw/%E6%96%87%E9%BC%8E%E7%A7%91%E6%8A%80
 
@@ -3517,6 +4063,28 @@ https://zh.wikipedia.org/zh-tw/%E6%96%87%E9%BC%8E%E7%A7%91%E6%8A%80
 
 
 arphic-ukai
+
+
+**** gentoo media-fonts/arphicfonts
+
+https://packages.gentoo.org/packages/media-fonts/arphicfonts
+
+
+http://tw.archive.ubuntu.com/ubuntu/pool/main/t/ttf-arphic-ukai/ttf-arphic-ukai_0.2.20080216.1.orig.tar.gz
+
+
+tar ztvf ttf-arphic-ukai_0.2.20080216.1.orig.tar.gz
+
+tar zxvf ttf-arphic-ukai_0.2.20080216.1.orig.tar.gz
+
+ukai.ttc
+
+fc-cache -vf
+
+
+/mnt/fs1/fonts/ukai/ukai.ttc: AR PL UKai TW:style=Book
+/mnt/fs1/fonts/ukai/ukai.ttc: AR PL UKai HK:style=Book
+/mnt/fs1/fonts/ukai/ukai.ttc: AR PL UKai CN:style=Book
 
 
 *** 楷書 維基百科

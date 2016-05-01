@@ -1756,6 +1756,7 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 |               |                         |                        |
 | imagej        |                         |                        |
 |               |                         |                        |
+| okular        |                         |                        |
 |---------------+-------------------------+------------------------|
 | audio         |                         |                        |
 |               |                         |                        |
@@ -3166,6 +3167,13 @@ eselect fontconfig enable 57-dejavu-serif.conf
 
 
 
+
+
+*** okular
+
+emerge okular --autounmask-write 
+
+dispatch-conf
 
 
 ** app-text/tesseract

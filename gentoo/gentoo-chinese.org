@@ -84,10 +84,77 @@ convmv -f BIG5 -t UTF-8 -r test --notest
 
 * fontconfig 
 
+** generic configuration
+
+|                        |                                       |
+|------------------------+---------------------------------------|
+| /etc/fonts/fonts.conf  |                                       |
+|                        | users should not edit this file       |
+|                        |                                       |
+|                        | will parse /etc/fonts/conf.d/         |
+|                        |                                       |
+|------------------------+---------------------------------------|
+|                        |                                       |
+| /etc/fonts/conf.avail/ |                                       |
+|                        | symlink necessary files to            |
+|                        | /etc/fonts/conf.d/                    |
+|                        |                                       |
+|                        | are executed in order they are named; |
+|                        |                                       |
+
+
+** Gentoo specific configuration
+
+| eselect                                 |
+| manages symlinks                        |
+|                                         |
+|-----------------------------------------|
+| files in  /etc/fonts/conf.avail/        |
+|                                         |
+| adding or removing them from            |
+|                                         |
+| /etc/fonts/conf.d/                      |
+|                                         |
+|-----------------------------------------|
+| eselect fontconfig list                 |
+|                                         |
+| eselect fontconfig enable               |
+|                                         |
+| eselect fontconfig disable              |
+|                                         |
+|-----------------------------------------|
+| Custom system wide configuration        |
+|                                         |
+| eselect fontconfig enable 51-local.conf |
+|                                         |
+| create /etc/fonts/local.conf            |
+|                                         |
+| cat /etc/fonts/local.conf               |
+|                                         |
+
+
+cat /etc/fonts/local.conf 
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+        <!-- Load local system customization file -->
+        <include ignore_missing="yes">local.conf</include>
+        <dir>/mnt/fs1/fonts</dir>
+</fontconfig>
+
+
+
+
 ** manual
+
+official
 
 https://www.freedesktop.org/software/fontconfig/fontconfig-user.html
 
+
+Gentoo specific
+
+https://wiki.gentoo.org/wiki/Fontconfig
 
 
 ** configuration file
@@ -208,20 +275,21 @@ Example fonts.conf which also specifies a default font for the Japanese locale (
 ** setup gentoo
 
 
-| verify the 51-local.conf is enabled     | eselect fontconfig list   | gentoo                 |
-|                                         | eclectic fontconfig list  | exherbo                |
-|                                         |                           |                        |
-|                                         |                           |                        |
-| verify contents of etc/fonts/local.conf |                           |                        |
-|                                         |                           |                        |
-| cp etc/fonts/local.conf                 |                           |                        |
-|                                         |                           |                        |
-| Then update the fontconfig font cache   | fc-cache -vf              |                        |
-|                                         |                           |                        |
-| list the font                           | fc-list                   |                        |
-|                                         |                           |                        |
-| exit and login again                    |                           |                        |
-|
+| verify the 51-local.conf is enabled     | eselect fontconfig list        | gentoo  |
+|                                         | eclectic fontconfig list       | exherbo |
+|                                         |                                |         |
+|                                         |                                |         |
+| verify contents of etc/fonts/local.conf |                                |         |
+|                                         |                                |         |
+| Then update the fontconfig font cache   | fc-cache -vf                   |         |
+|                                         |                                |         |
+| list the font                           | fc-list                        |         |
+|                                         | fc-list :lang=zh-tw  #繁体中文 |         |
+|                                         | fc-list :lang=zh     #中文     |         |
+|                                         |                                |         |
+| exit and login again                    |                                |         |
+|                                         |                                |         |
+
 
 
 # eselect fontconfig enable 10-autohint.conf
