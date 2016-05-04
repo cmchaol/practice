@@ -4354,3 +4354,111 @@ luatexja-fontspec  TW-Kai
 體 內内 次 觀 寬 護 丸 市巿 眾 線
 
 \end{document}
+
+
+* vocabulary
+
+|                 | reference |              | reference |
+|-----------------+-----------+--------------+-----------|
+| typeface        |           | 字體         |           |
+|                 |           |              |         1 |
+|                 |           |              |         2 |
+|                 |           |              |         3 |
+|                 |           |              |           |
+|                 |           |              |           |
+|-----------------+-----------+--------------+-----------|
+| Roman type      |           | 羅馬體       |           |
+|                 |           |              |        11 |
+|                 |           |              |           |
+|                 |           |              |           |
+| Times New Roman |           | 泰晤士新羅馬 |           |
+|                 |           |              |        12 |
+|                 |           |              |           |
+
+
+
+reference
+
+1
+
+https://zh.wikipedia.org/zh-tw/%E5%AD%97%E4%BD%93
+
+
+2
+
+https://zh.wikipedia.org/zh-tw/%E5%AD%97%E4%BD%93_(%E6%B6%88%E6%AD%A7%E4%B9%89)
+
+字體 (消歧義)
+維基百科，自由的百科全書
+字體、字型、字形、書體等詞容易混淆，它們可以指：
+
+字體（英語：typeface）：一整套的字形，一個或多個字型的一個或多個尺寸的集合。
+字型（英語：font）：一套具有同樣風格和尺寸的字形。
+電腦字型（英語：computer font；簡稱：字型；大陸稱：計算機字體；大陸簡稱：字體）：包含一套字形和字符的電子數據文件。
+字形（英語：glyph）：單個字的形體。
+楷體、隸書等，專業地說，並非一種字體，而是多種字體的一類風格。有關漢字的字體風格參見漢字字體風格。漢字字體風格之中的書法手寫字體風格又稱「書體」。
+漢字的繁體簡體的性質，專業地說，也不叫「字體」，而是兩種漢字書寫體系，可參見繁體字、簡化字等條目。
+
+
+3
+
+https://zh.wikipedia.org/zh-tw/%E6%B1%89%E5%AD%97%E5%AD%97%E4%BD%93%E9%A3%8E%E6%A0%BC
+
+
+
+漢字字體可以按照其字的樣式形態分成幾個不同的風格。
+
+在漢字書法上，傳統手寫字體風格有五大類，分別為：篆書、隸書、行書、草書和楷書。書法手寫字體風格又稱書體。
+
+古代傳統的印刷字體風格包括：明體、仿宋體。
+
+現代印刷字體風格還有：黑體。
+
+非專業人士會將明體等當做一種字體。其實這些風格，比如隸書，或楷書，或明體等，都並不能叫做一種「字體（typeface）」，而是一類相似風格的許多個字體的集合。兩位書法家寫出來的楷書就可稱為兩種字體。而像明體，在電腦上也有中易宋體和新細明體等多種不同字體。雖不應叫「字體」，但隸書、楷書等書法手寫字體風格可以叫「書體」，而明體則一般不歸類為「書體」。
+
+
+
+11
+
+https://zh.wikipedia.org/wiki/%E7%BE%85%E9%A6%AC%E9%AB%94
+
+在拉丁字母的字體排印學中，羅馬體（英语：Roman type）是一種主要印刷字形，與黑體（Blackletter）、義大利體並列為三大主流字形，也被稱為標準體（Regular）。羅馬體根據古羅馬時代，在建築上的銘文而設計，其特色為直立、正寫。起源於14世紀，當時為神聖羅馬帝國時代。在文藝復興時期，羅馬體與義大利體成為兩大主要印刷字形。
+
+
+12
+
+https://zh.wikipedia.org/zh-tw/Times_New_Roman
+
+開放原始碼的作業系統中一般使用URW的Nimbus Roman No9 L，它是Times Roman的URW PostScript版本，是基於GNU通用公共許可證發布的。
+
+* font families
+
+https://en.wikibooks.org/wiki/LaTeX/Fonts
+
+
+
+| font families       |            |                                           |
+| 3 main categories   |            | in the preamble                           |
+|---------------------+------------+-------------------------------------------|
+| roman (rm) or serif | \rmdefault | \renewcommand{\familydefault}{\rmdefault} |
+|                     |            |                                           |
+| serif (sf)          | \sfdefault | \renewcommand{\familydefault}{\sfdefault} |
+|                     |            |                                           |
+| monospace (tt)      | \ttdefault | \renewcommand{\familydefault}{\ttdefault} |
+|                     |            |                                           |
+
+
+* fontspec luatexja-fontspec
+
+http://www.ctan.org/pkg/fontspec
+
+| xetex    |                   |
+| luatex   | luatex-ja         |
+|----------+-------------------|
+| fontspec | luatexja-fontspec |
+|          |                   |
+
+
+
+https://osdn.jp/projects/luatex-ja/wiki/FrontPage(en)
+
