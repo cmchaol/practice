@@ -1673,6 +1673,11 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 
 * packages
 
+--autounmask-write
+
+dispatch-conf
+
+
 ** inventory
 
 |               | h77md3h fs2             | M4A87TD/USB3 280g/fs3  |
@@ -1716,6 +1721,8 @@ tar -xvjpf /mnt/sdb/fs1/stage4_20160121.tar.bz2
 | pciutils      |                         |                        |
 |               |                         |                        |
 | sshfs         |                         |                        |
+|               |                         |                        |
+| usbip         |                         |                        |
 |               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
@@ -2288,6 +2295,16 @@ emerge app-arch/p7zip
 *** pciutils
 
 emerge	sys-apps/pciutils
+
+
+*** usbip
+
+emerge usbip
+
+emerge usbip --autounmask-write
+
+dispatch-conf
+
 
 
 ** xorg group
