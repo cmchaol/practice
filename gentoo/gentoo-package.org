@@ -2127,6 +2127,20 @@ parallel convert '{}' '{.}.jpg' -- *.png
 
 emerge dev-vcs/git
 
+**** chinese filename
+
+git config --global core.quotepath false
+
+http://stackoverflow.com/questions/4144417/how-to-handle-asian-characters-in-file-names-in-git-on-os-x
+
+**** Git Large File Storage
+
+https://confluence.atlassian.com/bitbucketserver/git-large-file-storage-794364846.html
+
+Git LFS is disabled by default, on a per-repository basis, within Bitbucket Server.
+
+
+
 *** mc
 
 emerge app-misc/mc
@@ -2152,14 +2166,7 @@ emerge net-misc/megatools --autounmask-write
 
 dispatch-conf
 
-
-*** layman
-
-emerge --ask app-portage/layman
-
-
-
-**** megarc
+*** megarc
 
 http://albertolarripa.com/2013/07/10/megatools-synchronizing-your-backups-to-mega/
 
@@ -2169,6 +2176,13 @@ Username = email@albertolarripa.com
 Password = yourpassword
 
 
+
+
+
+
+*** layman
+
+emerge --ask app-portage/layman
 
 
 
@@ -4134,10 +4148,37 @@ https://wiki.gentoo.org/wiki/Overlay
 
 Ebuilds from overlays with higher priority numbers (for example 60) take precedence over ebuilds from overlays with lower priorities (such as 50).
 
+list overlays
+
+$
+
+emerge --info --verbose
+
+portageq repos_config /
+
 ** Layman
 
 https://wiki.gentoo.org/wiki/Layman
 
 Layman is Gentoo's primary overlay management tool,
+
+#
+
+
+
+layman -L
+
+
+layman -a  sabayon
+layman -d  sabayon
+
+
+layman -a vayerx
+
+emerge -av dev-vcs/git-lfs
+
+emerge  dev-vcs/git-lfs --autounmask-write
+
+dispatch-conf
 
 
