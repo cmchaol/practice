@@ -3213,6 +3213,26 @@ emerge okular --autounmask-write
 
 dispatch-conf
 
+*** shotwell
+
+emerge shotwell --autounmask-write 
+
+dispatch-conf
+
+
+echo "media-libs/libraw jpeg" >> /etc/portage/package.use/libraw
+echo "media-libs/lcms jpeg" >> /etc/portage/package.use/lcms
+echo "media-libs/libgphoto2 jpeg" >> /etc/portage/package.use/libgphoto2
+
+
+equery hasuse jpeg
+
+https://wiki.gentoo.org/wiki/Equery#Looking_for_packages_that_have_a_specific_USE_flag_with_hasuse_.28h.29
+
+equery depgraph shotwell
+
+
+
 
 ** app-text/tesseract
 
