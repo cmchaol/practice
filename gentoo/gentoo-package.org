@@ -3430,6 +3430,12 @@ emerge bluez
 |    |                                                 |
 |    | bluez-test-audio    connect 00:24:1C:A5:08:18   |
 |    |                                                 |
+|    | bluez-test-device connect 00:24:1C:A5:08:18     |
+|    | Unknown command                                 |
+|    |                                                 |
+|    | bluez-test-input connect 00:24:1C:A5:08:18      |
+|    | Operation is not supported                      |
+|    |                                                 |
 |    | bluez-test-audio disconnect 00:24:1C:A5:08:18   |
 |----+-------------------------------------------------|
 | 90 | chrome app VoiceNote II                         |
