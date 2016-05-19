@@ -1231,6 +1231,8 @@ EXTENSION=20160425-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wif
 
 EXTENSION=20160429-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wifi-bluetooth-batterylevel
 
+EXTENSION=20160519-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wifi-bluetooth-batterylevel-userleveldriver
+
 KERNELVER=4.4.2 
 
 cp .config /boot/config-${KERNELVER}-${EXTENSION}
@@ -3417,9 +3419,12 @@ emerge bluez
 |----+-------------------------------------------------|
 | 70 | trust                                           |
 |    |                                                 |
+|    | bluez-test-device trusted 00:24:1C:A5:08:18     |
+|    |                                                 |
 |    | bluez-test-device trusted 00:24:1C:A5:08:18 yes |
 |    |                                                 |
-|    | bluez-test-device trusted 00:24:1C:A5:08:18     |
+|    | bluez-test-device trusted 00:24:1C:A5:08:18 no  |
+|    |                                                 |
 |----+-------------------------------------------------|
 | 80 | connect                                         |
 |    |                                                 |
