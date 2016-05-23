@@ -1,3 +1,20 @@
+* steps
+
+| steps | aim           |   |
+|-------+---------------+---|
+|       | adjust kernel |   |
+|       |               |   |
+|       | emerge usbip  |   |
+|       |               |   |
+|       | setup server  |   |
+|       |               |   |
+|       | setup client  |   |
+|       |               |   |
+|       | connect       |   |
+|       |               |   |
+
+
+
 * usbip
 
 https://www.howtoforge.com/how-to-modify-your-gnu-linux-box-to-serve-as-a-usb-over-ip-server
@@ -19,7 +36,27 @@ lsusb
 
 Bus 004 Device 004: ID 0ca6:0010 Castles Technology Co., Ltd EZUSB PC/SC Smart Card Reader
 
-|   | vender | device |
-|---+--------+--------|
-|   | 0ca6   |   0010 |
-|   |        |        |
+| vender | device |
+|--------+--------|
+| 0ca6   |   0010 |
+
+* server
+
+#
+
+usbipd -D
+
+usbip list -l
+
+ - busid 4-3 (0ca6:0010)
+   Castles Technology Co., Ltd : EZUSB PC/SC Smart Card Reader (0ca6:0010)
+
+
+usbip bind --busid 4-3
+
+
+
+* client win7
+
+
+
