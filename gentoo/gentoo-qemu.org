@@ -2,6 +2,22 @@
 https://wiki.gentoo.org/wiki/QEMU
 
 
+* steps
+
+| steps | installation          |   |
+|-------+-----------------------+---|
+|       | prepare kernel        |   |
+|       |                       |   |
+|       | install qemu spice    |   |
+|       |                       |   |
+|       | add user to kvm group |   |
+
+
+| steps | install windows guest |
+|-------+-----------------------|
+|       |                       |
+
+
 * kernel
 
 
@@ -59,9 +75,66 @@ deploy kernel see gentoo-package.org  stage4  steps tmpfs M4A87TD/USB3 70 kernel
 |   | v |   |   |   | Ext4 Security Labels                      | *       |   |   |
 |   |   |   |   |   |                                           |         |   |   |
 
+
 * emerge 
 
-emerge --ask app-emulation/qemu
+echo "app-emulation/qemu spice sdl" > /etc/portage/package.use/qemu
+
+echo "app-emulation/spice  client" >> /etc/portage/package.use/spice
+
+echo " sdl" >> /etc/portage/package.use/qemu
+
+
+cat /etc/portage/package.use/qemu 
+cat /etc/portage/package.use/spice
+
+emerge app-emulation/qemu --autounmask-write 
+
+dispatch-conf 
+
+emerge app-emulation/spice 
 
 gpasswd -a <username> kvm
 
+sdl  for automatically open vncviewer
+
+
+
+* windows guest
+
+
+
+** DONE qemu, blank image
+
+cd /tmp
+
+qemu-img create -f qcow2 WindowsVM.img 15G
+
+qemu-system-x86_64 \
+        -enable-kvm \
+        -cpu host \
+        -drive file=WindowsVM.img,if=virtio \
+        -net nic -net user,hostname=windowsvm \
+        -m 1G \
+        -monitor stdio \
+        -name Windows \
+        "$@"
+
+** TODO qemu, blank image, spice
+
+cd /tmp
+
+qemu-img create -f qcow2 WindowsVM.img 15G
+
+SPICE_PORT=5924
+qemu-system-x86_64 \
+        -enable-kvm \
+        -cpu host \
+        -drive file=WindowsVM.img,if=virtio \
+        -net nic -net user,hostname=windowsvm \
+        -m 1G \
+        -monitor stdio \
+        -name Windows \
+        "$@"
+# /usr/bin/spicy --title Windows 127.0.0.1 -p ${SPICE_PORT}
+/usr/bin/spicy -h 127.0.0.1 -p ${SPICE_PORT}
