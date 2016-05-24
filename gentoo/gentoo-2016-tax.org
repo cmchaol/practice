@@ -19,6 +19,7 @@
 
 https://www.howtoforge.com/how-to-modify-your-gnu-linux-box-to-serve-as-a-usb-over-ip-server
 
+net-misc/usbip-3.19
 
 #
 
@@ -44,7 +45,11 @@ Bus 004 Device 004: ID 0ca6:0010 Castles Technology Co., Ltd EZUSB PC/SC Smart C
 
 #
 
-usbipd -D
+usbipd -D -d 
+
+modprobe usbip-core
+
+modprobe usbip-host
 
 usbip list -l
 
@@ -52,11 +57,13 @@ usbip list -l
    Castles Technology Co., Ltd : EZUSB PC/SC Smart Card Reader (0ca6:0010)
 
 
-usbip bind --busid 4-3
+usbip bind --busid=4-3
 
 
 
 * client win7
 
+* errors
 
+version mismatch: 262 273
 

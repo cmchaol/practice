@@ -1072,7 +1072,7 @@ overlay / overlay lowerdir=/mnt/rootfs1,upperdir=/mnt/rootfs2/upper,workdir=/mnt
 
 
 
-*** 70 kernel
+*** 70 kernel 
 
 **** steps
 
@@ -1234,6 +1234,8 @@ EXTENSION=20160429-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wif
 EXTENSION=20160519-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wifi-bluetooth-batterylevel-userleveldriver
 
 EXTENSION=20160523-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wifi-bluetooth-batterylevel-userleveldriver-usbip
+
+EXTENSION=20160524-hardened-net-zram-nouveau_buildin-amdtemp-hda-zswap-4core-wifi-bluetooth-batterylevel-userleveldriver-usbip-kvm
 
 KERNELVER=4.4.2 
 
@@ -1727,6 +1729,9 @@ dispatch-conf
 | sshfs         |                         |                        |
 |               |                         |                        |
 | usbip         |                         |                        |
+|               |                         |                        |
+| qemu          |                         |                        |
+|               |                         |                        |
 |               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
@@ -2323,6 +2328,11 @@ emerge usbip --autounmask-write
 
 dispatch-conf
 
+
+
+*** qemu
+
+see gentoo-qemu.org
 
 
 ** xorg group

@@ -1,0 +1,67 @@
+
+https://wiki.gentoo.org/wiki/QEMU
+
+
+* kernel
+
+
+cd /usr/src/linux
+
+make menuconfig
+
+make && make modules_install
+
+deploy kernel see gentoo-package.org  stage4  steps tmpfs M4A87TD/USB3 70 kernel 40 deploy
+
+
+ 
+
+| 1 | 2 | 3 | 4 | 5 |                                           | default |   |   |
+|---+---+---+---+---+-------------------------------------------+---------+---+---|
+| v |   |   |   |   | Virtualization                            | *       |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   | v |   |   |   | Kernel-based Virtual Machine (KVM) suppor | blank   | M |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   | v |   |   |   | KVM for AMD processors support            | blank   | M |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   | v |   |   |   | Host kernel accelerator for virtio net    | blank   |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|---+---+---+---+---+-------------------------------------------+---------+---+---|
+| v |   |   |   |   | Device Drivers                            |         |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   | v |   |   |   | Network device support                    | *       |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   |   | v |   |   | Network core driver support               | *       |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   |   | V |   |   | Universal TUN/TAP device driver support   | blank   | M |   |
+|   |   |   |   |   |                                           |         |   |   |
+|---+---+---+---+---+-------------------------------------------+---------+---+---|
+| v |   |   |   |   | Networking support                        |         |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   | v |   |   |   | Networking options                        |         |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   |   | v |   |   | The IPv6 protocol                         | *       |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   |   | v |   |   | 802.1d Ethernet Bridging                  | blank   | M |   |
+|   |   |   |   |   |                                           |         |   |   |
+|---+---+---+---+---+-------------------------------------------+---------+---+---|
+| v |   |   |   |   | Kernel hacking                            |         |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   | v |   |   |   | Compile-time checks and compiler options  |         |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   |   | v |   |   | Debug Filesystem                          | *       |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|---+---+---+---+---+-------------------------------------------+---------+---+---|
+| v |   |   |   |   | File systems                              |         |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   | v |   |   |   | The Extended 4 (ext4) filesystem          |         |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+|   | v |   |   |   | Ext4 Security Labels                      | *       |   |   |
+|   |   |   |   |   |                                           |         |   |   |
+
+* emerge 
+
+emerge --ask app-emulation/qemu
+
+gpasswd -a <username> kvm
+
