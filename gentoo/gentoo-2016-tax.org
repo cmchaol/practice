@@ -45,7 +45,7 @@ Bus 004 Device 004: ID 0ca6:0010 Castles Technology Co., Ltd EZUSB PC/SC Smart C
 
 #
 
-usbipd -D -d 
+usbipd -d 
 
 modprobe usbip-core
 
@@ -59,11 +59,46 @@ usbip list -l
 
 usbip bind --busid=4-3
 
+usbip version
+
+usbip (usbip-utils 2.0)
 
 
 * client win7
 
+
+
+
 * errors
 
 version mismatch: 262 273
+
+https://sourceforge.net/p/usbip/discussion/418508/thread/28f0a248/
+
+Just incase anyone else has the same issues, I simply reverted the version to 0x106 in the config.h file (staging/usbip/userspace) just before executing make install
+
+
+emerge usbip
+
+>>> Unpacking linux-3.19.tar.xz to /var/tmp/portage/net-misc/usbip-3.19/work
+
+
+|         | server          | client      |
+|         |                 |             |
+|         | gentoo          | win7        |
+|         |                 |             |
+|---------+-----------------+-------------|
+| version | # usbip version | usbip -v    |
+|         |                 |             |
+|         | usbip-utils 2.0 | usbip 0.2.0 |
+|         |                 |             |
+
+
+emerge -cav usbip
+
+https://wiki.gentoo.org/wiki/Gentoo_Cheat_Sheet#Package_installation_and_removal
+
+tar xvpf  /usr/portage/distfiles/linux-3.19.tar.xz --xattrs
+
+cd /tmp/linux-3.19/tools/usb/usbip/
 
