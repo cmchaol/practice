@@ -177,3 +177,31 @@ qemu-system-x86_64 \
         -netdev user,hostname=windowsvm \
 
 /usr/bin/spicy -h 127.0.0.1 -p 5930
+
+
+| 1 | 2 | 3 | 4 |                                                             | default |   |
+|---+---+---+---+-------------------------------------------------------------+---------+---|
+| v |   |   |   | File systems                                                |         |   |
+|   |   |   |   |                                                             |         |   |
+|   | v |   |   | Network File Systems                                        |         |   |
+|   |   |   |   |                                                             |         |   |
+|   |   | v |   | CIFS support (advanced network filesystem, SMBFS successor) | blank   | M |
+|   |   |   |   |                                                             |         |   |
+|   |   | v |   | CIFS statistics                                             | blank   | * |
+|   |   |   |   |                                                             |         |   |
+|   |   | v |   | Extended statistics                                         | blank   | * |
+|   |   |   |   |                                                             |         |   |
+|   |   | v |   | CIFS extended attributes                                    | blank   | * |
+|   |   |   |   |                                                             |         |   |
+|   |   | v |   | CIFS POSIX Extensions                                       | blank   | * |
+|   |   |   |   |                                                             |         |   |
+
+
+emerge --ask net-fs/samba --autounmask-write
+
+dispatch-conf
+
+rc-update add samba default
+
+service samba start
+
