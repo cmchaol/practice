@@ -102,3 +102,10 @@ tar xvpf  /usr/portage/distfiles/linux-3.19.tar.xz --xattrs
 
 cd /tmp/linux-3.19/tools/usb/usbip/
 
+
+* Java
+
+https://wiki.gentoo.org/wiki/Java
+
+emerge -pv dev-java/icedtea-bin
+

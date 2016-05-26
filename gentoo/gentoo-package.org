@@ -2338,6 +2338,85 @@ dispatch-conf
 see gentoo-qemu.org
 
 
+*** java
+
+https://wiki.gentoo.org/wiki/Java#Configuring_the_java_virtual_machine
+
+
+echo "app-editors/emacs xft X jpeg png svg tiff alsa gif imagemagick sound" >> /etc/portage/package.use/emacs
+
+echo "dev-java/icedtea-bin cjk nsplugin" > /etc/portage/package.use/icedtea-bin
+
+cat  /etc/portage/package.use/icedtea-bin
+
+echo "dev-java/icedtea cjk nsplugin" > /etc/portage/package.use/icedtea
+
+emerge -pv dev-java/icedtea
+
+emerge dev-java/icedtea-bin --autounmask-write 
+
+dispatch-conf
+
+**** USE flags
+
+
+The nsplugin flag adds support for Mozilla-like browsers (including Firefox). This is needed for viewing Java applets in a Mozilla-like browser;
+
+
+
+*** atm
+
+**** step
+
+|    | installation              |   |
+|----+---------------------------+---|
+| 20 | emerge sys-apps/pcsc-lite |   |
+|    |                           |   |
+| 30 | emerge sudo               |   |
+|    |                           |   |
+| 40 | install driver            |   |
+|    |                           |   |
+
+**** 30 sudo
+
+echo "app-admin/sudo pam" >> /etc/portage/package.use/sudo
+
+emerge app-admin/sudo
+
+EDITOR=emacs visudo 
+
+
+|      | delete the '#'         |   |
+|      |                        |   |
+| from | # %wheel ALL=(ALL) ALL |   |
+|      |                        |   |
+| to   | %wheel ALL=(ALL) ALL   |   |
+
+
+**** 20 PCSC-Lite
+
+https://wiki.gentoo.org/wiki/PCSC-Lite
+
+Testing
+
+#
+/etc/init.d/pcscd stop
+
+pcscd -a -d -f 
+
+**** install the driver EZMINI
+
+download the zip
+
+Execute enviroment check program: ./check_env
+
+Execute installation program : ./install  
+
+Reboot the system.
+
+
+
+
 ** xorg group
    
 *** x11-base/xorg-server
