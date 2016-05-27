@@ -2368,14 +2368,16 @@ The nsplugin flag adds support for Mozilla-like browsers (including Firefox). Th
 
 **** step
 
-|    | installation              |   |
-|----+---------------------------+---|
-| 20 | emerge sys-apps/pcsc-lite |   |
-|    |                           |   |
-| 30 | emerge sudo               |   |
-|    |                           |   |
-| 40 | install driver            |   |
-|    |                           |   |
+|    | installation                |   |
+|----+-----------------------------+---|
+| 20 | emerge sys-apps/pcsc-lite   |   |
+|    |                             |   |
+| 30 | emerge sudo                 |   |
+|    |                             |   |
+| 40 | install driver              |   |
+|    |                             |   |
+|    | install firefox plugin esun |   |
+|    |                             |   |
 
 **** 30 sudo
 
@@ -2455,22 +2457,22 @@ http://www.casauto.com.tw/db/pictures/modules/PDT/PDT060207001/20118101553170555
 
 ***** ./install 
 
-|   | check existence    |                        |
-|   | pcsc_driver_path   | in my gentoo           |
-|---+--------------------+------------------------|
-|   | /usr/local/pcsc    | none                   |
-|   |                    |                        |
-|   | /usr/pcsc          | none                   |
-|   |                    | /usr/sbin/pcscd        |
-|   |                    |                        |
-|   | /usr/lib/readers   | none                   |
-|   |                    |                        |
-|   | /usr/lib/pcsc      | none                   |
-|   |                    |                        |
-|   | /usr/lib64/readers | none                   |
-|   |                    | pcscd -a -d -f read    |
-|   |                    | /usr/lib64/readers/usb |
-|   |                    |                        |
+|   | check existence    |                                |
+|   | pcsc_driver_path   | in my gentoo                   |
+|---+--------------------+--------------------------------|
+|   | /usr/local/pcsc    | none                           |
+|   |                    |                                |
+|   | /usr/pcsc          | none                           |
+|   |                    | /usr/sbin/pcscd                |
+|   |                    |                                |
+|   | /usr/lib/readers   | none                           |
+|   |                    |                                |
+|   | /usr/lib/pcsc      | none                           |
+|   |                    |                                |
+|   | /usr/lib64/readers | none                           |
+|   |                    | pcscd -a -d -f read for bundle |
+|   |                    | /usr/lib64/readers/usb         |
+|   |                    |                                |
 
 in my gentoo
 
@@ -2514,6 +2516,30 @@ to
 sudo mkdir    $pcsc_driver_path"/drivers/"$BundleName".bundle/"
 
 
+
+
+
+**** install firefox plugin esun
+
+| run firefox            |
+|                        |
+| browse the url1        |
+|                        |
+| install/click the url2 |
+|                        |
+| test the atm-card      |
+|                        |
+
+
+url1
+
+
+https://netbank.esunbank.com.tw/webatm/Q&A_016.htm
+
+
+url2
+
+安裝玉山銀行Linux專用版 WebATM plugin(64-bit)。
 
 
 
