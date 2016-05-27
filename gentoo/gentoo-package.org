@@ -2414,7 +2414,41 @@ Execute installation program : ./install
 
 Reboot the system.
 
+***** ./install 
 
+|   | check existence    |                 |
+|   | pcsc_driver_path   | in my gentoo    |
+|---+--------------------+-----------------|
+|   | /usr/local/pcsc    | none            |
+|   |                    |                 |
+|   | /usr/pcsc          | none            |
+|   |                    | /usr/sbin/pcscd |
+|   |                    |                 |
+|   | /usr/lib/readers   | none            |
+|   |                    |                 |
+|   | /usr/lib/pcsc      | none            |
+|   |                    |                 |
+|   | /usr/lib64/readers | none            |
+|   |                    |                 |
+|   |                    |                 |
+
+in my gentoo
+
+/usr/sbin/pcscd
+/usr/lib64/pkgconfig/libpcsclite.pc
+/usr/lib64/systemd/system/pcscd.service
+/usr/lib64/systemd/system/pcscd.socket
+/usr/lib64/libpcsclite.so.1.0.0
+/usr/lib64/libpcscspy.so.0.0.0
+/usr/lib64/libpcsclite.so
+/usr/lib64/libpcsclite.so.1
+/usr/lib64/libpcscspy.so
+/usr/lib64/libpcscspy.so.0
+/usr/share/man/man8/pcscd.8.bz2
+/usr/share/man/man1/pcsc-spy.1.bz2
+/usr/share/doc/pcsc-lite-1.8.12-r1
+/usr/include/PCSC/pcsclite.h
+/usr/bin/pcsc-spy
 
 
 ** xorg group
