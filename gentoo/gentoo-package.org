@@ -2414,23 +2414,63 @@ Execute installation program : ./install
 
 Reboot the system.
 
+***** ezmini driver
+
+
+tar zxvpf 
+
+|              | EZ Mini | EZ100PU |
+|--------------+---------+---------|
+| reference    |       1 |       3 |
+|              |         |         |
+| linux driver |       2 |       4 |
+|              |         |         |
+| version      |   1.4.9 |   1.5.3 |
+|              |         |         |
+
+reference 
+
+1
+
+http://www.casauto.com.tw/in-download-02.aspx?wcid=C_00000012&id=P_00000002&cid=C_00000001
+
+
+2
+
+http://www.casauto.com.tw/db/pictures/modules/PDT/PDT060207001/200910202023353343.gz
+
+
+3
+
+http://www.casauto.com.tw/in-download-02.aspx?cid=C_00000001&id=P_00000001
+
+4
+
+http://www.casauto.com.tw/db/pictures/modules/PDT/PDT060207001/20118101553170555.zip
+
+
+
+
+
+
 ***** ./install 
 
-|   | check existence    |                 |
-|   | pcsc_driver_path   | in my gentoo    |
-|---+--------------------+-----------------|
-|   | /usr/local/pcsc    | none            |
-|   |                    |                 |
-|   | /usr/pcsc          | none            |
-|   |                    | /usr/sbin/pcscd |
-|   |                    |                 |
-|   | /usr/lib/readers   | none            |
-|   |                    |                 |
-|   | /usr/lib/pcsc      | none            |
-|   |                    |                 |
-|   | /usr/lib64/readers | none            |
-|   |                    |                 |
-|   |                    |                 |
+|   | check existence    |                        |
+|   | pcsc_driver_path   | in my gentoo           |
+|---+--------------------+------------------------|
+|   | /usr/local/pcsc    | none                   |
+|   |                    |                        |
+|   | /usr/pcsc          | none                   |
+|   |                    | /usr/sbin/pcscd        |
+|   |                    |                        |
+|   | /usr/lib/readers   | none                   |
+|   |                    |                        |
+|   | /usr/lib/pcsc      | none                   |
+|   |                    |                        |
+|   | /usr/lib64/readers | none                   |
+|   |                    | pcscd -a -d -f read    |
+|   |                    | /usr/lib64/readers/usb |
+|   |                    |                        |
 
 in my gentoo
 
@@ -2450,6 +2490,19 @@ in my gentoo
 /usr/include/PCSC/pcsclite.h
 /usr/bin/pcsc-spy
 
+my modification
+
+#
+
+mkdir -p /usr/lib64/readers/usb
+
+modify ./install 
+
+from 
+pcsc_driver_path="/usr/lib64/readers"
+
+to
+pcsc_driver_path="/usr/lib64/readers/usb"
 
 ** xorg group
    
