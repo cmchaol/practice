@@ -2504,6 +2504,19 @@ pcsc_driver_path="/usr/lib64/readers"
 to
 pcsc_driver_path="/usr/lib64/readers/usb"
 
+
+3 times
+
+from 
+sudo mkdir -p $pcsc_driver_path"/drivers/"$BundleName".bundle/"
+
+to
+sudo mkdir    $pcsc_driver_path"/drivers/"$BundleName".bundle/"
+
+
+
+
+
 ** xorg group
    
 *** x11-base/xorg-server
