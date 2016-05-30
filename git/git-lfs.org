@@ -2,10 +2,47 @@
 
 https://git-lfs.github.com/
 
+git-lfs-linux-amd64-1.2.0.tar.gz
 
-* git lfs gentoo overlay
+tar xvfz git-lfs-linux-amd64-1.2.0.tar.gz
+
+git-lfs-1.2.0/
+git-lfs-1.2.0/CHANGELOG.md
+git-lfs-1.2.0/git-lfs
+git-lfs-1.2.0/install.sh
+git-lfs-1.2.0/README.md
+
+
+
+
+* TODO git lfs gentoo overlay
 
 https://gpo.zugaina.org/dev-vcs/git-lfs
+
+https://gpo.zugaina.org/dev-vcs/git-lfs
+
+
+| git-lfs-1.1.0 | ~amd64 ~x86 ~arm | sabayon |
+| git-lfs-1.0.2 | ~amd64           | vayerx  |
+
+** compile fail in both 1.1.0 and 1.0.2
+
+ ERROR: dev-vcs/git-lfs-1.1.0::sabayon failed (compile phase):
+ *   (no error message)
+ * 
+ * Call stack:
+ *     ebuild.sh, line  133:  Called src_compile
+ *   environment, line 2472:  Called golang-single_src_compile
+ *   environment, line 1429:  Called die
+ * The specific snippet of code:
+ *           ${EGO} build -ldflags="$GOLANG_PKG_LDFLAGS" -tags="$GOLANG_PKG_TAGS" ${EGO_BUILD_FLAGS} ${GOLANG_PKG_IMPORTPATH_ALIAS}/${GOLANG_PKG_NAME}${GOLANG_PKG_BUILDPATH} || die;
+ * 
+ * If you need support, post the output of `emerge --info '=dev-vcs/git-lfs-1.1.0::sabayon'`,
+ * the complete build log and the output of `emerge -pqv '=dev-vcs/git-lfs-1.1.0::sabayon'`.
+ * The complete build log is located at '/var/tmp/portage/dev-vcs/git-lfs-1.1.0/temp/build.log'.
+ * The ebuild environment file is located at '/var/tmp/portage/dev-vcs/git-lfs-1.1.0/temp/environment'.
+ * Working directory: '/var/tmp/portage/dev-vcs/git-lfs-1.1.0/work/gopath/src/github.com/github/git-lfs'
+ * S: '/var/tmp/portage/dev-vcs/git-lfs-1.1.0/work/gopath/src/github.com/github/git-lfs'
 
 
 * Storing large binary files in git repositories
