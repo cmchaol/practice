@@ -1,19 +1,36 @@
-* steps
+* steps 
 
-| steps | aim           |   |
-|-------+---------------+---|
-|       | adjust kernel |   |
-|       |               |   |
-|       | emerge usbip  |   |
-|       |               |   |
-|       | setup server  |   |
-|       |               |   |
-|       | setup client  |   |
-|       |               |   |
-|       | connect       |   |
-|       |               |   |
+| verify with esun eatm |
+|                       |
+| go pay tax            |
+
+| steps | aim                     |   |
+|-------+-------------------------+---|
+|       | open firefox            |   |
+|       |                         |   |
+|       | as root, pcscd -a -d -f |   |
+|       |                         |   |
+|       | go esun eatm            |   |
+|       |                         |   |
+|       |                         |   |
 
 
+
+https://wiki.gentoo.org/wiki/PCSC-Lite
+
+| steps |                        |
+|-------+------------------------|
+|       | firefox                |
+|       |                        |
+|       | http://tax.nat.gov.tw/ |
+|       |                        |
+|       | 綜所稅結算申報         |
+|       |                        |
+|       | 電子申報程式           |
+|       |                        |
+|       | 線上申報               |
+|       |                        |
+|       |                        |
 
 * usbip
 
