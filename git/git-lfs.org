@@ -64,3 +64,11 @@ http://blog.deveo.com/storing-large-binary-files-in-git-repositories/
 | git-sym      |
 |              |
 |              |
+
+* https or ssh
+
+
+https://help.github.com/articles/which-remote-url-should-i-use/#cloning-with-https-urls-recommended
+
+using HTTPS URLs on the command line, you'll be asked for your GitHub username and password.
+
