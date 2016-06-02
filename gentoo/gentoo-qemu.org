@@ -78,7 +78,7 @@ deploy kernel see gentoo-package.org  stage4  steps tmpfs M4A87TD/USB3 70 kernel
 
 * emerge 
 
-echo "app-emulation/qemu spice sdl" > /etc/portage/package.use/qemu
+echo "app-emulation/qemu spice sdl usb usbredir" > /etc/portage/package.use/qemu
 
 echo "app-emulation/spice  client" >> /etc/portage/package.use/spice
 
@@ -86,6 +86,8 @@ echo " sdl" >> /etc/portage/package.use/qemu
 
 
 cat /etc/portage/package.use/qemu 
+
+
 cat /etc/portage/package.use/spice
 
 emerge app-emulation/qemu --autounmask-write 
@@ -108,20 +110,163 @@ qemu-img create -f qcow2 /mnt/fs1/qemu-image/WindowsVM.img 50G
 
 qemu-img create -f qcow2 /mnt/fs1/qemu-image/8-201605.img 50G
 
+| steps | .img | winpe7 | winpe10 | host share | usb |                     |
+|-------+------+--------+---------+------------+-----+---------------------|
+|    20 | v    |        |         |            |     | verify qemu runs    |
+|       |      |        |         |            |     |                     |
+|    30 |      | v      |         |            |     | verify winpe7 runs  |
+|       |      |        |         |            |     |                     |
+|    40 |      |        | v       |            |     | verify winpe10 runs |
+|       |      |        |         |            |     |                     |
+|    50 | v    |        |         |            | v   |                     |
+|       |      |        |         |            |     |                     |
 
-** DONE qemu, blank image
+** 20
 
 qemu-system-x86_64 \
         -enable-kvm \
         -cpu host \
-        -drive file=/mnt/fs1/qemu-image/8-201605.img \
-        -net nic -net user,hostname=windowsvm \
-        -m 1G \
+        -m 2G \
         -monitor stdio \
-        -name Windows \
-	-boot d \
+        -drive file=/mnt/fs1/qemu-image/8-201605.img \
+        "$@"
+
+
+** 30
+
+qemu-system-x86_64 \
+        -enable-kvm \
+        -cpu host \
+        -m 2G \
+        -monitor stdio \
+ 	-boot d \
+	-drive file=/mnt/fs1/qemu-image/7pe_amd64_E.iso,media=cdrom \
+        "$@"
+
+
+
+
+** 40
+
+qemu-system-x86_64 \
+        -enable-kvm \
+        -cpu host \
+        -m 2G \
+        -monitor stdio \
+ 	-boot d \
 	-drive file=/mnt/fs1/qemu-image/win10PEx64.ISO,media=cdrom \
         "$@"
+
+
+
+
+
+
+** 50
+
+	-usbdevice host:4:6 \  
+	-usbdevice host:0ca6:0010 \  
+	-usb -device usb-host,hostbus=4,hostaddr=6 \
+
+qemu-system-x86_64 \
+        -enable-kvm \
+        -cpu host \
+        -m 2G \
+        -monitor stdio \
+ 	-boot d \
+	-drive file=/mnt/fs1/qemu-image/win10PEx64.ISO,media=cdrom \
+	-vga std \
+	-usbdevice tablet \
+        "$@"
+
+# this fails
+
+
+
+
+
+** 50
+
+qemu-system-x86_64 \
+        -enable-kvm \
+        -cpu host \
+        -m 2G \
+        -monitor stdio \
+ 	-boot d \
+	-drive file=/mnt/fs1/qemu-image/7pe_amd64_E.iso,media=cdrom \
+        -drive file=/mnt/fs1/qemu-image/8-201605.img \
+	-net nic -net user,smb=/mnt/fs1/qemu-image \
+	-usbdevice tablet \
+	-usbdevice host:0ca6:0010 \
+        "$@"
+
+
+
+
+
+
+
+|   |                                 |                            |
+|---+---------------------------------+----------------------------|
+|   | activate the net card           |                            |
+|   |                                 | control panel              |
+|   |                                 | device manager             |
+|   |                                 | select ethernet controller |
+|   |                                 | scan for hardware chagne   |
+|   |                                 |                            |
+|---+---------------------------------+----------------------------|
+|   | connect the share drive         |                            |
+|   |                                 | open IE                    |
+|   |                                 | computer                   |
+|   |                                 | map network drive          |
+|   |                                 | \\10.0.2.4\qemu            |
+|   |                                 |                            |
+|---+---------------------------------+----------------------------|
+|   | copy install.wim to target disk |                            |
+|   |                                 |                            |
+
+
+
+
+
+** qemu, blank image, winpe10
+
+qemu-system-x86_64 \
+        -enable-kvm \
+        -cpu host \
+        -m 2G \
+        -monitor stdio \
+ 	-boot d \
+	-drive file=/mnt/fs1/qemu-image/win10PEx64.ISO,media=cdrom \
+        -drive file=/mnt/fs1/qemu-image/8-201605.img \
+	-net nic -net user,smb=/mnt/fs1/qemu-image \
+        "$@"
+
+
+Type diskpart
+Type select disk 0
+Type list partition
+then note the partition number where you installed windows 7.
+Type select partition X    (X is the partition number where Windows is installed)
+type active
+type exit
+type bcdboo c:\windows     (if C is your windows partition)
+ 
+
+https://social.technet.microsoft.com/Forums/windows/en-US/6b16586e-574d-4a0b-ad68-aafcc7c599d1/bcdboot-failure-when-attempting-to-copy-boot-files?forum=w7itproinstall
+
+
+qemu-system-x86_64 \
+        -enable-kvm \
+        -cpu host \
+        -m 2G \
+        -monitor stdio \
+        -drive file=/mnt/fs1/qemu-image/8-201605.img \
+	-net nic -net user,smb=/mnt/fs1/qemu-image \
+        "$@"
+
+	-drive file=/mnt/fs1/qemu-image/win10PEx64.ISO,media=cdrom \
+ 	-boot d \
 
 
 
@@ -169,7 +314,6 @@ qemu-system-x86_64 \
 qemu-system-x86_64 \
         -enable-kvm \
         -cpu host \
-        -drive file=/mnt/fs1/qemu-image/WindowsVM.img \
         -net nic -net user,hostname=windowsvm \
         -m 2G \
         -monitor stdio \
@@ -180,6 +324,7 @@ qemu-system-x86_64 \
 	-drive file=/mnt/fs1/qemu-image/win10PEx64.ISO,media=cdrom \
         "$@"
 
+        -drive file=/mnt/fs1/qemu-image/WindowsVM.img \
 	-drive file=/mnt/fs1/qemu-image/7pe_amd64_E.iso,media=cdrom \
 /usr/bin/spicy -h 127.0.0.1 -p 5930
 
@@ -255,6 +400,51 @@ dispatch-conf
 rc-update add samba default
 
 service samba start
+
+
+** usbdevice tablet
+
+https://wiki.gentoo.org/wiki/QEMU/Options#USB
+
+
+-usbdevice tablet - (Recommend) Use a USB tablet instead of the default PS/2 mouse. Recommend, because the tablet sends the mouse cursor's position to match the host mouse cursor.
+
+** usbdevice host:VENDOR-ID:PRODUCT-ID  # this fails
+
+
+https://wiki.gentoo.org/wiki/QEMU/Options#USB
+
+lsusb
+Bus 001 Device 006: ID: 08ec:2039 M-Systems Flash Disk Pioneers
+08ec is the vendor ID, 2039 is the product ID.
+
+lsusb
+
+Bus 004 Device 006: ID 0ca6:0010 Castles Technology Co., Ltd EZUSB PC/SC Smart Card Reader
+
+-usbdevice host:VENDOR-ID:PRODUCT-ID
+
+-usbdevice host:0ca6:0010
+
+**  -usb -device usb-host,hostbus=2,hostaddr=5
+lsusb
+[...]
+Bus 002 Device 005: ID 12d1:1406 Huawei Technologies Co., Ltd. E1750
+[...]
+
+-usb -device usb-host,hostbus=2,hostaddr=5
+
+
+
+https://www.suse.com/documentation/sles11/book_kvm/data/cha_qemu_running_devices.html
+
+lsusb
+
+Bus 004 Device 006: ID 0ca6:0010 Castles Technology Co., Ltd EZUSB PC/SC Smart Card Reader
+
+-usb -device usb-host,hostbus=4,hostaddr=6
+
+-usb -device hostbus=4,hostaddr=6
 
 
 * bcdedit
