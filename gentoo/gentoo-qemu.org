@@ -102,8 +102,11 @@ sdl  for automatically open vncviewer
 
 * windows guest
 
+https://wiki.gentoo.org/wiki/QEMU/Windows_guest
 
 qemu-img create -f qcow2 /mnt/fs1/qemu-image/WindowsVM.img 50G
+
+qemu-img create -f qcow2 /mnt/fs1/qemu-image/8-201605.img 50G
 
 
 ** DONE qemu, blank image
@@ -111,24 +114,16 @@ qemu-img create -f qcow2 /mnt/fs1/qemu-image/WindowsVM.img 50G
 qemu-system-x86_64 \
         -enable-kvm \
         -cpu host \
-        -drive file=/mnt/fs1/qemu-image/WindowsVM.img,if=virtio \
+        -drive file=/mnt/fs1/qemu-image/8-201605.img \
         -net nic -net user,hostname=windowsvm \
         -m 1G \
         -monitor stdio \
         -name Windows \
+	-boot d \
+	-drive file=/mnt/fs1/qemu-image/win10PEx64.ISO,media=cdrom \
         "$@"
 
-**  qemu, blank image
 
-qemu-system-x86_64 \
-        -enable-kvm \
-        -cpu host \
-        -drive file=/mnt/fs1/qemu-image/WindowsVM.img \
-        -net nic -net user,hostname=windowsvm \
-        -m 2G \
-        -monitor stdio \
-        -name Windows \
-        "$@"
 
 ** DONE qemu, blank image, spice
 
