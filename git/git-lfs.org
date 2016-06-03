@@ -1,3 +1,43 @@
+
+* git official
+
+https://github.com/github/git-lfs
+
+* top 5
+
+| top 5               |                       |
+|---------------------+-----------------------|
+| show track patterns | git lfs track         |
+|                     |                       |
+| track zip           | git lfs track "*.zip" |
+|                     |                       |
+| track gif           | git lfs track "*.gif" |
+|                     |                       |
+| track jpg           | git lfs track "*.jpg" |
+|                     |                       |
+|---------------------+-----------------------|
+| show track files    | git lfs ls-files      |
+|                     |                       |
+| show env            | git lfs env           |
+|                     |                       |
+| push                | git lfs push          |
+|                     |                       |
+
+
+* scenario basic
+
+| steps               | commands              |
+|---------------------+-----------------------|
+| show track patterns | git lfs track         |
+|                     |                       |
+| track file          | git lfs track "*.zip" |
+|                     |                       |
+| commit              |                       |
+|                     |                       |
+| push                |                       |
+|                     |                       |
+
+
 * Git Large File Storage (LFS) - official
 
 https://git-lfs.github.com/
@@ -64,6 +104,7 @@ http://blog.deveo.com/storing-large-binary-files-in-git-repositories/
 | git-sym      |
 |              |
 |              |
+
 
 * https or ssh
 

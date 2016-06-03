@@ -1,0 +1,12 @@
+* official github pages
+
+https://pages.github.com/
+
+| step                                |
+|-------------------------------------|
+| go to an existing github repository |
+|                                     |
+| Create a gh-pages branch            |
+|                                     |
+| create an index file, index.html    |
+|                                     |
