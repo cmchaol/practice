@@ -1,0 +1,22 @@
+* anatomy of the 3 pc
+
+|            | local    |     | ssh server   |        | remote server |
+|            |          |     |              |        |               |
+|            | begin    |     | intermediate |        | destination   |
+|            |          |     |              |        |               |
+|------------+----------+-----+--------------+--------+---------------|
+| location   | intranet |     |              |        | internet      |
+|            |          |     |              |        |               |
+| function   | my pc    |     | run sshd     |        | destination   |
+|            |          |     |              |        |               |
+| connection |          |     |              |        |               |
+|            | from     | ssh | succeeded    |        |               |
+|            |          |     |              |        |               |
+|            |          |     | from         | direct | succeeded     |
+|            |          |     |              |        |               |
+|            | from     |     | skip         | direct | failed        |
+|            |          |     |              |        |               |
+|            | from     | ssh |              | direct | succeeded     |
+|            |          |     |              |        |               |
+
+* 
