@@ -1735,6 +1735,7 @@ dispatch-conf
 |               |                         |                        |
 | qemu          |                         |                        |
 |               |                         |                        |
+| openvpn       |                         |                        |
 |               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
@@ -2565,6 +2566,53 @@ url2
 
 安裝玉山銀行Linux專用版 WebATM plugin(64-bit)。
 
+
+
+*** openvpn
+
+equery files --tree openvpn
+ * Searching for openvpn ...
+ * Contents of net-misc/openvpn-2.3.11:
+ /etc
+   > /conf.d
+      + openvpn
+   > /init.d
+      + openvpn
+   > /openvpn
+      + .keep_net-misc_openvpn-0
+      + down.sh
+      + up.sh
+ /usr
+   > /include
+      + openvpn-plugin.h
+   > /lib
+      > /systemd
+         > /system
+            + openvpn-client@.service
+            + openvpn-server@.service
+      > /tmpfiles.d
+         + openvpn.conf
+   > /lib64
+      > /openvpn
+         + openvpn-plugin-auth-pam.so
+   > /sbin
+      + openvpn
+   > /share
+      > /doc
+         > /openvpn-2.3.11
+            + AUTHORS
+            + COPYING.bz2
+            + COPYRIGHT.GPL.bz2
+            + ChangeLog.bz2
+            + PORTS.bz2
+            + README.IPv6.bz2
+            + README.auth-pam.bz2
+            + README.bz2
+            + README.polarssl.bz2
+            + management-notes.txt.bz2
+      > /man
+         > /man8
+            + openvpn.8.bz2
 
 
 ** xorg group
