@@ -1,12 +1,41 @@
+* orgmode links
+
+** format
+
+http://orgmode.org/manual/Link-format.html#Link-format
+
+[[
+link
+][
+description, optional
+]]
+
+
+
+[[link][description, optional]]
+
+to edit, C-c C-l
+
+** link example image
+
+
+
+https://zh.wikipedia.org/wiki/%E8%87%BA%E7%81%A3#/media/File:LocationTaiwan.svg
+
+
+
+
 * official github pages
 
 https://pages.github.com/
 
-| step                                |
-|-------------------------------------|
-| go to an existing github repository |
-|                                     |
-| Create a gh-pages branch            |
-|                                     |
-| create an index file, index.html    |
-|                                     |
+| steps                                        |
+|----------------------------------------------|
+| go to an existing github repository          |
+|                                              |
+| Create a gh-pages branch                     |
+|                                              |
+| create an index file, index.html             |
+|                                              |
+| browse  http://username.github.io/repository |
+|                                              |
