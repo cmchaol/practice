@@ -1,3 +1,25 @@
+* chinese space
+
+** 空格
+
+https://zh.wikipedia.org/zh-tw/%E7%A9%BA%E6%A0%BC
+
+中文傳統無標點，字與字之間亦無空格，但空格有特定用途，如每段起首須縮入兩個字位，尊稱前要留空一格作挪抬等等。在句號後面，一般以一個空格與其後的字分隔，這種分隔稱為「法式分隔」。有時候在處理文書上，會在句號後以兩個空格作間隔，這種分隔稱為「英式分隔」。
+
+
+
+| 句號後以 |          |
+| __個空格 |          |
+| 作間隔   |          |
+|----------+----------|
+| 一個     | 法式分隔 |
+|          |          |
+| 兩個     | 英式分隔 |
+|          |          |
+
+
+
+
 * usb mount chinese filename
 
 vfat chinese filename
@@ -301,3 +323,4 @@ eselect fontconfig enable 60-liberation.conf
 eselect fontconfig enable 70-no-bitmaps.conf
 
 eselect fontconfig list
+
