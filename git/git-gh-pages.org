@@ -4,15 +4,18 @@
 
 http://orgmode.org/manual/Link-format.html#Link-format
 
-[[
-link
-][
-description, optional
-]]
+
+[[link][description] ]
+
+remove the space between '] ]' at the end of the above line will generate a link in orgmode.
+
+2 sequential sets of '[]' inside a outer '[]'  
 
 
 
-[[link][description, optional]]
+
+
+
 
 to edit, C-c C-l
 
@@ -23,7 +26,27 @@ to edit, C-c C-l
 https://zh.wikipedia.org/wiki/%E8%87%BA%E7%81%A3#/media/File:LocationTaiwan.svg
 
 
+inline images format
 
+[[../../LocationTaiwan.svg]]
+
+
+
+
+** inline images
+
+You can run the command `org-toggle-inline-images' with C-c C-x C-v
+
+
+
+
+
+
+
+
+
+
+M-x apropos RET org.*image.*
 
 * official github pages
 
