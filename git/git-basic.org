@@ -1,0 +1,115 @@
+* Reset, Checkout, and Revert
+
+
+https://www.atlassian.com/git/tutorials/resetting-checking-out-and-reverting
+
+|   |                   |                 |                |
+|   | working directory | staged snapshot | commit history |
+|   |                   |                 |                |
+
+** the scope
+
+
+| the scope    | a commit | a file                             |
+|--------------+----------+------------------------------------|
+|              |          | include a file path as a parameter |
+|              |          |                                    |
+| git revert   | only     | not applicable                     |
+|              |          |                                    |
+| git reset    | v        | v                                  |
+| git checkout | v        | v                                  |
+
+
+** git reset 3 flags
+
+git reset HEAD~2
+
+
+| git reset flag | working      | staged      | commit  |             |
+|                | directory    | snapshot    | history |             |
+|                |              |             |         |             |
+|----------------+--------------+-------------+---------+-------------|
+| --hard         | updated      | updated     |         |             |
+|                |              |             |         |             |
+| --mixed        | not affected | updated     |         |             |
+|                |              |             |         |             |
+| --soft         | not altered  | not altered |         | less common |
+|                |              |             |         |             |
+
+| my viewpoints what git reset does |   |
+|-----------------------------------+---|
+| move the HEAD backword            |   |
+|                                   |   |
+| dangling commits                  |   |
+|                                   |   |
+|                                   |   |
+
+The --soft, --mixed, and --hard flags do not have any effect on the file-level version of git reset, as the staged snapshot is always updated, and the working directory is never updated.
+
+
+
+
+** git checkout
+
+|                       | working   | staged   | commit  |                                             |
+|                       | directory | snapshot | history |                                             |
+|                       |           |          |         |                                             |
+|-----------------------+-----------+----------+---------+---------------------------------------------|
+| git checkout a commit | updated   | ?        |         | This will put you in a detached HEAD state. |
+|                       |           |          |         |                                             |
+
+
+
+| git checkout | branch | commit        |
+|--------------+--------+---------------|
+|              |        | detached HEAD |
+|              |        |               |
+
+For this reason, you should always create a new branch before adding commits to a detached HEAD.
+
+
+** checkout vs reset
+
+http://gitolite.com/gcs.html#(46)
+
+checkout changes what your current branch is (i.e., it changes where HEAD is pointing to)
+reset changes which commit the current branch is pointing to
+
+my comprehension
+
+|               | master branch   | test branch |   |
+|---------------+-----------------+-------------+---|
+| checkout test | remain the same | HEAD        |   |
+|               |                 |             |   |
+| reset test    |                 |             |   |
+
+
+** File-level Operations
+
+|                                   | master branch   | test branch |   |
+|-----------------------------------+-----------------+-------------+---|
+| checkout test                     | remain the same | HEAD        |   |
+|                                   |                 |             |   |
+| git reset HEAD~2 foo.pyreset test |                 |             |   |
+
+
+| git reset flag             | working       | staged        | commit  |             |
+|                            | directory     | snapshot      | history |             |
+|                            |               |               |         |             |
+|----------------------------+---------------+---------------+---------+-------------|
+| git reset HEAD~2 foo.py    | not altered   | HEAD~2 foo.py |         |             |
+|                            |               |               |         |             |
+| --hard                     | not altered   | not altered   |         |             |
+|                            |               |               |         |             |
+| --mixed                    | not altered   | not altered   |         |             |
+|                            |               |               |         |             |
+| --soft                     | not altered   | not altered   |         | less common |
+|                            |               |               |         |             |
+| git checkout HEAD~2 foo.py | HEAD~2 foo.py | not altered   |         |             |
+|                            |               |               |         |             |
+
+
+** revert
+
+git revert should be used to undo changes on a public branch, and git reset should be reserved for undoing changes on a private branch.
+
