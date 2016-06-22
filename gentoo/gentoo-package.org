@@ -1737,6 +1737,8 @@ dispatch-conf
 |               |                         |                        |
 | openvpn       |                         |                        |
 |               |                         |                        |
+| python        |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -2613,6 +2615,19 @@ equery files --tree openvpn
       > /man
          > /man8
             + openvpn.8.bz2
+
+
+*** python
+
+ImportError: No module named sqlite3
+
+
+echo "dev-lang/python sqlite" >> /etc/portage/package.use/python
+
+cat /etc/portage/package.use/python
+
+emerge -pv python:2.7
+
 
 
 ** xorg group
