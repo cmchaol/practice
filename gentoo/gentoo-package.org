@@ -1739,6 +1739,8 @@ dispatch-conf
 |               |                         |                        |
 | python        |                         |                        |
 |               |                         |                        |
+| postgresql    |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | xorg group    |                         |                        |
 |               |                         |                        |
@@ -1761,6 +1763,8 @@ dispatch-conf
 | vnc           |                         |                        |
 |               |                         |                        |
 | gtk+          |                         |                        |
+|               |                         |                        |
+|               |                         |                        |
 |---------------+-------------------------+------------------------|
 | editors       |                         |                        |
 |               |                         |                        |
@@ -2629,6 +2633,15 @@ cat /etc/portage/package.use/python
 emerge -pv python:2.7
 
 
+
+*** postgresql
+
+
+echo "dev-db/postgresql python" >> /etc/portage/package.use/postgresql
+
+cat /etc/portage/package.use/postgresql
+
+emerge -pv postgresql
 
 ** xorg group
    
